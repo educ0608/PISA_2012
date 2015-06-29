@@ -218,6 +218,6 @@ DEVCON8 <- rbind(ALB_P,COL_P,IDN_P,JOR_P,PER_P,THA_P,TUN_P,VNM_P) # combine all 
 DEVCON8$VIETNAM[DEVCON8$COUNTRY==8] <- 1 # dummy takes value = 1, if the country is Vietnam
 DEVCON8$VIETNAM[DEVCON8$COUNTRY!=8] <- 0 # dummy takes value = 0, if the country is not Vietnam
 
-save(DEVCON8, file = "C:/Users/xxx/Desktop/PISAlatestversions/RFiles/PISA_2012/DEVCON.rda") # this will be the main file to work off so you might want to save it
+save(DEVCON8, file = "C:/Users/xxxx/Desktop/PISAlatestversions/RFiles/PISA_2012/DEVCON.rda") # this will be the main file to work off so you might want to save it
 
 
