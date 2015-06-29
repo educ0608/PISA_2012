@@ -46,8 +46,8 @@ library(lme4)## To run mixed-effects models using Eigen and S4
 # OECD-PISA Report: "PISA 2012 Results: What Makes a School Successful?" (Volume IV, Chapter 3, Table IV.3.2)
 # Original data downloaded from: http://pisa2012.acer.edu.au/downloads.php (txt files, spss or sas)
 
-student.rda <- read.dta("C:/Users/WB484284/Desktop/PISAlatestversions/RFiles/PISA_2012/stu.dta")
-school.rda <- read.dta("C:/Users/WB484284/Desktop/PISAlatestversions/RFiles/PISA_2012/sch.dta")
+student.rda <- read.dta("C:/Users/xxx/Desktop/PISAlatestversions/RFiles/PISA_2012/stu.dta")
+school.rda <- read.dta("C:/Users/xxx/Desktop/PISAlatestversions/RFiles/PISA_2012/sch.dta")
 
 # Please refer to the questionnaires, codebooks and the technical manual (pages 396-398) about the specific
 # variables included in the data files and their abbreviations  
@@ -218,6 +218,6 @@ DEVCON8 <- rbind(ALB_P,COL_P,IDN_P,JOR_P,PER_P,THA_P,TUN_P,VNM_P) # combine all 
 DEVCON8$VIETNAM[DEVCON8$COUNTRY==8] <- 1 # dummy takes value = 1, if the country is Vietnam
 DEVCON8$VIETNAM[DEVCON8$COUNTRY!=8] <- 0 # dummy takes value = 0, if the country is not Vietnam
 
-save(DEVCON8, file = "C:/Users/WB484284/Desktop/PISAlatestversions/RFiles/PISA_2012/DEVCON.rda") # this will be the main file to work off so you might want to save it
+save(DEVCON8, file = "C:/Users/xxx/Desktop/PISAlatestversions/RFiles/PISA_2012/DEVCON.rda") # this will be the main file to work off so you might want to save it
 
 
