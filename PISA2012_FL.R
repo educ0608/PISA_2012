@@ -18,6 +18,14 @@
 
 # Loading R packages to process PISA data:
 
+# Admin packages
+library(foreign)# To import and export data to and from R (eg. txt files)
+library(xlsx)# To generate MS-Excel output
+library(xtable)# To generate Latex output (in which the research paper is written)
+library(epicalc)# For producing descriptives of data
+library(tables) # Computes and displays complex tables of summary statistics
+library(stargazer) # For latex regression and summary statistics tables
+
 # Modeling packages
 library(intsvy)# For PISA (and TIMSS, PIRLS, etc) analysis with Plausible Values (PV) and Balanced Repeated Replication (BRR)
 library(TDMR)# For tuned data mining in R - eg. detect column of constants in dataframe
@@ -26,14 +34,6 @@ library(dplyr)# For varioys data manipulation
 library(psych)# For rescaling variables to given mean and sd
 library(sm) # for locally smoothed regressions and density estimation
 library(lme4) # To run mixed-effects models using Eigen and S4
-
-# Admin packages
-library(foreign)# To import and export data to and from R (eg. txt files)
-library(xlsx)# To generate MS-Excel output
-library(xtable)# To generate Latex output (in which the research paper is written)
-library(epicalc)# For producing descriptives of data
-library(tables) # Computes and displays complex tables of summary statistics
-library(stargazer) # For latex regression and summary statistics tables
 
 # Please be aware that many packages (eg. intsvy) require additional packages
 
