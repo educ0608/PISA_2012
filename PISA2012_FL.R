@@ -82,7 +82,7 @@ ALB_P$NEWID <- (ALB_P$country*10000000)+((as.numeric(ALB_P$schoolid))*10000)+(as
 # the new file ALB_P into the editor window, as it will only show up until a certain column or take very long to load. 
 # Instead, type in "ALB_P" into the Console to see all columns (and the first 10 rows per column). 
 
-# Now we repeat for remaining 7 countries:
+# Now we repeat the same process for the remaining 7 countries:
 
 # Colombia
 
@@ -210,7 +210,14 @@ VNM_P$nc.x <- NULL
 VNM_P$country <-8
 VNM_P$NEWID <- (VNM_P$country*10000000)+((as.numeric(VNM_P$schoolid))*10000)+(as.numeric(VNM_P$stidstd))
 
-DEVCON8 <- rbind(ALB_P,COL_P,IDN_P,JOR_P,PER_P,THA_P,TUN_P,VNM_P) # combine all country specific files into the "DEVCON8" file
-save(DEVCON8) # this will be the main file to work off so you might want to save it
+DEVCON8 <- rbind(ALB_P,COL_P,IDN_P,JOR_P,PER_P,THA_P,TUN_P,VNM_P) # combine all country specific files into the "DEVCON8" file, thanks to "dyplr" package
+
+# Finally, we add a Vietnam dummy variable to "DEVCON8", which we will need to produce descriptive statistics 
+# and for the modified Fryer-Levitt analysis:
+
+DEVCON8$VIETNAM[DEVCON8$COUNTRY==8] <- 1 # dummy takes value = 1, if the country is Vietnam
+DEVCON8$VIETNAM[DEVCON8$COUNTRY!=8] <- 0 # dummy takes value = 0, if the country is not Vietnam
+
+save(DEVCON8, file = "C:/Users/WB484284/Desktop/PISAlatestversions/RFiles/PISA_2012/DEVCON.rda") # this will be the main file to work off so you might want to save it
 
 
