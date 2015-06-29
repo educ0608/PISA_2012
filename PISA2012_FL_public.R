@@ -1,5 +1,5 @@
 # PISA2012_FL_public
-# Unraveling a secret: Vietnam's outstanding performance on the PISA test 2012 following the Fryer-Levitt (2004) approach
+# Unraveling a secret: Vietnam's outstanding performance on the PISA test 2012 following the Fryer & Levitt (2004) approach
 
 # Prepared by Elisabeth Sedmik on Wednesday, June 24 2015
 # Based on code by Suhas D. Parandekar
@@ -213,7 +213,7 @@ VNM_P$NEWID <- (VNM_P$country*10000000)+((as.numeric(VNM_P$schoolid))*10000)+(as
 DEVCON8 <- rbind(ALB_P,COL_P,IDN_P,JOR_P,PER_P,THA_P,TUN_P,VNM_P) # combine all country specific files into the "DEVCON8" file, thanks to "dyplr" package
 
 # Finally, we add a Vietnam dummy variable to "DEVCON8", which we will need to produce descriptive statistics 
-# and for the modified Fryer-Levitt analysis:
+# and for the modified Fryer & Levitt analysis:
 
 DEVCON8$VIETNAM[DEVCON8$COUNTRY==8] <- 1 # dummy takes value = 1, if the country is Vietnam
 DEVCON8$VIETNAM[DEVCON8$COUNTRY!=8] <- 0 # dummy takes value = 0, if the country is not Vietnam
