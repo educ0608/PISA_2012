@@ -240,4 +240,10 @@ stargazer(DEVCON8,
           digit.separator="",
           summary=TRUE)
 
+# Useful tip: read up on the specifics of the stargazer command, especially since you might need to load additional packages in Latex
+
+
+######################################### 2. DESCRIPTIVE STATISTICS ######################################### 
+
+
 
