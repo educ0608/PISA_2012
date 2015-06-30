@@ -1,4 +1,4 @@
-# PISA2012_FL_public
+# PISA2012_FL
 # Unraveling a secret: Vietnam's outstanding performance on the PISA test 2012 following the Fryer & Levitt (2004) approach
 
 # Prepared by Elisabeth Sedmik on Wednesday, June 24 2015
@@ -11,10 +11,12 @@
 # of Vietnam's high test score in MATH, comparing 7 other developing countries with Vietnam. The statistical 
 # approach taken is a modified dummy variable approach following Fryer and Levitt (2004).
 
+##################################################################################
 # Outline:
 # 1. GENERATING DATA SET (MERGING, CLEANING) FOR VIETNAM + 7 DEVELOPING COUNTRIES
 # 2. DESCRIPTIVE STATISTICS
 # 3. REGRESSION ANALYSIS FOR MATH OF A MODIFIED FRYER-LEVITT APPROACH 
+##################################################################################
 
 # Loading R packages to process PISA data:
 
@@ -46,8 +48,8 @@ library(lme4)## To run mixed-effects models using Eigen and S4
 # OECD-PISA Report: "PISA 2012 Results: What Makes a School Successful?" (Volume IV, Chapter 3, Table IV.3.2)
 # Original data downloaded from: http://pisa2012.acer.edu.au/downloads.php (txt files, spss or sas)
 
-student.rda <- read.dta("C:/Users/xxx/Desktop/PISAlatestversions/RFiles/PISA_2012/stu.dta")
-school.rda <- read.dta("C:/Users/xxx/Desktop/PISAlatestversions/RFiles/PISA_2012/sch.dta")
+student.rda <- read.dta("C:/Users/WB484284/Desktop/PISAlatestversions/RFiles/PISA_2012/stu.dta")
+school.rda <- read.dta("C:/Users/WB484284/Desktop/PISAlatestversions/RFiles/PISA_2012/sch.dta")
 
 # Please refer to the questionnaires, codebooks and the technical manual (pages 396-398) about the specific
 # variables included in the data files and their abbreviations  
@@ -75,8 +77,8 @@ ALB_P$nc.x <- NULL # same as above
 # We want to have a unique identifier number per student per school per country. Note, that for all countries, numbering of school and student id's
 # starts at 1; so we introduce "NEWID" to create for a cumulative list spanning all 8 countries:
 
-ALB_P$country <- 1 # We numerate each country alphabetically, starting with Albania = 1, Colombia = 2, etc.
-ALB_P$NEWID <- (ALB_P$country*10000000)+((as.numeric(ALB_P$schoolid))*10000)+(as.numeric(ALB_P$stidstd))
+ALB_P$COUNTRY <- 1 # We numerate each country alphabetically, starting with Albania = 1, Colombia = 2, etc.
+ALB_P$NEWID <- (ALB_P$COUNTRY*10000000)+((as.numeric(ALB_P$schoolid))*10000)+(as.numeric(ALB_P$stidstd))
 
 # Useful tip: these are very large data files. to double check if the new columns have been created, do not load 
 # the new file ALB_P into the editor window, as it will only show up until a certain column or take very long to load. 
@@ -99,8 +101,11 @@ COL_P$oecd <- COL_P$oecd.x
 COL_P$oecd.x <- NULL
 COL_P$nc <- COL_P$nc.x
 COL_P$nc.x <- NULL
-COL_P$country <-2
-COL_P$NEWID <- (COL_P$country*10000000)+((as.numeric(COL_P$schoolid))*10000)+(as.numeric(COL_P$stidstd))
+COL_P$COUNTRY <-2
+COL_P$NEWID <- (COL_P$COUNTRY*10000000)+((as.numeric(COL_P$schoolid))*10000)+(as.numeric(COL_P$stidstd)) 
+
+# The command 'as.numeric' converts individual columns to numeric variables 
+# Useful tip: to test for the class of variables in the column 'schoolid', type in 'class(COL_P$schoolid)'
 
 # Indonesia
 
@@ -117,8 +122,8 @@ IDN_P$oecd <- IDN_P$oecd.x
 IDN_P$oecd.x <- NULL
 IDN_P$nc <- IDN_P$nc.x
 IDN_P$nc.x <- NULL
-IDN_P$country <-3
-IDN_P$NEWID <- (IDN_P$country*10000000)+((as.numeric(IDN_P$schoolid))*10000)+(as.numeric(IDN_P$stidstd))
+IDN_P$COUNTRY <-3
+IDN_P$NEWID <- (IDN_P$COUNTRY*10000000)+((as.numeric(IDN_P$schoolid))*10000)+(as.numeric(IDN_P$stidstd))
 
 # Jordan
 
@@ -135,8 +140,8 @@ JOR_P$oecd <- JOR_P$oecd.x
 JOR_P$oecd.x <- NULL
 JOR_P$nc <- JOR_P$nc.x
 JOR_P$nc.x <- NULL
-JOR_P$country <-4
-JOR_P$NEWID <- (JOR_P$country*10000000)+((as.numeric(JOR_P$schoolid))*10000)+(as.numeric(JOR_P$stidstd))
+JOR_P$COUNTRY <-4
+JOR_P$NEWID <- (JOR_P$COUNTRY*10000000)+((as.numeric(JOR_P$schoolid))*10000)+(as.numeric(JOR_P$stidstd))
 
 # Peru
 
@@ -153,8 +158,8 @@ PER_P$oecd <- PER_P$oecd.x
 PER_P$oecd.x <- NULL
 PER_P$nc <- PER_P$nc.x
 PER_P$nc.x <- NULL
-PER_P$country <-5
-PER_P$NEWID <- (PER_P$country*10000000)+((as.numeric(PER_P$schoolid))*10000)+(as.numeric(PER_P$stidstd))
+PER_P$COUNTRY <-5
+PER_P$NEWID <- (PER_P$COUNTRY*10000000)+((as.numeric(PER_P$schoolid))*10000)+(as.numeric(PER_P$stidstd))
 
 # Thailand
 
@@ -171,8 +176,8 @@ THA_P$oecd <- THA_P$oecd.x
 THA_P$oecd.x <- NULL
 THA_P$nc <- THA_P$nc.x
 THA_P$nc.x <- NULL
-THA_P$country <-6
-THA_P$NEWID <- (THA_P$country*10000000)+((as.numeric(THA_P$schoolid))*10000)+(as.numeric(THA_P$stidstd))
+THA_P$COUNTRY <-6
+THA_P$NEWID <- (THA_P$COUNTRY*10000000)+((as.numeric(THA_P$schoolid))*10000)+(as.numeric(THA_P$stidstd))
 
 # Tunisia
 
@@ -189,8 +194,8 @@ TUN_P$oecd <- TUN_P$oecd.x
 TUN_P$oecd.x <- NULL
 TUN_P$nc <- TUN_P$nc.x
 TUN_P$nc.x <- NULL
-TUN_P$country <-7
-TUN_P$NEWID <- (TUN_P$country*10000000)+((as.numeric(TUN_P$schoolid))*10000)+(as.numeric(TUN_P$stidstd))
+TUN_P$COUNTRY <-7
+TUN_P$NEWID <- (TUN_P$COUNTRY*10000000)+((as.numeric(TUN_P$schoolid))*10000)+(as.numeric(TUN_P$stidstd))
 
 # Vietnam
 
@@ -207,17 +212,32 @@ VNM_P$oecd <- VNM_P$oecd.x
 VNM_P$oecd.x <- NULL
 VNM_P$nc <- VNM_P$nc.x
 VNM_P$nc.x <- NULL
-VNM_P$country <-8
-VNM_P$NEWID <- (VNM_P$country*10000000)+((as.numeric(VNM_P$schoolid))*10000)+(as.numeric(VNM_P$stidstd))
+VNM_P$COUNTRY <-8
+VNM_P$NEWID <- (VNM_P$COUNTRY*10000000)+((as.numeric(VNM_P$schoolid))*10000)+(as.numeric(VNM_P$stidstd))
 
 DEVCON8 <- rbind(ALB_P,COL_P,IDN_P,JOR_P,PER_P,THA_P,TUN_P,VNM_P) # combine all country specific files into the "DEVCON8" file, thanks to "dyplr" package
 
 # Finally, we add a Vietnam dummy variable to "DEVCON8", which we will need to produce descriptive statistics 
-# and for the modified Fryer & Levitt analysis:
+# and for the modified Fryer-Levitt analysis
 
 DEVCON8$VIETNAM[DEVCON8$COUNTRY==8] <- 1 # dummy takes value = 1, if the country is Vietnam
 DEVCON8$VIETNAM[DEVCON8$COUNTRY!=8] <- 0 # dummy takes value = 0, if the country is not Vietnam
 
-save(DEVCON8, file = "C:/Users/xxx/Desktop/PISAlatestversions/RFiles/PISA_2012/DEVCON.rda") # this will be the main file to work off so you might want to save it
+# The 'intsvy' package (the most important one for the PISA analysis) requires variable names to be in upper case; 
+# you might have noticed how we put all newly created variables already in upper case; no we convert all 
 
-# Adding a line to demonstrate Version control on Github
+names(DEVCON8) <- toupper(names(DEVCON8)) 
+
+# This will be the main file to work off so you might want to save it
+
+save(DEVCON8, file = "C:/Users/WB484284/Desktop/PISAlatestversions/RFiles/PISA_2012/DEVCON.rda") 
+
+# Get summary of the DEVCON file (variables, mean, sd, etc.) in LATEX via use of the 'stargazer' package
+stargazer(DEVCON8,
+          type="latex", out="C:/Users/WB484284/Desktop/PISAlatestversions/WPLatex/DescriptiveStats/DEVCON.tex",
+          style="default",
+          align=TRUE,
+          digit.separator="",
+          summary=TRUE)
+
+
