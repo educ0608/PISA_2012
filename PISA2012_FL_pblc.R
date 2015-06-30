@@ -48,8 +48,8 @@ library(lme4)## To run mixed-effects models using Eigen and S4
 # OECD-PISA Report: "PISA 2012 Results: What Makes a School Successful?" (Volume IV, Chapter 3, Table IV.3.2)
 # Original data downloaded from: http://pisa2012.acer.edu.au/downloads.php (txt files, spss or sas)
 
-student.rda <- read.dta("C:/Users/WB484284/Desktop/PISAlatestversions/RFiles/PISA_2012/stu.dta")
-school.rda <- read.dta("C:/Users/WB484284/Desktop/PISAlatestversions/RFiles/PISA_2012/sch.dta")
+student.rda <- read.dta("C:/Users/xxx/Desktop/PISAlatestversions/RFiles/PISA_2012/stu.dta")
+school.rda <- read.dta("C:/Users/xxx/Desktop/PISAlatestversions/RFiles/PISA_2012/sch.dta")
 
 # Please refer to the questionnaires, codebooks and the technical manual (pages 396-398) about the specific
 # variables included in the data files and their abbreviations  
@@ -230,11 +230,11 @@ names(DEVCON8) <- toupper(names(DEVCON8))
 
 # This will be the main file to work off so you might want to save it
 
-save(DEVCON8, file = "C:/Users/WB484284/Desktop/PISAlatestversions/RFiles/PISA_2012/DEVCON.rda") 
+save(DEVCON8, file = "C:/Users/xxx/Desktop/PISAlatestversions/RFiles/PISA_2012/DEVCON.rda") 
 
 # Get summary of the DEVCON file (variables, mean, sd, etc.) in LATEX via use of the 'stargazer' package
 stargazer(DEVCON8,
-          type="latex", out="C:/Users/WB484284/Desktop/PISAlatestversions/WPLatex/DescriptiveStats/DEVCON.tex",
+          type="latex", out="C:/Users/xxx/Desktop/PISAlatestversions/WPLatex/DescriptiveStats/DEVCON.tex",
           style="default",
           align=TRUE,
           digit.separator="",
