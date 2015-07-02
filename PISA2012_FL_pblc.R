@@ -245,5 +245,100 @@ stargazer(DEVCON8,
 
 ######################################### 2. DESCRIPTIVE STATISTICS ######################################### 
 
+# We generate Kernel plots (comparison of non-parametric univariate density estimates) for Math, Science and Reading scores 
+# comparing Vietnam to the group of 7 developing countries as identified above and the OECD Average. 
+
+# The 'sm' package (used for locally smoothed density estimates) requires that country names are converted into factors, 
+# (ie categorical variables) so we create a new column (VNM.f), which contains either 'Vietnam' or 'Group of 7' as a factor. 
+# Useful resource on the use of factors in R: http://www.stat.berkeley.edu/~s133/factors.html
+
+DEVCON8$VNM.f <- factor(DEVCON8$VIETNAM, levels=c(0,1),labels = c("GROUP OF 7", "Vietnam"))
+
+# For the Kernel plots we are using the 'sm.density.compare' function of the 'sm' package, because it allows
+# to superimpose the kernel density plots of two or more groups; in our case 'Vietnam' and 'Group of 7'
+
+# Kernel density plots for MATH (Vietnam and Group of 7)
+
+sm.density.compare(DEVCON8$PV3MATH,lwd=2,DEVCON8$VNM.f,lty=c(2,1),col=c("darkgreen","red"),
+                   nbins=0,h=35,xlab="Mathematics Score",weights=DEVCON8$W_FSTUWT)
+title(main="Kernel Density PISA 2012 Mathematics Scores")
+
+# Bandwith selectors
+
+h.select(DEVCON8$PV3MATH, y = NA, weights = DEVCON8$W_FSTUWT, nbins=0, group = DEVCON8$VNM.f) # sm package code for h selection
+# 13.11189
+bw.nrd(DEVCON8$PV3MATH) # Silverman's rule of thumb
+# 11.20623
+
+# Two important points:
+
+# 1. You will notice that from now on, we will frequently use 'W_FSTUWT'. It stands for the
+# final student weight (ie. size of the student body in the respective country), that needs to be applied 
+# to the PVs (Plausible Values) to correctly compute the PISA score.
+# The methodology can be found here: http://www.oecd.org/pisa/pisaproducts/pisa2012technicalreport.htm (Chapter 8)
+
+# 2. For the numeric vector (PV3MATH) we randomly pick one of the 5 PVs for the Math Score,
+# since we are 'smoothing' the values anyway (through Kernel). Ideally, we would analyse all five PV's, 
+# average the result and significance tests adjusting for variation between the five sets of results computed. 
+# However, for the purpose of producing descriptive statistics, we deem our approach sufficient. 
+# You can double check with different PV's and will notice slight differences.
+
+# Note: if 'weights' is used, the number of bins must be set to 0 ('nbins=0') 
+
+# We draw a reference line for the OECD average
+
+abline(v=494, lty=5, col="grey",lwd=2)
+axis(1,at=494,labels=494)
+legend(-150,0.003, levels(DEVCON8$VNM.f),lty=c(2,1), lwd=2, col=c("darkgreen","red"),bty="n")
+text(-50,0.0050, labels="OECD Average",pos=4)
+arrows(400, 0.0050, 494, 0.0050)
+
+# Note: The PISA scores have been standardized with an international mean of 500 and a standard deviation of 100.
+# The 'OECD Average' scores can be found here: http://www.oecd.org/pisa/keyfindings/pisa-2012-results-overview.pdf (page 5)
+# I took the OECD Average not the international (overall PISA) average ... do you agree?
+
+
+
+
+
+# Kernel density plots for SCIENCE (Vietnam and Group of 7)
+
+sm.density.compare(DEVCON8$PV1SCIE,lwd=2,DEVCON8$VNM.f,lty=c(2,1),col=c("blue","red"),
+                   nbins=0,h=35,xlab="Science Score",weights=DEVCON8$W_FSTUWT)
+title(main="Kernel Density PISA 2012 Science Scores")
+
+abline(v=501, lty=5, col="grey",lwd=2)
+axis(1,at=501,labels=501)
+legend(-150,0.003, levels(DEVCON8$VNM.f),lty=c(2,1), lwd=2, col=c("blue","red"),bty="n")
+text(-50,0.0051, labels="OECD Average",pos=4)
+arrows(400, 0.0051, 501, 0.0051)
+
+# Kernel density plots for READING (Vietnam and Group of 7)
+
+sm.density.compare(DEVCON8$PV5READ,lwd=2,DEVCON8$VNM.f,lty=c(2,1),col=c("purple","red"),
+                   nbins=0,h=35,xlab="Reading Score",weights=DEVCON8$W_FSTUWT)
+title(main="Kernel Density PISA 2012 Reading Scores")
+
+# Draw reference line for OECD average
+abline(v=496, lty=5, col="grey",lwd=2)
+axis(1,at=496,labels=496)
+legend(-150,0.003, levels(DEVCON8$VNM.f),lty=c(2,1), lwd=2, col=c("purple","red"),bty="n")
+text(-50,0.0052, labels="OECD Average",pos=4)
+arrows(400, 0.0052, 496, 0.0052)
+
+
+
+
+
+# Kernel Density Plot
+d <- density(mtcars$mpg) # returns the density data 
+plot(d) # plots the results
+
+sm.density.compare(DEVCON8$PV3MATH, DEVCON8$VNM.f)
+
+
+
+
+
 
 
