@@ -263,27 +263,24 @@ sm.density.compare(DEVCON8$PV3MATH,lwd=2,DEVCON8$VNM.f,lty=c(2,1),col=c("darkgre
                    nbins=0,h=35,xlab="Mathematics Score",weights=DEVCON8$W_FSTUWT)
 title(main="Kernel Density PISA 2012 Mathematics Scores")
 
-# Bandwith selectors
-
-h.select(DEVCON8$PV3MATH, y = NA, weights = DEVCON8$W_FSTUWT, nbins=0, group = DEVCON8$VNM.f) # sm package code for h selection
-# 13.11189
-bw.nrd(DEVCON8$PV3MATH) # Silverman's rule of thumb
-# 11.20623
-
 # Two important points:
 
-# 1. You will notice that from now on, we will frequently use 'W_FSTUWT'. It stands for the
+# 1. You will notice that from now on, that we will frequently use 'W_FSTUWT'. It stands for the
 # final student weight (ie. size of the student body in the respective country), that needs to be applied 
 # to the PVs (Plausible Values) to correctly compute the PISA score.
 # The methodology can be found here: http://www.oecd.org/pisa/pisaproducts/pisa2012technicalreport.htm (Chapter 8)
 
 # 2. For the numeric vector (PV3MATH) we randomly pick one of the 5 PVs for the Math Score,
-# since we are 'smoothing' the values anyway (through Kernel). Ideally, we would analyse all five PV's, 
+# since we are 'smoothing' the values anyway (through Kernel). Plausible values are intermediate values
+# provided to obtain consistent estimates of population parameters. Ideally, we would analyse all five PV's, 
 # average the result and significance tests adjusting for variation between the five sets of results computed. 
 # However, for the purpose of producing descriptive statistics, we deem our approach sufficient. 
-# You can double check with different PV's and will notice slight differences.
+# You can double check with different PV's and will notice only slight differences.
+# Please refer to the PISA 2012 technical report (cited above) page 147. 
 
 # Note: if 'weights' is used, the number of bins must be set to 0 ('nbins=0') 
+# Note: we select bandwith as h=35. There are different approaches to selecting bandwith and you can adjust 'h' to see
+# which bin size you prefer to best visualize the density plots. 
 
 # We draw a reference line for the OECD average
 
@@ -296,10 +293,6 @@ arrows(400, 0.0050, 494, 0.0050)
 # Note: The PISA scores have been standardized with an international mean of 500 and a standard deviation of 100.
 # The 'OECD Average' scores can be found here: http://www.oecd.org/pisa/keyfindings/pisa-2012-results-overview.pdf (page 5)
 # I took the OECD Average not the international (overall PISA) average ... do you agree?
-
-
-
-
 
 # Kernel density plots for SCIENCE (Vietnam and Group of 7)
 
@@ -326,18 +319,32 @@ legend(-150,0.003, levels(DEVCON8$VNM.f),lty=c(2,1), lwd=2, col=c("purple","red"
 text(-50,0.0052, labels="OECD Average",pos=4)
 arrows(400, 0.0052, 496, 0.0052)
 
+# Finally note that there are other ways to create Kernel Density Plots; eg for Kernel Density of only
+# one variable/group (above we compared two groups: group of 7 & Vietnam) you do not need the sm package and can simply
+# code 'plot(density(DEVCON8$PV3MATH))' which will give you the Kernel density for the Math score for the group of
+# all 8 countries. 
+# For a very basic overview we recommend: http://www.statmethods.net/graphs/density.html 
 
 
+#################### 3. REGRESSION ANALYSIS FOR MATH OF A MODIFIED FRYER-LEVITT APPROACH ####################
 
+# The most important tip from now on: work closely with the PISA 2012 technical manual AND get familiar with
+# functions of the 'intsvy' package (which does all the rigorous calculations of PISA PV's etc. for you!)
 
-# Kernel Density Plot
-d <- density(mtcars$mpg) # returns the density data 
-plot(d) # plots the results
+# To highlight this, look how the intsvy packages helps you find the Mean PISA Scores for Vietnam from the PVs:
 
-sm.density.compare(DEVCON8$PV3MATH, DEVCON8$VNM.f)
+mean0 <- pisa.mean.pv(pvlabel="MATH",by="VIETNAM", data=DEVCON8, weight="W_FSTUWT")
+mean0
+mean1 <- pisa.mean.pv(pvlabel="SCIE",by="VIETNAM", data=DEVCON8, weight="W_FSTUWT")
+mean1
+mean2 <- pisa.mean.pv(pvlabel="READ",by="VIETNAM", data=DEVCON8, weight="W_FSTUWT")
+mean2
 
+# Similarly, you can find the mean Math scores for all 8 countries through sorting by "COUNTRY" 
+# (remember we assigned countries numerical values from 1 to 8 alphabetically)
 
-
+mean3 <- pisa.mean.pv(pvlabel="MATH",by="COUNTRY", data=DEVCON8, weight="W_FSTUWT")
+mean3
 
 
 
