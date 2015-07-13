@@ -4,7 +4,7 @@
 # Prepared by Elisabeth Sedmik on Wednesday, June 24 2015
 # Based on code by Suhas D. Parandekar
 
-# Revised on ...
+# Revised on 07/13/2015
 
 # The following code tries to unravel the secret of Vietnam's outstanding performance on the PISA 2012 assessment. 
 # It presents an analytical comparison of possible explanatory factors (as assessed within the PISA 2012 test) 
@@ -13,35 +13,36 @@
 
 ##################################################################################
 # Outline:
-# 1. GENERATING DATA SET (MERGING, CLEANING) FOR VIETNAM + 7 DEVELOPING COUNTRIES
-# 2. DESCRIPTIVE STATISTICS
-# 3. REGRESSION ANALYSIS FOR MATH OF A MODIFIED FRYER-LEVITT APPROACH 
+# 1. GENERATING DATA SET (MERGING, CLEANING) 
+# 2. DESCRIPTIVE STATISTICS WITH VIETNAM + 7 DEVELOPING COUNTRIES
+# 3. PISA SCORES 
+# 4. REGRESSION ANALYSIS FOR MATH OF A MODIFIED FRYER & LEVITT (2004) APPROACH 
 ##################################################################################
 
 # Loading R packages to process PISA data:
 
 # Admin packages
-library(foreign)## To import and export data to and from R (eg. txt files)
-library(xlsx)## To generate MS-Excel output
-library(xtable)## To generate Latex output (in which the research paper is written)
-library(epicalc)## For producing descriptives of data
+library(foreign)# To import and export data to and from R (eg. txt files)
+library(xlsx)# To generate MS-Excel output
+library(xtable)# To generate Latex output (in which the research paper is written)
+library(epicalc)# For producing descriptives of data
 library(tables) # Computes and displays complex tables of summary statistics
-library(stargazer)## For latex regression and summary statistics tables
+library(stargazer)# For latex regression and summary statistics tables
 
 # Modeling packages
 library(intsvy)# For PISA (and TIMSS, PIRLS, etc) analysis with Plausible Values (PV) and Balanced Repeated Replication (BRR)
-library(TDMR)## For tuned data mining in R - eg. detect column of constants in dataframe
+library(TDMR)# For tuned data mining in R - eg. detect column of constants in dataframe
 library(gmodels)# For model fitting, contains various R programming tools (eg. PROC FREQ like tables)
-library(dplyr)## For varioys data manipulation
+library(dplyr)# For varioys data manipulation
 library(psych)# For rescaling variables to given mean and sd
-library(sm)## for locally smoothed regressions and density estimation
-library(lme4)## To run mixed-effects models using Eigen and S4
+library(sm)# for locally smoothed regressions and density estimation
+library(lme4)# To run mixed-effects models using Eigen and S4
 
 # Please be aware that many packages (eg. tables, intsvy) require additional packages to run. When trying to load
 # the package, R will tell you which ones are missing. Overall you may need to download around 40 packages.
 
 
-############## 1. GENERATING DATA SET (MERGING, CLEANING) FOR VIETNAM + 7 DEVELOPING COUNTRIES ##############
+################################ 1. GENERATING DATA SET (MERGING, CLEANING) #################################
 
 # We generate new, merged data sets based on the student data set and school data set for the 8 countries
 # that have a Per Capita GDP below $10,000 in PPP for 2010, based on OECD-PISA Table Table IV.3.2 
@@ -230,11 +231,13 @@ names(DEVCON8) <- toupper(names(DEVCON8))
 
 # This will be the main file to work off so you might want to save it
 
-save(DEVCON8, file = "C:/Users/xxx/Desktop/PISAlatestversions/RFiles/PISA_2012/DEVCON.rda") 
+save(DEVCON8, file = "C:/Users/xxx/Desktop/PISAlatestversions/RFiles/PISA_2012/DEVCON8.rda") 
 
 # Get summary of the DEVCON file (variables, mean, sd, etc.) in LATEX via use of the 'stargazer' package
+# This will give you a neat ouptut of all variables and you can use it as an overview of all variables in the data set
+
 stargazer(DEVCON8,
-          type="latex", out="C:/Users/xxx/Desktop/PISAlatestversions/WPLatex/DescriptiveStats/DEVCON.tex",
+          type="latex", out="C:/Users/xxx/Desktop/PISAlatestversions/WPLatex/DescriptiveStats/DEVCON8.tex",
           style="default",
           align=TRUE,
           digit.separator="",
@@ -243,7 +246,7 @@ stargazer(DEVCON8,
 # Useful tip: read up on the specifics of the stargazer command, especially since you might need to load additional packages in Latex
 
 
-######################################### 2. DESCRIPTIVE STATISTICS ######################################### 
+###################### 2. DESCRIPTIVE STATISTICS WITH VIETNAM + 7 DEVELOPING COUNTRIES ######################
 
 # We generate Kernel plots (comparison of non-parametric univariate density estimates) for Math, Science and Reading scores 
 # comparing Vietnam to the group of 7 developing countries as identified above and the OECD Average. 
@@ -325,27 +328,108 @@ arrows(400, 0.0052, 496, 0.0052)
 # all 8 countries. 
 # For a very basic overview we recommend: http://www.statmethods.net/graphs/density.html 
 
+# We will keep DEVCON8 as a master file, so we create a new version for the subsequent steps
 
-#################### 3. REGRESSION ANALYSIS FOR MATH OF A MODIFIED FRYER-LEVITT APPROACH ####################
+save(DEVCON8, file = "C:/Users/xxx/Desktop/PISAlatestversions/RFiles/PISA_2012/DEVCON8.rda")
+
+
+############################################## 3. PISA SCORES  ##############################################
 
 # The most important tip from now on: work closely with the PISA 2012 technical manual AND get familiar with
 # functions of the 'intsvy' package (which does all the rigorous calculations of PISA PV's etc. for you!)
 
 # To highlight this, look how the intsvy packages helps you find the Mean PISA Scores for Vietnam from the PVs:
 
-mean0 <- pisa.mean.pv(pvlabel="MATH",by="VIETNAM", data=DEVCON8, weight="W_FSTUWT")
-mean0
-mean1 <- pisa.mean.pv(pvlabel="SCIE",by="VIETNAM", data=DEVCON8, weight="W_FSTUWT")
-mean1
-mean2 <- pisa.mean.pv(pvlabel="READ",by="VIETNAM", data=DEVCON8, weight="W_FSTUWT")
-mean2
+meanMATH <- pisa.mean.pv(pvlabel="MATH",by="VIETNAM", data=DEVCON8, weight="W_FSTUWT")
+meanMATH
+meanSCIE <- pisa.mean.pv(pvlabel="SCIE",by="VIETNAM", data=DEVCON8, weight="W_FSTUWT")
+meanSCIE
+meanREAD <- pisa.mean.pv(pvlabel="READ",by="VIETNAM", data=DEVCON8, weight="W_FSTUWT")
+meanREAD
 
 # Similarly, you can find the mean Math scores for all 8 countries through sorting by "COUNTRY" 
 # (remember we assigned countries numerical values from 1 to 8 alphabetically)
 
-mean3 <- pisa.mean.pv(pvlabel="MATH",by="COUNTRY", data=DEVCON8, weight="W_FSTUWT")
-mean3
+meanCNT <- pisa.mean.pv(pvlabel="MATH", by="CNT", data=DEVCON8, weight="W_FSTUWT")
+meanCNT
 
+
+############### 4. REGRESSION ANALYSIS FOR MATH OF A MODIFIED FRYER & LEVITT (2004) APPROACH ################
+
+##################### 4.1 Dummy variable regression - Introduction & baseline regressions ###################
+
+# The Main idea is quite simple: We build a regression on PISA test scores of 1) a dummy representing Vietnam 
+# (which we already created) and 2) a vector of other covariates (which we will create in this section). 
+# We start with the dummy variable as the only regressor. Covariates are added to the regression subsequently. 
+# In each turn, we analyze how and with which specific addition the (Vietnam) dummy variable decreases/becomes 
+# insignificant in association with the test scores. 
+
+# See: Roland Fryer and Steven Levitt 'Understanding the Black-White test score gap in the first two years of school', The Review of Economics and Statistics, 2004, Vol 86, 447-464
+# Available to download here: http://www.mitpressjournals.org/doi/pdf/10.1162/003465304323031049 (July 2015)
+
+# So lets do the baseline regressions with help of the 'intsvy' package. The command 'pisa.reg.pv' performs linear 
+# regression analysis (OLS) with plausible values and replicate weights.
+
+# MATH
+
+MATH0 <- pisa.reg.pv(pvlabel="MATH", 
+                     x=c("VIETNAM"),
+                     weight="W_FSTUWT",
+                     data=DEVCON8,export=FALSE)
+MATH0
+
+# SCIENCE
+
+SCIE0 <- pisa.reg.pv(pvlabel="SCIE", 
+                     x=c("VIETNAM"),
+                     weight="W_FSTUWT",
+                     data=DEVCON8,export=FALSE)
+SCIE0
+
+# READING
+
+READ0 <- pisa.reg.pv(pvlabel="READ", 
+                     x=c("VIETNAM"),
+                     weight="W_FSTUWT",
+                     data=DEVCON8,export=FALSE)
+READ0
+
+# The difference between mean score values is the coefficient value on the dummy. For example, the intercept (383.29) +
+# VIETNAM (128.05) = 511.34: the Mean Math Score for Vietnam.
+
+##################### 4.2 Dummy variable regression - Student, school and other factors  ####################
+
+# As we regress on the independent variables from the questionnaires (eg. hours spent learning outside school, etc.), we 
+# need to first make sure that we are not faced with too many missing cases per independent variable; otherwise we cannot
+# analyze it. We therefore create intermediary files with the specific variables, see how many cases are missing, drop
+# the missing cases and add it back to the main file. In the process we will loose quite a few cases and our sensitivity
+# analysis later on will work in a reverse order of dropping missing variables to ensure that our findings are coherent.
+
+# Since we will now alter most of the initial file (delete missing cases, etc.) we create a new file (DEVON8a) and 
+# to have the masterfile (DEVCON8) as a back-up. 
+
+DEVCON8a <- DEVCON8
+save(DEVCON8a, file = "C:/Users/xxx/Desktop/PISAlatestversions/RFiles/PISA_2012/DEVCON8a.rda") 
+
+########################################## 4.2.2 Student Regressors #########################################
+
+
+# How many cases ?
+T0 <- DEVCON8a[, c("VIETNAM")]
+N0<- NROW(na.omit(T0)) # 48483 data points - we have scores on these students for sure
+
+T1b <- DEVCON8a[, c("VIETNAM","ST05Q01","ST07Q01","ST08Q01","ST09Q01","ST115Q01")]
+N1 <- NROW(na.omit(T1b)) # removes all NA's
+N1 # 43,626
+N0-N1 # 4857 NAs
+
+T1b[complete.cases(T1b),]
+T1c <- na.omit(T1b)
+length(T1c$VIETNAM) # 43626
+
+# I work on dataframe of non-missing
+DEVCON8test <- DEVCON8a[complete.cases(T1b),]
+length(DEVCON8test$SC22Q13)
 
 
 
