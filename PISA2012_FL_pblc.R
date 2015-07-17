@@ -397,22 +397,234 @@ READ0
 # The difference between mean score values is the coefficient value on the dummy. For example, the intercept (383.29) +
 # VIETNAM (128.05) = 511.34: the Mean Math Score for Vietnam.
 
-##################### 4.2 Dummy variable regression - Student, school and other factors  ####################
+DEVCON8a <- DEVCON8
+save(DEVCON8a, file = "C:/Users/xxx/Desktop/PISAlatestversions/RFiles/PISA_2012/DEVCON8a.rda") 
+
+############# 4.2 Explanatory variables - Students, teachers, pedagogical practices and schools #############
+
+# Useful tip: Take a moment and think about the specific regressors you want to choose (eg. Teaching variables,
+# Student Attitutde, Parent Involvement, etc.) that best fit with your conjecture. Since our target is to 'unravel
+# a secret', namely why Vietnam did so well in PISA 2012, it requires quite a rigorous and holistic approach, so
+# we analyze many potential sources.
+
+# Please see our conceptual scheme. We have arranged possible explanatory variables into four sets of factors and
+# working through the codebooks, questionnaires and Technical Manual, carefully decided which variables (or indices)
+# to use to proxy these factors: 
+
+# 1. STUDENTS
+# 1.0 Background: First set: ST05, REPEAT (indexed ST07), ST08, ST09, ST115, Second set: MISCED, FISCED, HISEI,
+# --------------HISCED, WEALTH, CULTPOS, HEDRES, ST28Q01, ST91Q03 (Problems at home prevent from being good at school, rotated)
+# 1.1 Effort: MATWKETH (Math work ethics, rotated), ST55Q02 (Out-of-school lessons in math, rotated), ST57Q01-Q06
+# --------------(rotated, recommend to use individual rankings and not PISA 'OUTHOURS' index)
+# 1.2 Attitude: PERSEV (rotated), OPENPS (rotated), some of the following from 'Attitudes towards Math': INTMAT, 
+# --------------INSTMOT, SUBNORM, MATHEFF, ANXMAT, SCMAT, FAILMAT, MATWKETH, MATINTFC, MATBEH (all rotated), from 
+# --------------'Attitudes towards school': ATSCHL (Attitudes towards school: learning outcome, rotated), 
+# --------------ATTLNACT (Attitude towards School: learning activities, rotated), BELONG (Sense of belonging to school, rotated)
+# 1.3 Preparation/Content: EXAPPLM (Experience with applied math at school, rotated), EXPUREM (Experience with pure
+# --------------Math tasks at school, rotated), FAMCONC (same as FAMCON-FOIL, rotated)
+# 1.4 Home Support: SC25 (Parent Participation, SC), SC24Q01 (Parental Expectations, SC)
+# 1.5 Gender Balance: PCGIRLS (Proportion of girls enrolled at school, SC)
+
+# 2. TEACHERS
+# 2.1 Quantity: LMINS (rotated), MMINS (rotated), SMINS (rotated), STRATIO (Teacher-Student ratio, SC), PROPCERT 
+# --------------(Proportion of fully certified Teachers, SC), PROPQUAL (Proportion of teachers with an ISCED 5A qualification, SC),
+# --------------TCSHORT (Shortage of Teaching Staff, SC), SMRATIO (Student - Mathematics Teacher Ratio, SC)
+# 2.2 Quality: STUDREL (Teacher-Student Relations, rotated) and/or response from headmaster SC22Q10 (Poor student-teacher relations, SC), 
+# --------------TEACHSUP or MTSUP (Teacher support in Math, rotated both in Form 3), SC35Q02 (Professional development on Maths for Math teachers, SC), 
+# --------------SC30Q04 (Teacher Monitoring through Inspector observation, SC), SC30Q02 (Teacher monitoring through peer review, SC), 
+# --------------SC30Q03 (Teacher Monitoring through staff, SC), SC30Q01 (Teacher practice measured through stdt achvmnt, SC), 
+# --------------SC31Q01-Q07 (Teacher incentives through appraisal), ST91Q04 (If had different teacher would try harder, rotated), 
+# --------------TCFOCST (Teacher Focus in Math, SC), SC39Q08 (Teacher Mentoring, SC)
+
+# 3. PEDAGOGICAL PRACTICES
+# 3.0 General / student-perceived teaching practices: TCHBEHTD (Teacher-directed Instruction, rotated),
+# --------------TCHBEHSO (Student Orientation, rotated), SC40Q03 (Standardized Math curriculum per school, SC)
+# 3.1 Assessment: TCHBEHFA (Formative Assessment, rotated), ASSESS (SC, see p. 309) or better SC18Q01-Q08
+# 3.2 Cognitive Activation: COGACT (Cognitive Activation, rotated)
+# 3.3 Classroom Management: CLSMAN (Classroom Management, rotated), DISCLIMA (Disciplinary Climante, rotated),
+# --------------SC39Q07 (Seeking student feedback, SC)
+
+# 4. SCHOOLS
+# 4.0 Type: SC01Q01 (Public or private school, SC), SC02Q02 (Revenues from student fees, SC), SCHSIZE (SC)
+# 4.1 Resources: RATCMP15 (Availabilit of resources, SC), COMPWEB (PC for learning connected to the internet, SC),
+# --------------CLSIZE (Class Size based on SC05, SC) and/or ST72 (Students asked about class size, rotated), 
+# --------------SC16Q01-SC16Q11 (SC) or also MACTIV (Extracurricular Math activities at school, SC else SC16 & SC21) 
+# --------------and CREACTIV (Creative extra-curricular activities at school, SC else SC16Q02/06/10/11), 
+# --------------SCMATEDU (Quality of educ. resources, SC), SCMATBUI (Quality of Physical Infrastructure, SC),
+# --------------SC20Q01 (Additional maths lessons offered, SC)
+# 4.2 Leadership: LEADCOM (Framing Schools goal and curriculum, SC), LEADINST (Instructional Leadership, SC), 
+# --------------LEADPD (Promoting Development, SC), LEADTCH (Teacher Participation in Leadership, SC),
+# --------------SC19Q01 & SC19Q02 (if Student Achievement data is made available, SC), SCHAUTON (School autonomy, SC), 
+# --------------TCHPARTI (Teacher participation, SC), SC39Q03 (recording of student/teacher/test data, SC)
+# 4.3 Selectivity: SCHSEL (School Selectivity of students, SC) or SC32Q01-SC32Q07 (School selectivity - individual items, SC),
+# --------------ABGMATH? (Ability of grouping students between Math classes, SC)
+# 4.4 Climate: STUDCLIM (Student aspects of school climate, SC), TEACCLIM (teacher aspects of school climate, SC), 
+# --------------TCMORALE (Teacher Morale, SC)
+
+########################## 4.2.2 Explanatory Variables - rotated & non-rotated questions #######################
+
+# The student questionnaires administered to students contains a common part and three rotated sections (two of
+# which were given to each student). For example, Student Ann would answer the common part, rotation question set 1
+# and rotation question set 2, Student Bert would answer the common part, rotation question set 3 and question set 1
+# and so on, so that all rotation parts are answered by 2/3 of the sampled students. 
+# For more details please read: PISA 2012 technical report, p. 58-61 and p. 376-386
+
+# The school questionnaire administered to school administration does not contain rotated parts. 
+
+# We follow our conceptual scheme, ie first student variables, then teacher variables, and so on; we will need to split sub-
+# sections to account for the fact that some of the independent variables are in different rotated parts (1-3). No worries
+# for now, this will become very clear as we go along.
+
+# Some of the PISA items were designed to be used in analyses as single items (for example, gender). However, most questionnaire
+# items were designed to be combined in some way in order to measure latent constructs that cannot be observed directly.
+# We will work closely with these indices as regressors; to see on which questionnaire items they are based on, please
+# consult the PISA 2012 Technical Manual, Ch. 16
+
+############################### 4.2.2 Explanatory Variables - Student variables #############################
 
 # As we regress on the independent variables from the questionnaires (eg. hours spent learning outside school, etc.), we 
 # need to first make sure that we are not faced with too many missing cases per independent variable; otherwise we cannot
 # analyze it. We therefore create intermediary files with the specific variables, see how many cases are missing, drop
 # the missing cases and add it back to the main file. In the process we will loose quite a few cases and our sensitivity
 # analysis later on will work in a reverse order of dropping missing variables to ensure that our findings are coherent.
+# For an overview of how to handle missing data in R we recommend: http://www.statmethods.net/input/missingdata.html
 
-# Since we will now alter most of the initial file (delete missing cases, etc.) we create a new file (DEVON8a) and 
-# to have the masterfile (DEVCON8) as a back-up. 
+# How many cases do we have inititally?
 
-DEVCON8a <- DEVCON8
-save(DEVCON8a, file = "C:/Users/xxx/Desktop/PISAlatestversions/RFiles/PISA_2012/DEVCON8a.rda") 
+T0 <- DEVCON8a[, c("VIETNAM")] # create a vector only of "VIETNAM"
+N0<- NROW(na.omit(T0)) # tell R to delete any rows with missing variables 
+N0 # we find that we have 48483 data points, which is a good sample size to start with
 
-########################################## 4.2.2 Student Regressors #########################################
+# ST01 - GRADE
+# We omit as an analytical variable as we already capture that aspect through Preschool and Age variable
 
+
+
+############ THIS IS JUST NOTES or tests or for later use ##############
+
+DEVCON8a$SC47Q01
+length(DEVCON8a$SC47Q01)
+class(DEVCON8a$SC47Q01)
+
+T1b <- DEVCON8a[, c("SC47Q01")]
+N1 <- NROW(na.omit(T1b)) # removes all NA's
+N1 # 0
+N0-N1 # 48483 NAs ---> no Financial Education data for (at least one of these) countries, lets leave it
+
+
+
+
+
+## FOR LATER:
+
+# Some of the PISA items were designed to be used in analyses as single items (for example, gender). However, most questionnaire
+# items were designed to be combined in some way in order to measure latent constructs that cannot be observed directly.
+# We will work closely with these indices as regressors; to see on which questionnaire items they are based on, please
+# consult the PISA 2012 Technical Manual, Ch. 16
+
+
+### JUST for TESTING out: with and without deleting NA's ####################
+
+R0 <- pisa.reg.pv(pvlabel="MATH", 
+                  x=c("VIETNAM", 
+                      "COGACT",
+                      "CULTPOS",
+                      "HOMEPOS",
+                      "INTMAT",
+                      "INSTMOT"),
+                  weight="W_FSTUWT",
+                  data=DEVCON8a,export=FALSE)
+R0
+# Estimate Std. Error t value
+# (Intercept)   430.10       4.56   94.34
+# VIETNAM       128.94       5.14   25.10
+# COGACT          5.02       1.30    3.86
+# CULTPOS        -9.98       1.24   -8.03
+# HOMEPOS        26.12       1.70   15.34
+# INTMAT         -2.52       2.09   -1.20
+# INSTMOT         2.84       1.95    1.46
+# R-squared      37.46       2.07   18.07
+
+T1b <- DEVCON8a[, c("VIETNAM","COGACT","CULTPOS", "HOMEPOS", "INTMAT", "INSTMOT")]
+N1 <- NROW(na.omit(T1b)) 
+N1 #15035
+DEVCON8b <- DEVCON8a[complete.cases(T1b),]
+
+R0 <- pisa.reg.pv(pvlabel="MATH", 
+                  x=c("VIETNAM", 
+                      "COGACT",
+                      "CULTPOS",
+                      "HOMEPOS",
+                      "INTMAT",
+                      "INSTMOT"),
+                  weight="W_FSTUWT",
+                  data=DEVCON8b,export=FALSE)
+R0
+
+# Estimate Std. Error t value
+# (Intercept)   430.10       4.56   94.34
+# VIETNAM       128.94       5.14   25.10
+# COGACT          5.02       1.30    3.86
+# CULTPOS        -9.98       1.24   -8.03
+# HOMEPOS        26.12       1.70   15.34
+# INTMAT         -2.52       2.09   -1.20
+# INSTMOT         2.84       1.95    1.46
+# R-squared      37.46       2.07   18.07
+
+mean1A <- t(sapply(DEVCON8a[c("COGACT","CULTPOS","HOMEPOS", "INTMAT", "INSTMOT")], function(x) 
+  unlist(t.test(x~DEVCON8a$VIETNAM,paired=FALSE,weight="W_FSTUWT")[c("estimate","p.value","statistic")])))
+mean1A
+
+# estimate.mean in group 0 estimate.mean in group 1       p.value statistic.t
+# COGACT                 0.2961395               -0.3261360  0.000000e+00   47.778674
+# CULTPOS               -0.1461614               -0.2364387  3.840693e-09    5.899749
+# HOMEPOS               -1.3157310               -1.8168381 3.646975e-208   31.925199
+# INTMAT                 0.7187600                0.6919566  3.412589e-02    2.119206
+# INSTMOT                0.4258199                0.3689303  3.473342e-05    4.144245
+
+mean1B <- t(sapply(DEVCON8b[c("COGACT","CULTPOS","HOMEPOS", "INTMAT", "INSTMOT")], function(x) 
+  unlist(t.test(x~DEVCON8b$VIETNAM,paired=FALSE,weight="W_FSTUWT")[c("estimate","p.value","statistic")])))
+mean1B
+
+# estimate.mean in group 0 estimate.mean in group 1       p.value statistic.t
+# COGACT                 0.2515972               -0.3329091 6.802506e-176   30.778643
+# CULTPOS               -0.1498809               -0.2633874  2.148253e-05    4.259201
+# HOMEPOS               -1.2993032               -1.8394074  4.382984e-77   19.358243
+# INTMAT                 0.7369364                0.6680100  1.401528e-04    3.814131
+# INSTMOT                0.4056477                0.3180724  3.931470e-06    4.626535
+
+###############################################################################
+
+
+DEVCON8a$FAILMAT
+DEVCON8a
+
+T1b <- DEVCON8a[, c("VIETNAM","COGACT","CULTPOS","HOMEPOS","FAILMAT","EXAPPLM")]
+N1 <- NROW(na.omit(T1b)) 
+N1 # 0
+N0-N1 # 48483
+DEVCON8b <- DEVCON8a[complete.cases(T1b),]
+
+R0 <- pisa.reg.pv(pvlabel="MATH", 
+                  x=c("VIETNAM", 
+                      "COGACT",
+                      "CULTPOS",
+                      "HOMEPOS",
+                      "FAILMAT"),
+                  weight="W_FSTUWT",
+                  data=DEVCON8b,export=FALSE)
+R0
+
+# I work on dataframe of non-missing
+DEVCON8b <- DEVCON8a[complete.cases(T1b),]
+
+
+
+
+
+length(DEVCON8$ST74Q01)
+
+is.na(DEVCON8$ST74Q01)
 
 # How many cases ?
 T0 <- DEVCON8a[, c("VIETNAM")]
@@ -424,12 +636,26 @@ N1 # 43,626
 N0-N1 # 4857 NAs
 
 T1b[complete.cases(T1b),]
+length(T1b)
 T1c <- na.omit(T1b)
 length(T1c$VIETNAM) # 43626
 
 # I work on dataframe of non-missing
 DEVCON8test <- DEVCON8a[complete.cases(T1b),]
 length(DEVCON8test$SC22Q13)
+
+
+T10 <- DEVCON8a[, c("VIETNAM")]
+N0 <- NROW(na.omit(T10))
+N0
+
+# Not applicable anymore, see page 376 is.na(DEVCON8a$PERSEV)
+# T1z <- DEVCON8a[, c("VIETNAM", "PERSEV")]
+# N1 <- NROW(na.omit)
+# N1
+
+#How many missing variables? 
+# length(which(is.na(DEVCON8a$PERSEV)))
 
 
 
