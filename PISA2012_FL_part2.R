@@ -15,7 +15,7 @@
 # Outline:
 # 1. GENERATING DATA SET (MERGING, CLEANING) (in part 1)
 # 2. DESCRIPTIVE STATISTICS WITH VIETNAM + 7 DEVELOPING COUNTRIES (in part 1)
-# 3. PISA SCORES 
+# 3. PISA SCORES (in part 1)
 # 4. REGRESSION ANALYSIS FOR MATH OF A MODIFIED FRYER & LEVITT (2004) APPROACH 
 ##################################################################################
 
@@ -1238,9 +1238,11 @@ R53
 #R-squared      43.60       2.16   20.19
 
 # Arguably, this is not the nicest output for the Vietnam dummy, since we already had it down to 91.84 
-# when we only had the gap decreasing student and gap decreasing teacher variables. But for consistency 
-# reasons we have to cumulatively keep on adding variables. Let's see how far we can get the Vietnam dummy
-# down after we have added the last section, school-related variables. 
+# when we only had the gap decreasing student and gap decreasing teacher variables. But again be aware,
+# that we are regressing on different data sets; that is why we always do the initial regression again on 
+# then new data set and see where we are starting from. For consistency reasons we have to cumulatively 
+# keep on adding variables. Let's see how far we can get the Vietnam dummy down after we have added 
+# the last section, school-related variables. 
 
 # Now testing all 6 variables that increased the gap
 
@@ -1280,7 +1282,7 @@ R54
 #STD_CUR       -13.76       8.57   -1.61
 #R-squared      43.53       2.16   20.11
 
-# At least it is higher then the initial regression. Let's move on to our last part.
+# At least it is higher than the initial regression. Let's move on to our last part.
 
 ###### 4.2.4 Non-rotated Questions - student & teacher, pedagogical practices and school variables ######
 
@@ -1494,7 +1496,7 @@ R55
 # Estimate Std. Error t value
 # (Intercept)   393.12       3.35  117.29
 # VIETNAM       120.68       6.94   17.38
-# R-squared      27.25       2.59   10.5
+# R-squared      27.25       2.59   10.54
 
 R56 <- pisa.reg.pv(pvlabel="MATH", 
                    x=c("VIETNAM",
@@ -1776,7 +1778,713 @@ R71 <- pisa.reg.pv(pvlabel="MATH",
                        "EXC6_MATHCOMP","EXC10_SPORT","EXC11_UNICORN","SCL_EXTR_CL","SCORE_PUBLIC"),
                    weight="W_FSTUWT",
                    data=DEVCON8f,export=FALSE)
-R71
+R71 # PRIVATESCL increases, SC02Q02 increases, TOWN decreases, CLSIZE decreases, SCHSIZE increases,
+#RATCMP15 increases, COMPWEB decreases, SCMATEDU decreases, SCMATBUI decreases, (EXC2_PLAY + EXC6_MATHCOMP
+# + EXC10_SPORT + EXC11_UNICORN) decrease, SCL_EXTR_CL decreases, SCORE_PUBLIC decreases
+#VIETNAM: 82.28
+
+R72 <- pisa.reg.pv(pvlabel="MATH", 
+                   x=c("VIETNAM",
+                       "PRESCHOOL", "REPEAT", "ST08Q01","ST115Q01","BOOK_N", "PARPRESSURE",
+                       "PCGIRLS", "FUNDMOM", "COUNCILMOM","PROPCERT","SMRATIO","TCSHORT",
+                       "TCFOCST","TCM_STUASS","TCM_PEER","TCH_INCENTV", "ASS_PROG","ASS_PROM",
+                       "ASS_SCH","STU_FEEDB","COMP_USE","TXT_BOOK","PRIVATESCL","SC02Q02","TOWN",
+                       "CLSIZE","SCHSIZE","RATCMP15","COMPWEB","SCMATEDU","SCMATBUI","EXC2_PLAY",
+                       "EXC6_MATHCOMP","EXC10_SPORT","EXC11_UNICORN","SCL_EXTR_CL","SCORE_PUBLIC",
+                       "SCORE_AUTHRITS"),
+                   weight="W_FSTUWT",
+                   data=DEVCON8f,export=FALSE)
+R72 # PRIVATESCL increases, SC02Q02 increases, TOWN decreases, CLSIZE decreases, SCHSIZE increases,
+#RATCMP15 increases, COMPWEB decreases, SCMATEDU decreases, SCMATBUI decreases, (EXC2_PLAY + EXC6_MATHCOMP
+# + EXC10_SPORT + EXC11_UNICORN) decrease, SCL_EXTR_CL decreases, SCORE_PUBLIC decreases, SCORE_AUTHRITS increases
+#VIETNAM: 82.97
+
+R73 <- pisa.reg.pv(pvlabel="MATH", 
+                   x=c("VIETNAM",
+                       "PRESCHOOL", "REPEAT", "ST08Q01","ST115Q01","BOOK_N", "PARPRESSURE",
+                       "PCGIRLS", "FUNDMOM", "COUNCILMOM","PROPCERT","SMRATIO","TCSHORT",
+                       "TCFOCST","TCM_STUASS","TCM_PEER","TCH_INCENTV", "ASS_PROG","ASS_PROM",
+                       "ASS_SCH","STU_FEEDB","COMP_USE","TXT_BOOK","PRIVATESCL","SC02Q02","TOWN",
+                       "CLSIZE","SCHSIZE","RATCMP15","COMPWEB","SCMATEDU","SCMATBUI","EXC2_PLAY",
+                       "EXC6_MATHCOMP","EXC10_SPORT","EXC11_UNICORN","SCL_EXTR_CL","SCORE_PUBLIC",
+                       "SCORE_AUTHRITS","SCHAUTON"),
+                   weight="W_FSTUWT",
+                   data=DEVCON8f,export=FALSE)
+R73 # PRIVATESCL increases, SC02Q02 increases, TOWN decreases, CLSIZE decreases, SCHSIZE increases,
+#RATCMP15 increases, COMPWEB decreases, SCMATEDU decreases, SCMATBUI decreases, (EXC2_PLAY + EXC6_MATHCOMP
+# + EXC10_SPORT + EXC11_UNICORN) decrease, SCL_EXTR_CL decreases, SCORE_PUBLIC decreases, SCORE_AUTHRITS increases,
+#SCHAUTON increases
+#VIETNAM: 91.50
+
+R74 <- pisa.reg.pv(pvlabel="MATH", 
+                   x=c("VIETNAM",
+                       "PRESCHOOL", "REPEAT", "ST08Q01","ST115Q01","BOOK_N", "PARPRESSURE",
+                       "PCGIRLS", "FUNDMOM", "COUNCILMOM","PROPCERT","SMRATIO","TCSHORT",
+                       "TCFOCST","TCM_STUASS","TCM_PEER","TCH_INCENTV", "ASS_PROG","ASS_PROM",
+                       "ASS_SCH","STU_FEEDB","COMP_USE","TXT_BOOK","PRIVATESCL","SC02Q02","TOWN",
+                       "CLSIZE","SCHSIZE","RATCMP15","COMPWEB","SCMATEDU","SCMATBUI","EXC2_PLAY",
+                       "EXC6_MATHCOMP","EXC10_SPORT","EXC11_UNICORN","SCL_EXTR_CL","SCORE_PUBLIC",
+                       "SCORE_AUTHRITS","SCHAUTON","TCHPARTI"),
+                   weight="W_FSTUWT",
+                   data=DEVCON8f,export=FALSE)
+R74 # PRIVATESCL increases, SC02Q02 increases, TOWN decreases, CLSIZE decreases, SCHSIZE increases,
+#RATCMP15 increases, COMPWEB decreases, SCMATEDU decreases, SCMATBUI decreases, (EXC2_PLAY + EXC6_MATHCOMP
+# + EXC10_SPORT + EXC11_UNICORN) decrease, SCL_EXTR_CL decreases, SCORE_PUBLIC decreases, SCORE_AUTHRITS increases,
+#SCHAUTON increases, TCHPARTI increases
+#VIETNAM: 98.84
+
+R75 <- pisa.reg.pv(pvlabel="MATH", 
+                   x=c("VIETNAM",
+                       "PRESCHOOL", "REPEAT", "ST08Q01","ST115Q01","BOOK_N", "PARPRESSURE",
+                       "PCGIRLS", "FUNDMOM", "COUNCILMOM","PROPCERT","SMRATIO","TCSHORT",
+                       "TCFOCST","TCM_STUASS","TCM_PEER","TCH_INCENTV", "ASS_PROG","ASS_PROM",
+                       "ASS_SCH","STU_FEEDB","COMP_USE","TXT_BOOK","PRIVATESCL","SC02Q02","TOWN",
+                       "CLSIZE","SCHSIZE","RATCMP15","COMPWEB","SCMATEDU","SCMATBUI","EXC2_PLAY",
+                       "EXC6_MATHCOMP","EXC10_SPORT","EXC11_UNICORN","SCL_EXTR_CL","SCORE_PUBLIC",
+                       "SCORE_AUTHRITS","SCHAUTON","TCHPARTI","LEADCOM"),
+                   weight="W_FSTUWT",
+                   data=DEVCON8f,export=FALSE)
+R75 # PRIVATESCL increases, SC02Q02 increases, TOWN decreases, CLSIZE decreases, SCHSIZE increases,
+#RATCMP15 increases, COMPWEB decreases, SCMATEDU decreases, SCMATBUI decreases, (EXC2_PLAY + EXC6_MATHCOMP
+# + EXC10_SPORT + EXC11_UNICORN) decrease, SCL_EXTR_CL decreases, SCORE_PUBLIC decreases, SCORE_AUTHRITS increases,
+#SCHAUTON increases, TCHPARTI increases, LEADCOM increases
+#VIETNAM: 100.32
+
+R76 <- pisa.reg.pv(pvlabel="MATH", 
+                   x=c("VIETNAM",
+                       "PRESCHOOL", "REPEAT", "ST08Q01","ST115Q01","BOOK_N", "PARPRESSURE",
+                       "PCGIRLS", "FUNDMOM", "COUNCILMOM","PROPCERT","SMRATIO","TCSHORT",
+                       "TCFOCST","TCM_STUASS","TCM_PEER","TCH_INCENTV", "ASS_PROG","ASS_PROM",
+                       "ASS_SCH","STU_FEEDB","COMP_USE","TXT_BOOK","PRIVATESCL","SC02Q02","TOWN",
+                       "CLSIZE","SCHSIZE","RATCMP15","COMPWEB","SCMATEDU","SCMATBUI","EXC2_PLAY",
+                       "EXC6_MATHCOMP","EXC10_SPORT","EXC11_UNICORN","SCL_EXTR_CL","SCORE_PUBLIC",
+                       "SCORE_AUTHRITS","SCHAUTON","TCHPARTI","LEADCOM","LEADINST"),
+                   weight="W_FSTUWT",
+                   data=DEVCON8f,export=FALSE)
+R76 # PRIVATESCL increases, SC02Q02 increases, TOWN decreases, CLSIZE decreases, SCHSIZE increases,
+#RATCMP15 increases, COMPWEB decreases, SCMATEDU decreases, SCMATBUI decreases, (EXC2_PLAY + EXC6_MATHCOMP
+# + EXC10_SPORT + EXC11_UNICORN) decrease, SCL_EXTR_CL decreases, SCORE_PUBLIC decreases, SCORE_AUTHRITS increases,
+#SCHAUTON increases, TCHPARTI increases, LEADCOM increases, LEADINST decreases
+#VIETNAM: 100.30
+
+R77 <- pisa.reg.pv(pvlabel="MATH", 
+                   x=c("VIETNAM",
+                       "PRESCHOOL", "REPEAT", "ST08Q01","ST115Q01","BOOK_N", "PARPRESSURE",
+                       "PCGIRLS", "FUNDMOM", "COUNCILMOM","PROPCERT","SMRATIO","TCSHORT",
+                       "TCFOCST","TCM_STUASS","TCM_PEER","TCH_INCENTV", "ASS_PROG","ASS_PROM",
+                       "ASS_SCH","STU_FEEDB","COMP_USE","TXT_BOOK","PRIVATESCL","SC02Q02","TOWN",
+                       "CLSIZE","SCHSIZE","RATCMP15","COMPWEB","SCMATEDU","SCMATBUI","EXC2_PLAY",
+                       "EXC6_MATHCOMP","EXC10_SPORT","EXC11_UNICORN","SCL_EXTR_CL","SCORE_PUBLIC",
+                       "SCORE_AUTHRITS","SCHAUTON","TCHPARTI","LEADCOM","LEADINST","LEADPD"),
+                   weight="W_FSTUWT",
+                   data=DEVCON8f,export=FALSE)
+R77 # PRIVATESCL increases, SC02Q02 increases, TOWN decreases, CLSIZE decreases, SCHSIZE increases,
+#RATCMP15 increases, COMPWEB decreases, SCMATEDU decreases, SCMATBUI decreases, (EXC2_PLAY + EXC6_MATHCOMP
+# + EXC10_SPORT + EXC11_UNICORN) decrease, SCL_EXTR_CL decreases, SCORE_PUBLIC decreases, SCORE_AUTHRITS increases,
+#SCHAUTON increases, TCHPARTI increases, LEADCOM increases, LEADINST decreases, LEADPD increases
+#VIETNAM: 100.41
+
+R78 <- pisa.reg.pv(pvlabel="MATH", 
+                   x=c("VIETNAM",
+                       "PRESCHOOL", "REPEAT", "ST08Q01","ST115Q01","BOOK_N", "PARPRESSURE",
+                       "PCGIRLS", "FUNDMOM", "COUNCILMOM","PROPCERT","SMRATIO","TCSHORT",
+                       "TCFOCST","TCM_STUASS","TCM_PEER","TCH_INCENTV", "ASS_PROG","ASS_PROM",
+                       "ASS_SCH","STU_FEEDB","COMP_USE","TXT_BOOK","PRIVATESCL","SC02Q02","TOWN",
+                       "CLSIZE","SCHSIZE","RATCMP15","COMPWEB","SCMATEDU","SCMATBUI","EXC2_PLAY",
+                       "EXC6_MATHCOMP","EXC10_SPORT","EXC11_UNICORN","SCL_EXTR_CL","SCORE_PUBLIC",
+                       "SCORE_AUTHRITS","SCHAUTON","TCHPARTI","LEADCOM","LEADINST","LEADPD","LEADTCH"),
+                   weight="W_FSTUWT",
+                   data=DEVCON8f,export=FALSE)
+R78 # PRIVATESCL increases, SC02Q02 increases, TOWN decreases, CLSIZE decreases, SCHSIZE increases,
+#RATCMP15 increases, COMPWEB decreases, SCMATEDU decreases, SCMATBUI decreases, (EXC2_PLAY + EXC6_MATHCOMP
+# + EXC10_SPORT + EXC11_UNICORN) decrease, SCL_EXTR_CL decreases, SCORE_PUBLIC decreases, SCORE_AUTHRITS increases,
+#SCHAUTON increases, TCHPARTI increases, LEADCOM increases, LEADINST decreases, LEADPD increases, LEADTCH increases
+#VIETNAM: 101.12
+
+R79 <- pisa.reg.pv(pvlabel="MATH", 
+                   x=c("VIETNAM",
+                       "PRESCHOOL", "REPEAT", "ST08Q01","ST115Q01","BOOK_N", "PARPRESSURE",
+                       "PCGIRLS", "FUNDMOM", "COUNCILMOM","PROPCERT","SMRATIO","TCSHORT",
+                       "TCFOCST","TCM_STUASS","TCM_PEER","TCH_INCENTV", "ASS_PROG","ASS_PROM",
+                       "ASS_SCH","STU_FEEDB","COMP_USE","TXT_BOOK","PRIVATESCL","SC02Q02","TOWN",
+                       "CLSIZE","SCHSIZE","RATCMP15","COMPWEB","SCMATEDU","SCMATBUI","EXC2_PLAY",
+                       "EXC6_MATHCOMP","EXC10_SPORT","EXC11_UNICORN","SCL_EXTR_CL","SCORE_PUBLIC",
+                       "SCORE_AUTHRITS","SCHAUTON","TCHPARTI","LEADCOM","LEADINST","LEADPD","LEADTCH",
+                       "QUAL_RECORD"),
+                   weight="W_FSTUWT",
+                   data=DEVCON8f,export=FALSE)
+R79 # PRIVATESCL increases, SC02Q02 increases, TOWN decreases, CLSIZE decreases, SCHSIZE increases,
+#RATCMP15 increases, COMPWEB decreases, SCMATEDU decreases, SCMATBUI decreases, (EXC2_PLAY + EXC6_MATHCOMP
+# + EXC10_SPORT + EXC11_UNICORN) decrease, SCL_EXTR_CL decreases, SCORE_PUBLIC decreases, SCORE_AUTHRITS increases,
+#SCHAUTON increases, TCHPARTI increases, LEADCOM increases, LEADINST decreases, LEADPD increases, LEADTCH increases,
+#QUAL_RECORD decreases
+#VIETNAM: 100.62
+
+R80 <- pisa.reg.pv(pvlabel="MATH", 
+                   x=c("VIETNAM",
+                       "PRESCHOOL", "REPEAT", "ST08Q01","ST115Q01","BOOK_N", "PARPRESSURE",
+                       "PCGIRLS", "FUNDMOM", "COUNCILMOM","PROPCERT","SMRATIO","TCSHORT",
+                       "TCFOCST","TCM_STUASS","TCM_PEER","TCH_INCENTV", "ASS_PROG","ASS_PROM",
+                       "ASS_SCH","STU_FEEDB","COMP_USE","TXT_BOOK","PRIVATESCL","SC02Q02","TOWN",
+                       "CLSIZE","SCHSIZE","RATCMP15","COMPWEB","SCMATEDU","SCMATBUI","EXC2_PLAY",
+                       "EXC6_MATHCOMP","EXC10_SPORT","EXC11_UNICORN","SCL_EXTR_CL","SCORE_PUBLIC",
+                       "SCORE_AUTHRITS","SCHAUTON","TCHPARTI","LEADCOM","LEADINST","LEADPD","LEADTCH",
+                       "QUAL_RECORD","SCHSEL"),
+                   weight="W_FSTUWT",
+                   data=DEVCON8f,export=FALSE)
+R80 # PRIVATESCL increases, SC02Q02 increases, TOWN decreases, CLSIZE decreases, SCHSIZE increases,
+#RATCMP15 increases, COMPWEB decreases, SCMATEDU decreases, SCMATBUI decreases, (EXC2_PLAY + EXC6_MATHCOMP
+# + EXC10_SPORT + EXC11_UNICORN) decrease, SCL_EXTR_CL decreases, SCORE_PUBLIC decreases, SCORE_AUTHRITS increases,
+#SCHAUTON increases, TCHPARTI increases, LEADCOM increases, LEADINST decreases, LEADPD increases, LEADTCH increases,
+#QUAL_RECORD decreases, SCHSEL decreases
+#VIETNAM: 100.54
+
+R81 <- pisa.reg.pv(pvlabel="MATH", 
+                   x=c("VIETNAM",
+                       "PRESCHOOL", "REPEAT", "ST08Q01","ST115Q01","BOOK_N", "PARPRESSURE",
+                       "PCGIRLS", "FUNDMOM", "COUNCILMOM","PROPCERT","SMRATIO","TCSHORT",
+                       "TCFOCST","TCM_STUASS","TCM_PEER","TCH_INCENTV", "ASS_PROG","ASS_PROM",
+                       "ASS_SCH","STU_FEEDB","COMP_USE","TXT_BOOK","PRIVATESCL","SC02Q02","TOWN",
+                       "CLSIZE","SCHSIZE","RATCMP15","COMPWEB","SCMATEDU","SCMATBUI","EXC2_PLAY",
+                       "EXC6_MATHCOMP","EXC10_SPORT","EXC11_UNICORN","SCL_EXTR_CL","SCORE_PUBLIC",
+                       "SCORE_AUTHRITS","SCHAUTON","TCHPARTI","LEADCOM","LEADINST","LEADPD","LEADTCH",
+                       "QUAL_RECORD","SCHSEL","STUDCLIM"),
+                   weight="W_FSTUWT",
+                   data=DEVCON8f,export=FALSE)
+R81 # PRIVATESCL increases, SC02Q02 increases, TOWN decreases, CLSIZE decreases, SCHSIZE increases,
+#RATCMP15 increases, COMPWEB decreases, SCMATEDU decreases, SCMATBUI decreases, (EXC2_PLAY + EXC6_MATHCOMP
+# + EXC10_SPORT + EXC11_UNICORN) decrease, SCL_EXTR_CL decreases, SCORE_PUBLIC decreases, SCORE_AUTHRITS increases,
+#SCHAUTON increases, TCHPARTI increases, LEADCOM increases, LEADINST decreases, LEADPD increases, LEADTCH increases,
+#QUAL_RECORD decreases, SCHSEL decreases, STUDCLIM increases
+#VIETNAM: 101.26 
+
+R82 <- pisa.reg.pv(pvlabel="MATH", 
+                   x=c("VIETNAM",
+                       "PRESCHOOL", "REPEAT", "ST08Q01","ST115Q01","BOOK_N", "PARPRESSURE",
+                       "PCGIRLS", "FUNDMOM", "COUNCILMOM","PROPCERT","SMRATIO","TCSHORT",
+                       "TCFOCST","TCM_STUASS","TCM_PEER","TCH_INCENTV", "ASS_PROG","ASS_PROM",
+                       "ASS_SCH","STU_FEEDB","COMP_USE","TXT_BOOK","PRIVATESCL","SC02Q02","TOWN",
+                       "CLSIZE","SCHSIZE","RATCMP15","COMPWEB","SCMATEDU","SCMATBUI","EXC2_PLAY",
+                       "EXC6_MATHCOMP","EXC10_SPORT","EXC11_UNICORN","SCL_EXTR_CL","SCORE_PUBLIC",
+                       "SCORE_AUTHRITS","SCHAUTON","TCHPARTI","LEADCOM","LEADINST","LEADPD","LEADTCH",
+                       "QUAL_RECORD","SCHSEL","STUDCLIM","TEACCLIM"),
+                   weight="W_FSTUWT",
+                   data=DEVCON8f,export=FALSE)
+R82 # PRIVATESCL increases, SC02Q02 increases, TOWN decreases, CLSIZE decreases, SCHSIZE increases,
+#RATCMP15 increases, COMPWEB decreases, SCMATEDU decreases, SCMATBUI decreases, (EXC2_PLAY + EXC6_MATHCOMP
+# + EXC10_SPORT + EXC11_UNICORN) decrease, SCL_EXTR_CL decreases, SCORE_PUBLIC decreases, SCORE_AUTHRITS increases,
+#SCHAUTON increases, TCHPARTI increases, LEADCOM increases, LEADINST decreases, LEADPD increases, LEADTCH increases,
+#QUAL_RECORD decreases, SCHSEL decreases, STUDCLIM increases, TEACCLIM increases
+#VIETNAM: 101.27
+
+R83 <- pisa.reg.pv(pvlabel="MATH", 
+                   x=c("VIETNAM",
+                       "PRESCHOOL", "REPEAT", "ST08Q01","ST115Q01","BOOK_N", "PARPRESSURE",
+                       "PCGIRLS", "FUNDMOM", "COUNCILMOM","PROPCERT","SMRATIO","TCSHORT",
+                       "TCFOCST","TCM_STUASS","TCM_PEER","TCH_INCENTV", "ASS_PROG","ASS_PROM",
+                       "ASS_SCH","STU_FEEDB","COMP_USE","TXT_BOOK","PRIVATESCL","SC02Q02","TOWN",
+                       "CLSIZE","SCHSIZE","RATCMP15","COMPWEB","SCMATEDU","SCMATBUI","EXC2_PLAY",
+                       "EXC6_MATHCOMP","EXC10_SPORT","EXC11_UNICORN","SCL_EXTR_CL","SCORE_PUBLIC",
+                       "SCORE_AUTHRITS","SCHAUTON","TCHPARTI","LEADCOM","LEADINST","LEADPD","LEADTCH",
+                       "QUAL_RECORD","SCHSEL","STUDCLIM","TEACCLIM","TCMORALE"),
+                   weight="W_FSTUWT",
+                   data=DEVCON8f,export=FALSE)
+R83 # PRIVATESCL increases, SC02Q02 increases, TOWN decreases, CLSIZE decreases, SCHSIZE increases,
+#RATCMP15 increases, COMPWEB decreases, SCMATEDU decreases, SCMATBUI decreases, (EXC2_PLAY + EXC6_MATHCOMP
+# + EXC10_SPORT + EXC11_UNICORN) decrease, SCL_EXTR_CL decreases, SCORE_PUBLIC decreases, SCORE_AUTHRITS increases,
+#SCHAUTON increases, TCHPARTI increases, LEADCOM increases, LEADINST decreases, LEADPD increases, LEADTCH increases,
+#QUAL_RECORD decreases, SCHSEL decreases, STUDCLIM increases, TEACCLIM increases, TCMORALE increases
+#VIETNAM: 102.42 
+
+# Now testing all 14 (or more accurately 11 with 4 combined) variables that decreased the gap
+
+# TOWN, CLSIZE, COMPWEB, SCMATEDU, SCMATBUI, (EXC2_PLAY + EXC6_MATHCOMP + EXC10_SPORT + EXC11_UNICORN),
+# SCL_EXTR_CL, SCORE_PUBLIC, LEADINST, QUAL_RECORD, SCHSEL
+
+R84 <- pisa.reg.pv(pvlabel="MATH", 
+                   x=c("VIETNAM",
+                       "PRESCHOOL", "REPEAT", "ST08Q01","ST115Q01","BOOK_N", "PARPRESSURE",
+                       "PCGIRLS", "FUNDMOM", "COUNCILMOM","PROPCERT","SMRATIO","TCSHORT",
+                       "TCFOCST","TCM_STUASS","TCM_PEER","TCH_INCENTV", "ASS_PROG","ASS_PROM",
+                       "ASS_SCH","STU_FEEDB","COMP_USE","TXT_BOOK","TOWN","CLSIZE","COMPWEB",
+                       "SCMATEDU","SCMATBUI","EXC2_PLAY","EXC6_MATHCOMP","EXC10_SPORT","EXC11_UNICORN",
+                       "SCL_EXTR_CL","SCORE_PUBLIC","LEADINST","QUAL_RECORD","SCHSEL"),
+                   weight="W_FSTUWT",
+                   data=DEVCON8f,export=FALSE)
+R84
+# Estimate Std. Error t value
+# (Intercept)     371.69      22.59   16.45
+# VIETNAM          73.40       8.15    9.01
+# PRESCHOOL        26.43       4.24    6.24
+# REPEAT          -38.82       3.49  -11.11
+# ST08Q01          -8.64       1.52   -5.69
+# ST115Q01         -5.28       1.99   -2.65
+# BOOK_N            0.07       0.01    5.09
+# PARPRESSURE      12.25       4.85    2.53
+# PCGIRLS           9.79      18.00    0.54
+# FUNDMOM           0.15       0.07    2.15
+# COUNCILMOM       -0.17       0.06   -2.69
+# PROPCERT         15.56       7.55    2.06
+# SMRATIO          -0.02       0.01   -1.69
+# TCSHORT           5.41       1.95    2.77
+# TCFOCST          -3.18       2.01   -1.58
+# TCM_STUASS       -8.56       6.23   -1.37
+# TCM_PEER         -4.72       5.69   -0.83
+# TCH_INCENTV      -3.82       3.01   -1.27
+# ASS_PROG        -26.51       8.41   -3.15
+# ASS_PROM         11.34       6.00    1.89
+# ASS_SCH          -9.78      10.24   -0.95
+# STU_FEEDB         1.95       5.55    0.35
+# COMP_USE          0.52       5.82    0.09
+# TXT_BOOK        -12.43       8.27   -1.50
+# TOWN             -7.91       4.12   -1.92
+# CLSIZE            0.71       0.25    2.84
+# COMPWEB          12.39       6.96    1.78
+# SCMATEDU          8.56       3.46    2.47
+# SCMATBUI          2.97       2.71    1.10
+# EXC2_PLAY         8.45       4.62    1.83
+# EXC6_MATHCOMP     0.13       5.43    0.02
+# EXC10_SPORT      -0.38       9.59   -0.04
+# EXC11_UNICORN     4.68       6.50    0.72
+# SCL_EXTR_CL      12.94       5.34    2.42
+# SCORE_PUBLIC      9.28       5.40    1.72
+# LEADINST          2.02       2.56    0.79
+# QUAL_RECORD      10.60       6.37    1.66
+# SCHSEL            0.84       3.40    0.25
+# R-squared        44.18       2.37   18.67
+
+# Remember that with this data set and no other regressors than Vietnam the dummy was at 120.68,
+# regressing all gap decreasing student, teacher, pedagogical practices and school variables, we could bring
+# it down to 73.40, which means explaining about 39% of variation. We will create a data set, where we just
+# account for the missing data of the gap decreasing variables and then see how in each step, the Vietnam
+# dummy goes down, so that we have a cumulative step by step regression on one single data set. Remember,
+# in our last data set (DEVCON8f) we also have deleted missing data for the gap increasing school-related
+# variables.
+
+# Before we do aforementioned, lets quickly compare, testing for all 13 variables that increased the gap
+
+# PRIVATESCL, SC02Q02, SCHSIZE, RATCMP15, SCORE_AUTHRITS, SCHAUTON, TCHPARTI, LEADCOM,
+# LEADPD, LEADTCH, STUDCLIM, TEACCLIM, TCMORALE
+
+R85 <- pisa.reg.pv(pvlabel="MATH", 
+                   x=c("VIETNAM",
+                       "PRESCHOOL", "REPEAT", "ST08Q01","ST115Q01","BOOK_N", "PARPRESSURE",
+                       "PCGIRLS", "FUNDMOM", "COUNCILMOM","PROPCERT","SMRATIO","TCSHORT",
+                       "TCFOCST","TCM_STUASS","TCM_PEER","TCH_INCENTV", "ASS_PROG","ASS_PROM",
+                       "ASS_SCH","STU_FEEDB","COMP_USE","TXT_BOOK","PRIVATESCL","SC02Q02",
+                       "SCHSIZE","RATCMP15","SCORE_AUTHRITS","SCHAUTON","TCHPARTI","LEADCOM",
+                       "LEADPD","LEADTCH","STUDCLIM","TEACCLIM","TCMORALE"),
+                   weight="W_FSTUWT",
+                   data=DEVCON8f,export=FALSE)
+R85
+# Estimate Std. Error t value
+#(Intercept)      388.12      18.47   21.01
+#VIETNAM          110.06       8.43   13.05
+#PRESCHOOL         23.82       4.07    5.85
+#REPEAT           -39.63       3.41  -11.64
+#ST08Q01           -7.52       1.25   -6.02
+#ST115Q01          -3.83       1.84   -2.09
+#BOOK_N             0.06       0.01    4.97
+#PARPRESSURE       11.03       4.59    2.40
+#PCGIRLS           20.83      16.26    1.28
+#FUNDMOM            0.14       0.06    2.15
+#COUNCILMOM        -0.13       0.06   -2.03
+#PROPCERT           6.94       6.51    1.07
+#SMRATIO           -0.05       0.01   -3.28
+#TCSHORT            2.44       1.94    1.26
+#TCFOCST           -6.93       2.55   -2.72
+#TCM_STUASS       -14.16       6.80   -2.08
+#TCM_PEER          -0.71       5.64   -0.13
+#TCH_INCENTV       -5.06       3.04   -1.67
+#ASS_PROG         -18.36       8.14   -2.26
+#ASS_PROM           0.87       6.16    0.14
+#ASS_SCH           -6.66      11.29   -0.59
+#STU_FEEDB          0.91       5.00    0.18
+#COMP_USE          -0.48       4.84   -0.10
+#TXT_BOOK         -12.67       7.20   -1.76
+#PRIVATESCL       -13.12       7.02   -1.87
+#SC02Q02            0.35       0.08    4.24
+#SCHSIZE            0.02       0.00    8.49
+#RATCMP15           7.09       7.03    1.01
+#SCORE_AUTHRITS    14.73       5.84    2.52
+#SCHAUTON           5.52       2.96    1.87
+#TCHPARTI           3.41       1.74    1.96
+#LEADCOM            1.50       2.71    0.55
+#LEADPD             4.49       3.10    1.45
+#LEADTCH           -0.40       3.30   -0.12
+#STUDCLIM           5.65       3.17    1.78
+#TEACCLIM           3.26       3.32    0.98
+#TCMORALE           2.70       2.82    0.96
+#R-squared         46.55       2.32   20.05
+
+# That is quite an indicative output. Let's move on to just regressing on gap decreasing variables and
+# one data set (where missing data is deleted just for the gap decreasing variables)
+
+###################### 4.2.5 Non-rotated Questions - all gap decreasing/Sensitivity #########################
+
+# Let's prepare our data set by deleting the missing data for all gap decreasing variables
+
+T1b <- DEVCON8a[, c("VIETNAM","PROPCERT","SMRATIO","TCSHORT","TCFOCST","SC30Q01","SC30Q02","SC31Q01",
+                    "SC31Q02","SC31Q03","SC31Q04","SC31Q05","SC31Q06","SC31Q07","ST05Q01","REPEAT",
+                    "ST08Q01","ST115Q01","ST28Q01","SC24Q01","PCGIRLS","SC18Q01","SC18Q02","SC18Q05",
+                    "SC39Q07","SC40Q01","SC40Q02","SC03Q01","CLSIZE","COMPWEB","SCMATEDU","SCMATBUI",
+                    "SC16Q02","SC16Q06","SC16Q10","SC16Q11","SC20Q01","SC19Q01","LEADINST","SC39Q03",
+                    "SCHSEL")]
+N1 <- NROW(na.omit(T1b)) 
+N1 #25542
+N0-N1 #22941 NA's
+DEVCON8g <- DEVCON8a[complete.cases(T1b),]
+
+# Let's prepare the relevant student variables again:
+
+#ST05Q01
+#_________________________________________________________________________________________________________
+DEVCON8g$PRESCHOOL[DEVCON8g$ST05Q01==1] <- 0
+DEVCON8g$PRESCHOOL[DEVCON8g$ST05Q01==2] <- 1
+DEVCON8g$PRESCHOOL[DEVCON8g$ST05Q01==3] <- 1
+
+#ST28Q01
+#______________________________________________________________________________________________________________
+DEVCON8g$BOOK_N[DEVCON8g$ST28Q01==1]  <- 5
+DEVCON8g$BOOK_N[DEVCON8g$ST28Q01==2]  <- 15
+DEVCON8g$BOOK_N[DEVCON8g$ST28Q01==3]  <- 60
+DEVCON8g$BOOK_N[DEVCON8g$ST28Q01==4]  <- 150
+DEVCON8g$BOOK_N[DEVCON8g$ST28Q01==5]  <- 350
+DEVCON8g$BOOK_N[DEVCON8g$ST28Q01==6]  <- 500
+
+#SC24Q01 
+#________________________________________________________________________________________________________________
+DEVCON8g$PARPRESSURE[DEVCON8g$SC24Q01==1] <- 1
+DEVCON8g$PARPRESSURE[DEVCON8g$SC24Q01==2] <- 0
+DEVCON8g$PARPRESSURE[DEVCON8g$SC24Q01==3] <- 0
+
+#SC25Q01
+#_________________________________________________________________________________________________________________
+DEVCON8g$SC25Q10[is.na(DEVCON8g$SC25Q10)]  <- 0
+DEVCON8g$SC25Q11[is.na(DEVCON8g$SC25Q11)]  <- 0
+DEVCON8g$FUNDMOM <- DEVCON8g$SC25Q11
+DEVCON8g$COUNCILMOM <- DEVCON8g$SC25Q10
+
+# Now for the teacher-related variables
+
+#SC30Q01, SC30Q02
+#_________________________________________________________________________________________________________________
+# Convert into 0 1 variable # Teacher Monitoring (TCM) through Student Assessment (STUASS)
+DEVCON8g$TCM_STUASS[DEVCON8g$SC30Q01==1] <- 1
+DEVCON8g$TCM_STUASS[DEVCON8g$SC30Q01==2] <- 0
+
+# Convert into 0 1 variable # Teacher Monitoring (TCM) through Peer review (PEER)
+DEVCON8g$TCM_PEER[DEVCON8g$SC30Q02==1] <- 1
+DEVCON8g$TCM_PEER[DEVCON8g$SC30Q02==2] <- 0
+
+#SC31Q01 - SC31Q07
+#________________________________________________________________________________________________________________
+SC31OUT.rda <- read.csv("C:/Users/WB484284/Desktop/PISAlatestversions/RFiles/PISA_2012/SC31DATOUT.csv")
+DEVCON8g <- merge(DEVCON8g,SC31OUT.rda,by="NEWID")
+DEVCON8g$TCH_INCENTV <- rescale(DEVCON8g$WMLE_SC31, mean = 0, sd = 1,df=FALSE)
+
+# Now for the pedagogical practices-related variables
+
+# SC18Q01-Q08
+#________________________________________________________________________________________________________________
+DEVCON8g$ASS_PROG[DEVCON8g$SC18Q01==1] <- 1
+DEVCON8g$ASS_PROG[DEVCON8g$SC18Q01==2] <- 0
+
+DEVCON8g$ASS_PROM[DEVCON8g$SC18Q02==1] <- 1
+DEVCON8g$ASS_PROM[DEVCON8g$SC18Q02==2] <- 0
+
+DEVCON8g$ASS_SCH[DEVCON8g$SC18Q05==1] <- 1
+DEVCON8g$ASS_SCH[DEVCON8g$SC18Q05==2] <- 0
+
+#SC39Q07
+#________________________________________________________________________________________________________________
+DEVCON8g$STU_FEEDB[DEVCON8g$SC39Q07==1] <- 1
+DEVCON8g$STU_FEEDB[DEVCON8g$SC39Q07==2] <- 0
+
+#SC40Q01-SC40Q03
+#________________________________________________________________________________________________________________
+DEVCON8g$COMP_USE[DEVCON8g$SC40Q01==1] <- 1
+DEVCON8g$COMP_USE[DEVCON8g$SC40Q01==2] <- 0
+
+DEVCON8g$TXT_BOOK[DEVCON8g$SC40Q02==1] <- 1
+DEVCON8g$TXT_BOOK[DEVCON8g$SC40Q02==2] <- 0
+
+# Now for the schools-related variables
+
+#SC03Q01/City size
+#_________________________________________________________________________________________________________
+# First I have to generate a series of dummy variables 
+DEVCON8g$DUM_SMLTOWN <- ifelse(DEVCON8g$SC03Q01==2,1,0)
+DEVCON8g$DUM_TOWN    <- ifelse(DEVCON8g$SC03Q01==3,1,0)
+
+DEVCON8g$TOWN <- DEVCON8g$DUM_SMLTOWN+DEVCON8g$DUM_TOWN
+DEVCON8g$TOWN[DEVCON8g$TOWN>1] <- 1
+
+#SC16Q01-Q11
+#________________________________________________________________________________________________________
+DEVCON8g$EXC2_PLAY[DEVCON8g$SC16Q02==1] <- 1
+DEVCON8g$EXC2_PLAY[DEVCON8g$SC16Q02==2] <- 0
+
+DEVCON8g$EXC6_MATHCOMP[DEVCON8g$SC16Q06==1] <- 1
+DEVCON8g$EXC6_MATHCOMP[DEVCON8g$SC16Q06==2] <- 0
+
+DEVCON8g$EXC10_SPORT[DEVCON8g$SC16Q10==1] <- 1
+DEVCON8g$EXC10_SPORT[DEVCON8g$SC16Q10==2] <- 0
+
+DEVCON8g$EXC11_UNICORN[DEVCON8g$SC16Q11==1] <- 1
+DEVCON8g$EXC11_UNICORN[DEVCON8g$SC16Q11==2] <- 0
+
+#SC20Q01
+#________________________________________________________________________________________________________
+DEVCON8g$SCL_EXTR_CL[DEVCON8g$SC20Q01==1] <- 1
+DEVCON8g$SCL_EXTR_CL[DEVCON8g$SC20Q01==2] <- 0
+
+#SC19Q01-Q02
+#________________________________________________________________________________________________________
+DEVCON8g$SCORE_PUBLIC[DEVCON8g$SC19Q01==1] <- 1
+DEVCON8g$SCORE_PUBLIC[DEVCON8g$SC19Q01==2] <- 0
+
+#SC39Q03
+#_________________________________________________________________________________________________________
+DEVCON8g$QUAL_RECORD[DEVCON8g$SC39Q03==1] <- 1
+DEVCON8g$QUAL_RECORD[DEVCON8g$SC39Q03==2] <- 0
+
+# Let's support R and create an intermediate file we will just load when we come back here, so that the
+# R memory does not get all worked up:
+save(DEVCON8g, file = "C:/Users/WB484284/Desktop/PISAlatestversions/RFiles/PISA_2012/DEVCON8g.rda") 
+
+# First, remember, we have a smaller data set (25542 data points) compared to when we first regressed the Vietnam PISA Math score
+# (48483 data points); hence we regress again to get the correct size of the Vietnam dummy. 
+
+R86 <- pisa.reg.pv(pvlabel="MATH", 
+                   x=c("VIETNAM"),
+                   weight="W_FSTUWT",
+                   data=DEVCON8g,export=FALSE)
+R86
+# Estimate Std. Error t value
+# (Intercept)   390.53       2.97  131.43
+# VIETNAM       125.99       6.73   18.73
+# R-squared      27.66       2.45   11.27
+
+# Let's try our regression with all gap decreasing variables before we do it individually per factor (student,
+# teacher, etc)
+
+R87 <- pisa.reg.pv(pvlabel="MATH", 
+                   x=c("VIETNAM",
+                       "PRESCHOOL", "REPEAT", "ST08Q01","ST115Q01","BOOK_N", "PARPRESSURE",
+                       "PCGIRLS", "FUNDMOM", "COUNCILMOM","PROPCERT","SMRATIO","TCSHORT",
+                       "TCFOCST","TCM_STUASS","TCM_PEER","TCH_INCENTV", "ASS_PROG","ASS_PROM",
+                       "ASS_SCH","STU_FEEDB","COMP_USE","TXT_BOOK","TOWN","CLSIZE","COMPWEB",
+                       "SCMATEDU","SCMATBUI","EXC2_PLAY","EXC6_MATHCOMP","EXC10_SPORT","EXC11_UNICORN",
+                       "SCL_EXTR_CL","SCORE_PUBLIC","LEADINST","QUAL_RECORD","SCHSEL"),
+                   weight="W_FSTUWT",
+                   data=DEVCON8g,export=FALSE)
+R87
+# Estimate Std. Error t value
+#(Intercept)     344.24      20.15   17.08
+#VIETNAM          76.91       7.79    9.87
+#PRESCHOOL        25.30       3.85    6.57
+#REPEAT          -37.56       3.09  -12.17
+#ST08Q01          -7.81       1.35   -5.77
+#ST115Q01         -5.42       1.89   -2.87
+#BOOK_N            0.07       0.01    5.30
+#PARPRESSURE      10.24       4.38    2.34
+#PCGIRLS          12.97      15.02    0.86
+#FUNDMOM           0.17       0.07    2.62
+#COUNCILMOM       -0.13       0.06   -2.18
+#PROPCERT         17.51       6.78    2.58
+#SMRATIO          -0.03       0.01   -2.00
+#TCSHORT           2.62       1.83    1.43
+#TCFOCST          -2.29       1.91   -1.20
+#TCM_STUASS       -0.27       7.90   -0.03
+#TCM_PEER         -5.08       5.56   -0.91
+#TCH_INCENTV      -3.26       2.80   -1.16
+#ASS_PROG        -18.66       8.28   -2.25
+#ASS_PROM         12.01       5.54    2.17
+#ASS_SCH          -0.67       8.00   -0.08
+#STU_FEEDB         1.33       4.90    0.27
+#COMP_USE         -2.21       5.29   -0.42
+#TXT_BOOK         -9.17       7.24   -1.27
+#TOWN             -9.09       3.69   -2.47
+#CLSIZE            0.81       0.24    3.32
+#COMPWEB          15.72       6.24    2.52
+#SCMATEDU          6.03       3.04    1.98
+#SCMATBUI          3.60       2.50    1.44
+#EXC2_PLAY         8.37       3.94    2.13
+#EXC6_MATHCOMP    -1.27       5.24   -0.24
+#EXC10_SPORT      -5.53       9.14   -0.61
+#EXC11_UNICORN     6.63       5.58    1.19
+#SCL_EXTR_CL      10.06       5.17    1.94
+#SCORE_PUBLIC      9.60       4.92    1.95
+#LEADINST          2.26       2.27    1.00
+#QUAL_RECORD       7.00       6.56    1.07
+#SCHSEL            1.14       3.21    0.36
+#R-squared        43.75       2.36   18.55
+
+# Quite a good output/ decrease of the Vietnam dummy from 125.99 to 76.91, which is a 39% decrease.
+# So let's see how the individual factors add to this 39%
+
+# Just the student-related variables:
+
+R88 <- pisa.reg.pv(pvlabel="MATH", 
+                   x=c("VIETNAM",
+                       "PRESCHOOL", "REPEAT", "ST08Q01","ST115Q01","BOOK_N", "PARPRESSURE",
+                       "PCGIRLS", "FUNDMOM", "COUNCILMOM"),
+                   weight="W_FSTUWT",
+                   data=DEVCON8g,export=FALSE)
+R88
+#Estimate Std. Error t value
+#(Intercept)   369.21       9.34   39.54
+#VIETNAM        97.34       6.43   15.14
+#PRESCHOOL      37.13       4.69    7.92
+#REPEAT        -44.90       3.76  -11.94
+#ST08Q01        -8.89       1.61   -5.51
+#ST115Q01       -5.05       1.95   -2.59
+#BOOK_N          0.08       0.01    6.14
+#PARPRESSURE    13.48       4.59    2.93
+#PCGIRLS        29.00      15.98    1.81
+#FUNDMOM         0.22       0.06    3.58
+#COUNCILMOM     -0.22       0.06   -3.60
+#R-squared      39.29       2.23   17.65
+
+# As expected, and seen from our previous regressions, student related-variables add a large part of decreasing
+# the gap.
+
+# The student-related variables and the teacher-related variables:
+
+R89 <- pisa.reg.pv(pvlabel="MATH", 
+                   x=c("VIETNAM",
+                       "PRESCHOOL", "REPEAT", "ST08Q01","ST115Q01","BOOK_N", "PARPRESSURE",
+                       "PCGIRLS", "FUNDMOM", "COUNCILMOM","PROPCERT","SMRATIO","TCSHORT",
+                       "TCFOCST","TCM_STUASS","TCM_PEER","TCH_INCENTV"),
+                   weight="W_FSTUWT",
+                   data=DEVCON8g,export=FALSE)
+R89
+#Estimate Std. Error t value
+#(Intercept)   357.35      12.98   27.52
+#VIETNAM        93.51       6.97   13.41
+#PRESCHOOL      36.54       4.42    8.26
+#REPEAT        -43.79       3.77  -11.62
+#ST08Q01        -8.65       1.56   -5.55
+#ST115Q01       -5.29       1.92   -2.76
+#BOOK_N          0.08       0.01    6.10
+#PARPRESSURE    13.02       4.63    2.81
+#PCGIRLS        26.98      15.68    1.72
+#FUNDMOM         0.22       0.06    3.44
+#COUNCILMOM     -0.22       0.06   -3.42
+#PROPCERT       15.39       6.10    2.52
+#SMRATIO        -0.01       0.01   -1.63
+#TCSHORT        -2.92       2.06   -1.41
+#TCFOCST        -0.73       2.28   -0.32
+#TCM_STUASS      9.54       9.04    1.05
+#TCM_PEER       -1.12       6.34   -0.18
+#TCH_INCENTV    -1.96       2.87   -0.69
+#R-squared      39.92       2.24   17.79
+
+# The student, teacher and pedagogical practices-related variables:
+
+R90 <- pisa.reg.pv(pvlabel="MATH", 
+                   x=c("VIETNAM",
+                       "PRESCHOOL", "REPEAT", "ST08Q01","ST115Q01","BOOK_N", "PARPRESSURE",
+                       "PCGIRLS", "FUNDMOM", "COUNCILMOM","PROPCERT","SMRATIO","TCSHORT",
+                       "TCFOCST","TCM_STUASS","TCM_PEER","TCH_INCENTV", "ASS_PROG","ASS_PROM",
+                       "ASS_SCH","STU_FEEDB","COMP_USE","TXT_BOOK"),
+                   weight="W_FSTUWT",
+                   data=DEVCON8g,export=FALSE)
+R90
+#Estimate Std. Error t value
+#(Intercept)   361.60      16.17   22.36
+#VIETNAM        92.43       7.01   13.19
+#PRESCHOOL      35.12       4.43    7.93
+#REPEAT        -43.77       3.82  -11.45
+#ST08Q01        -8.71       1.53   -5.70
+#ST115Q01       -5.02       1.95   -2.58
+#BOOK_N          0.08       0.01    5.96
+#PARPRESSURE    11.46       4.84    2.37
+#PCGIRLS        25.86      15.49    1.67
+#FUNDMOM         0.21       0.06    3.41
+#COUNCILMOM     -0.21       0.07   -3.25
+#PROPCERT       16.69       6.91    2.42
+#SMRATIO        -0.01       0.01   -1.42
+#TCSHORT        -2.33       2.02   -1.15
+#TCFOCST        -0.69       2.26   -0.31
+#TCM_STUASS     10.36       9.19    1.13
+#TCM_PEER       -0.51       6.34   -0.08
+#TCH_INCENTV    -2.37       3.05   -0.78
+#ASS_PROG      -20.53       8.36   -2.46
+#ASS_PROM       12.84       5.62    2.28
+#ASS_SCH         9.29       8.75    1.06
+#STU_FEEDB       1.73       5.45    0.32
+#COMP_USE        4.44       5.24    0.85
+#TXT_BOOK      -10.65       7.20   -1.48
+#R-squared      40.41       2.29   17.66
+
+# A bit dissapointing but at least it is going down
+
+# So it is easier to compare, let's just do here the student, teacher, pedagogical practices and school-related
+# variables again:
+
+R91 <- pisa.reg.pv(pvlabel="MATH", 
+                   x=c("VIETNAM",
+                       "PRESCHOOL", "REPEAT", "ST08Q01","ST115Q01","BOOK_N", "PARPRESSURE",
+                       "PCGIRLS", "FUNDMOM", "COUNCILMOM","PROPCERT","SMRATIO","TCSHORT",
+                       "TCFOCST","TCM_STUASS","TCM_PEER","TCH_INCENTV", "ASS_PROG","ASS_PROM",
+                       "ASS_SCH","STU_FEEDB","COMP_USE","TXT_BOOK","TOWN","CLSIZE","COMPWEB",
+                       "SCMATEDU","SCMATBUI","EXC2_PLAY","EXC6_MATHCOMP","EXC10_SPORT","EXC11_UNICORN",
+                       "SCL_EXTR_CL","SCORE_PUBLIC","LEADINST","QUAL_RECORD","SCHSEL"),
+                   weight="W_FSTUWT",
+                   data=DEVCON8g,export=FALSE)
+R91
+#Estimate Std. Error t value
+#(Intercept)     344.24      20.15   17.08
+#VIETNAM          76.91       7.79    9.87
+#PRESCHOOL        25.30       3.85    6.57
+#REPEAT          -37.56       3.09  -12.17
+#ST08Q01          -7.81       1.35   -5.77
+#ST115Q01         -5.42       1.89   -2.87
+#BOOK_N            0.07       0.01    5.30
+#PARPRESSURE      10.24       4.38    2.34
+#PCGIRLS          12.97      15.02    0.86
+#FUNDMOM           0.17       0.07    2.62
+#COUNCILMOM       -0.13       0.06   -2.18
+#PROPCERT         17.51       6.78    2.58
+#SMRATIO          -0.03       0.01   -2.00
+#TCSHORT           2.62       1.83    1.43
+#TCFOCST          -2.29       1.91   -1.20
+#TCM_STUASS       -0.27       7.90   -0.03
+#TCM_PEER         -5.08       5.56   -0.91
+#TCH_INCENTV      -3.26       2.80   -1.16
+#ASS_PROG        -18.66       8.28   -2.25
+#ASS_PROM         12.01       5.54    2.17
+#ASS_SCH          -0.67       8.00   -0.08
+#STU_FEEDB         1.33       4.90    0.27
+#COMP_USE         -2.21       5.29   -0.42
+#TXT_BOOK         -9.17       7.24   -1.27
+#TOWN             -9.09       3.69   -2.47
+#CLSIZE            0.81       0.24    3.32
+#COMPWEB          15.72       6.24    2.52
+#SCMATEDU          6.03       3.04    1.98
+#SCMATBUI          3.60       2.50    1.44
+#EXC2_PLAY         8.37       3.94    2.13
+#EXC6_MATHCOMP    -1.27       5.24   -0.24
+#EXC10_SPORT      -5.53       9.14   -0.61
+#EXC11_UNICORN     6.63       5.58    1.19
+#SCL_EXTR_CL      10.06       5.17    1.94
+#SCORE_PUBLIC      9.60       4.92    1.95
+#LEADINST          2.26       2.27    1.00
+#QUAL_RECORD       7.00       6.56    1.07
+#SCHSEL            1.14       3.21    0.36
+#R-squared        43.75       2.36   18.55
+
+# Overall, the four different sets decreased the Vietnam gap as follows:
+#                                                 abs	  abs_cum   %	  %_cum
+# Original:                       VIETNAM 125.99
+# Students:                       VIETNAM 97.34   -28.65	-28.65	23%	23%
+# Students & Teachers:            VIETNAM 93.51   -3.83	  -32.48	4%	26%
+# Student & Teach & Ped.Pract:    VIETNAM 92.43   -1.08	  -33.56	1%	27%
+# Stu & Tea & Ped.Prac & School:  VIETNAM 76.91   -15.52	-49.08	17%	39%
+
+# Please be careful how you use these figures, especially the non-cumulative percentages!
 
 
 
@@ -1792,6 +2500,29 @@ R71
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+################################ OLD REGRESSIONS AND/OR FOR LATER USE ################################
 
 ############### OLD REGRESSIONS (with HISCED, FISCED) ####################
 
@@ -2050,20 +2781,6 @@ R22
 #R-squared      40.46       1.96   20.67
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 ################ FOR LATER / NOTES ###############################################
 
 # So let"s do our first regression on the student related non-rotated variables
@@ -2092,19 +2809,6 @@ MATH0
 # (Intercept)   383.29       2.50  153.26
 # VIETNAM       128.05       5.65   22.68
 # R-squared      27.21       2.25   12.07
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 ########################################################### JUST TESTS #################################
@@ -2153,8 +2857,6 @@ TP1 <- DEVCON8a[, c("MATWKETH", "PERSEV", "OPENPS", "INTMAT", "INSTMOT", "SUBNOR
 NP1 <- NROW(na.omit(TP1))
 NP1 # 28364
 
-
-
 ############ THIS IS JUST NOTES or tests or for later use ##############
 
 # ST01 - GRADE
@@ -2175,9 +2877,7 @@ N1 <- NROW(na.omit(T1b)) # removes all NA's
 N1 # 0
 N0-N1 # 48483 NAs ---> no Financial Education data for (at least one of these) countries, lets leave it
 
-
-
-## FOR LATER:
+################################### FOR LATER: #######################################
 
 # Some of the PISA items were designed to be used in analyses as single items (for example, gender). However, most questionnaire
 # items were designed to be combined in some way in order to measure latent constructs that cannot be observed directly.
@@ -2185,7 +2885,7 @@ N0-N1 # 48483 NAs ---> no Financial Education data for (at least one of these) c
 # consult the PISA 2012 Technical Manual, Ch. 16
 
 
-### JUST for TESTING out: with and without deleting NA's ####################
+####################### JUST for TESTING out: with and without deleting NA's ####################
 
 R0 <- pisa.reg.pv(pvlabel="MATH", 
                   x=c("VIETNAM", 
@@ -2281,9 +2981,6 @@ R0
 DEVCON8b <- DEVCON8a[complete.cases(T1b),]
 
 
-
-
-
 length(DEVCON8$ST74Q01)
 
 is.na(DEVCON8$ST74Q01)
@@ -2305,7 +3002,6 @@ length(T1c$VIETNAM) # 43626
 # I work on dataframe of non-missing
 DEVCON8test <- DEVCON8a[complete.cases(T1b),]
 length(DEVCON8test$SC22Q13)
-
 
 T10 <- DEVCON8a[, c("VIETNAM")]
 N0 <- NROW(na.omit(T10))
