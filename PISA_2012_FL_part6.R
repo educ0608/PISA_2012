@@ -436,6 +436,38 @@ R166 # BKGR_FAMPROB decreases, SCMAT increases, ANXMAT decreases, BELONG increas
 # ATT_CONTROL increases
 # Vietnam 74.15
 
+# We have now checked all the student related variables from the rotational part 3. Let's group them into
+# decreasing and increasing variables 
+
+# Gap decreasing variables
+
+R166a <- pisa.reg.pv(pvlabel="MATH", 
+                     x=c("VIETNAM",
+                         "PRESCHOOL", "REPEAT", "ST08Q01","ST115Q01","BOOK_N", "PARPRESSURE",
+                         "PCGIRLS", "FUNDMOM", "COUNCILMOM","PROPCERT","SMRATIO","TCSHORT",
+                         "TCFOCST","TCM_STUASS","TCM_PEER","TCH_INCENTV", "ASS_PROG","ASS_PROM",
+                         "ASS_SCH","STU_FEEDB","COMP_USE","TXT_BOOK","TOWN","CLSIZE","COMPWEB",
+                         "SCMATEDU","SCMATBUI","EXC2_PLAY","EXC6_MATHCOMP","EXC10_SPORT","EXC11_UNICORN",
+                         "SCL_EXTR_CL","SCORE_PUBLIC","QUAL_RECORD","SCHSEL","BKGR_FAMPROB","ANXMAT",
+                         "ATSCHL","ATTLNACT"),
+                     weight="W_FSTUWT",
+                     data=DEVCON8k,export=FALSE)
+R166a # Vietnam 70.83 
+
+# Gap increasing variables
+
+R166b <- pisa.reg.pv(pvlabel="MATH", 
+                    x=c("VIETNAM",
+                        "PRESCHOOL", "REPEAT", "ST08Q01","ST115Q01","BOOK_N", "PARPRESSURE",
+                        "PCGIRLS", "FUNDMOM", "COUNCILMOM","PROPCERT","SMRATIO","TCSHORT",
+                        "TCFOCST","TCM_STUASS","TCM_PEER","TCH_INCENTV", "ASS_PROG","ASS_PROM",
+                        "ASS_SCH","STU_FEEDB","COMP_USE","TXT_BOOK","TOWN","CLSIZE","COMPWEB",
+                        "SCMATEDU","SCMATBUI","EXC2_PLAY","EXC6_MATHCOMP","EXC10_SPORT","EXC11_UNICORN",
+                        "SCL_EXTR_CL","SCORE_PUBLIC","QUAL_RECORD","SCHSEL","SCMAT","BELONG","ATT_CONTROL"),
+                    weight="W_FSTUWT",
+                    data=DEVCON8k,export=FALSE)
+R166b # Vietnam 80.53 
+
 R167 <- pisa.reg.pv(pvlabel="MATH", 
                     x=c("VIETNAM",
                         "PRESCHOOL", "REPEAT", "ST08Q01","ST115Q01","BOOK_N", "PARPRESSURE",
@@ -480,6 +512,39 @@ R169 <- pisa.reg.pv(pvlabel="MATH",
 R169 # BKGR_FAMPROB decreases, SCMAT increases, ANXMAT decreases, BELONG increases, ATSCHL decreases, ATTLNACT decreases
 # ATT_CONTROL increases, MTSUP decreases, STUDREL decreases, TCHQUAL_DIFF decreases
 # Vietnam 71.45
+
+# We have now checked all the students and teachers related variables from the rotational part 3. Let's group them into
+# decreasing and increasing variables 
+
+# Gap decreasing variables
+
+R169a <- pisa.reg.pv(pvlabel="MATH", 
+                    x=c("VIETNAM",
+                        "PRESCHOOL", "REPEAT", "ST08Q01","ST115Q01","BOOK_N", "PARPRESSURE",
+                        "PCGIRLS", "FUNDMOM", "COUNCILMOM","PROPCERT","SMRATIO","TCSHORT",
+                        "TCFOCST","TCM_STUASS","TCM_PEER","TCH_INCENTV", "ASS_PROG","ASS_PROM",
+                        "ASS_SCH","STU_FEEDB","COMP_USE","TXT_BOOK","TOWN","CLSIZE","COMPWEB",
+                        "SCMATEDU","SCMATBUI","EXC2_PLAY","EXC6_MATHCOMP","EXC10_SPORT","EXC11_UNICORN",
+                        "SCL_EXTR_CL","SCORE_PUBLIC","QUAL_RECORD","SCHSEL","BKGR_FAMPROB","ANXMAT",
+                        "ATSCHL","ATTLNACT","MTSUP","STUDREL","TCHQUAL_DIFF"),
+                    weight="W_FSTUWT",
+                    data=DEVCON8k,export=FALSE)
+R169a # Vietnam 67.41
+
+# Gap increasing variables
+
+R169b <- pisa.reg.pv(pvlabel="MATH", 
+                    x=c("VIETNAM",
+                        "PRESCHOOL", "REPEAT", "ST08Q01","ST115Q01","BOOK_N", "PARPRESSURE",
+                        "PCGIRLS", "FUNDMOM", "COUNCILMOM","PROPCERT","SMRATIO","TCSHORT",
+                        "TCFOCST","TCM_STUASS","TCM_PEER","TCH_INCENTV", "ASS_PROG","ASS_PROM",
+                        "ASS_SCH","STU_FEEDB","COMP_USE","TXT_BOOK","TOWN","CLSIZE","COMPWEB",
+                        "SCMATEDU","SCMATBUI","EXC2_PLAY","EXC6_MATHCOMP","EXC10_SPORT","EXC11_UNICORN",
+                        "SCL_EXTR_CL","SCORE_PUBLIC","QUAL_RECORD","SCHSEL","SCMAT",
+                        "BELONG","ATT_CONTROL"),
+                    weight="W_FSTUWT",
+                    data=DEVCON8k,export=FALSE)
+R169b # Vietnam 80.53 
 
 R170 <- pisa.reg.pv(pvlabel="MATH", 
                     x=c("VIETNAM",
