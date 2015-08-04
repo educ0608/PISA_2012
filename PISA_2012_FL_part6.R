@@ -12,11 +12,16 @@
 # approach taken is a modified dummy variable approach following Fryer and Levitt (2004).
 
 ##################################################################################
+# PLEASE NOTE THAT THIS IS THE FILE FOR THE MATH REGRESSIONS
+# For the Reading and Science regressions please see PISA_2012_FL_part7 onwards
+##################################################################################
+
+##################################################################################
 # Outline:
 # 1. GENERATING DATA SET (MERGING, CLEANING) (in part 1)
 # 2. DESCRIPTIVE STATISTICS WITH VIETNAM + 7 DEVELOPING COUNTRIES (in part 1)
 # 3. PISA SCORES (in part 1)
-# 4. REGRESSION ANALYSIS FOR MATH OF A MODIFIED FRYER & LEVITT (2004) APPROACH (see also part 2)
+# 4. REGRESSION ANALYSIS FOR MATH OF A MODIFIED FRYER & LEVITT (2004) APPROACH (Math: part 2 - part 6)
 ##################################################################################
 
 # Loading R packages to process PISA data:
@@ -52,53 +57,64 @@ N0
 
 ############# 4.2 Explanatory variables - Students, teachers, pedagogical practices and schools #############
 
-# 1. STUDENTS
-# 1.0 Background: First set: FEMALE, ST05Q01, REPEAT (indexed ST07), ST08Q01, ST09Q01, ST115Q01, Second set: MISCED, HISEI,
-# --------------WEALTH, CULTPOS, HEDRES, ST28Q01, ST91Q03 (Problems at home prevent from being good at school, rotated)
-# 1.1 Effort: MATWKETH (Math work ethics, rotated), ST55Q02 (Out-of-school lessons in math, rotated), ST57Q01-Q06
-# --------------(rotated, recommend to use individual rankings and not PISA 'OUTHOURS' index)
-# 1.2 Attitude: PERSEV (rotated), OPENPS (rotated), some of the following from 'Attitudes towards Math': INTMAT, 
-# --------------INSTMOT, SUBNORM, MATHEFF, ANXMAT, SCMAT, FAILMAT, MATWKETH, MATINTFC, MATBEH (all rotated), from 
-# --------------'Attitudes towards school': ATSCHL (Attitudes towards school: learning outcome, rotated), 
-# --------------ATTLNACT (Attitude towards School: learning activities, rotated), BELONG (Sense of belonging to school, rotated)
-# 1.3 Preparation/Content: EXAPPLM (Experience with applied math at school, rotated), EXPUREM (Experience with pure
-# --------------Math tasks at school, rotated), FAMCONC (same as FAMCON-FOIL, rotated)
-# 1.4 Home Support: SC25 (Parent Participation, SC), SC24Q01 (Parental Expectations, SC)
-# 1.5 Gender Balance: PCGIRLS (Proportion of girls enrolled at school, SC)
+# NON-ROTATED PART:
 
-# 2. TEACHERS
-# 2.1 Quantity: LMINS (rotated), MMINS (rotated), SMINS (rotated), STRATIO (Teacher-Student ratio, SC), PROPCERT 
-# --------------(Proportion of fully certified Teachers, SC), PROPQUAL (Proportion of teachers with an ISCED 5A qualification, SC),
-# --------------TCSHORT (Shortage of Teaching Staff, SC), SMRATIO (Student - Mathematics Teacher Ratio, SC)
-# 2.2 Quality: STUDREL (Teacher-Student Relations, rotated), 
-# --------------TEACHSUP or MTSUP (Teacher support in Math, rotated both in Form 3), SC35Q02 (Professional development on Maths for Math teachers, SC), 
-# --------------SC30Q04 (Teacher Monitoring through Inspector observation, SC), SC30Q02 (Teacher monitoring through peer review, SC), 
-# --------------SC30Q03 (Teacher Monitoring through staff, SC), SC30Q01 (Teacher practice measured through stdt achvmnt, SC), 
-# --------------SC31Q01-Q07 (Teacher incentives through appraisal), ST91Q04 (If had different teacher would try harder, rotated), 
-# --------------TCFOCST (Teacher Focus in Math, SC), SC39Q08 (Teacher Mentoring, SC)
+# 1. Students		
+# Background: FEMALE, ST05Q01, REPEAT (indexed ST07), ST08Q01, ST09Q01, ST115Q01, MISCED, HISEI,		
+# --------------WEALTH, CULTPOS, HEDRES, ST28Q01		
+# Home Support: SC25 (Parent Participation, SC), SC24Q01 (Parental Expectations, SC)		
+# Gender Balance: PCGIRLS (Proportion of girls enrolled at school, SC)
 
-# 3. PEDAGOGICAL PRACTICES
-# 3.0 General / student-perceived teaching practices: TCHBEHTD (Teacher-directed Instruction, rotated),
-# --------------TCHBEHSO (Student Orientation, rotated), SC40Q01-SC40Q03 (Practices in Maths, SC)
-# 3.1 Assessment: TCHBEHFA (Formative Assessment, rotated), ASSESS (SC, see p. 309) or better SC18Q01-Q08
-# 3.2 Cognitive Activation: COGACT (Cognitive Activation, rotated)
-# 3.3 Classroom Management: CLSMAN (Classroom Management, rotated), DISCLIMA (Disciplinary Climante, rotated),
-# --------------SC39Q07 (Seeking student feedback, SC)
+# 2. Teachers		
+# Quantity: STRATIO, PROPCERT, PROPQUAL, TCSHORT, SMRATIO		
+# Quality: TCFOCST, SC30Q01, SC30Q02, SC30Q03, SC30Q04, SC31Q01-Q07 (TCH incentive), SC39Q08, SC35Q02		
 
-# 4. SCHOOLS
-# 4.0 Type: SC01Q01 (Public or private school, SC), SC02Q02 (Revenues from student fees, SC), SC03Q01 (SC), SCHSIZE (SC)
-# 4.1 Resources: RATCMP15 (Availabilit of resources, SC), COMPWEB (PC for learning connected to the internet, SC),
-# --------------CLSIZE (Class Size based on SC05, SC) and/or ST72 (Students asked about class size, rotated), 
-# --------------SC16Q01-SC16Q11 (SC), 
-# --------------SCMATEDU (Quality of educ. resources, SC), SCMATBUI (Quality of Physical Infrastructure, SC),
-# --------------SC20Q01 (Additional maths lessons offered, SC)
-# 4.2 Leadership: LEADCOM (Framing Schools goal and curriculum, SC), LEADINST (Instructional Leadership, SC), 
-# --------------LEADPD (Promoting Development, SC), LEADTCH (Teacher Participation in Leadership, SC),
-# --------------SC19Q01 & SC19Q02 (if Student Achievement data is made available, SC), SCHAUTON (School autonomy, SC), 
-# --------------TCHPARTI (Teacher participation, SC), SC39Q03 (recording of student/teacher/test data, SC)
-# 4.3 Selectivity: SCHSEL (School Selectivity of students, SC) or SC32Q01-SC32Q07 (School selectivity - individual items, SC),
-# 4.4 Climate: STUDCLIM (Student aspects of school climate, SC), TEACCLIM (teacher aspects of school climate, SC), 
-# --------------TCMORALE (Teacher Morale, SC)
+# 3. Pedagogical practices		
+# General / student-perceived teaching practices: SC40Q01-SC40Q03 (Practices in Maths, SC)		
+# Assessment: SC18Q01-Q08		
+# Classroom Management: SC39Q07 (Seeking student feedback, SC)	
+
+# 4. Schools		
+# Type: SC01Q01 (Public or private school, SC), SC02Q02 (Revenues from student fees, SC), SC03Q01, SCHSIZE (SC)		
+# Resources: RATCMP15 (Availabilit of resources, SC), COMPWEB (PC for learning connected to the internet, SC),		
+# --------------CLSIZE (Class Size based on SC05, SC)		
+# --------------SC16Q01-Q11		
+# --------------SCMATEDU (Quality of educ. resources, SC), SCMATBUI (Quality of Physical Infrastructure, SC),		
+# --------------SC20Q01 (Additional maths lessons offered, SC)		
+#  Leadership: LEADCOM (Framing Schools goal and curriculum, SC), LEADINST (Instructional Leadership, SC), 		
+# --------------LEADPD (Promoting Development, SC), LEADTCH (Teacher Participation in Leadership, SC),		
+# --------------SC19Q01 & SC19Q02 (if Student Achievement data is made available, SC), SCHAUTON (School autonomy, SC), 		
+# --------------TCHPARTI (Teacher participation, SC), SC39Q03 (recording of student/teacher/test data, SC)		
+# Selectivity: SCHSEL (School Selectivity of students, SC)		
+# Climate: STUDCLIM (Student aspects of school climate, SC), TEACCLIM (teacher aspects of school climate, SC), 		
+# --------------TCMORALE (Teacher Morale, SC)		
+
+# ROTATED PART 1	
+
+# 1. Students	
+#-----Effort: MATWKETH	
+#-----Attitude: INSTMOT, INTMAT, SUBNORM, MATHEFF, FAILMAT, MATINTFC, MATBEH, PERSEV, OPENPS 	
+
+# ROTATED PART 2
+
+# 1. Students
+#-----Effort: ST55Q02 (Math lessons out of school), ST57Q01-Q06 (dropped for Math)
+#-----Preparation: EXAPPLM, EXPUREM, FACMCONC
+# 2. Teachers
+#-----Quantity: LMINS (minutes of language classes), MMINS (minutes of math classes), SMINS (minutes of science classes)
+
+# ROTATED PART 3
+
+# 1. Students
+#-----Background: ST91Q03
+#-----Attitude: SCMAT, ANXMAT, BELONG, ATSCHL, ATTLNACT, ST91Q02
+# 2. Teachers
+#----Quality: MTSUP, STUDREL, ST91Q04
+# 3. Pedagogical Practices
+#-----General: TCHBEHTD, TCHBEHSO
+#-----Assessment: TCHBEHFA
+#-----Cognitive Activation: COGACT
+#-----Classroom Management: CLSMAN, DISCLIMA
 
 ########################## 4.2.1 Explanatory Variables - rotated & non-rotated questions #######################
 

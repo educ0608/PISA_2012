@@ -12,11 +12,16 @@
 # approach taken is a modified dummy variable approach following Fryer and Levitt (2004).
 
 ##################################################################################
+# PLEASE NOTE THAT THIS IS THE FILE FOR THE MATH REGRESSIONS
+# For the Reading and Science regressions please see PISA_2012_FL_part7 onwards
+##################################################################################
+
+##################################################################################
 # Outline:
 # 1. GENERATING DATA SET (MERGING, CLEANING) (in part 1)
 # 2. DESCRIPTIVE STATISTICS WITH VIETNAM + 7 DEVELOPING COUNTRIES (in part 1)
 # 3. PISA SCORES (in part 1)
-# 4. REGRESSION ANALYSIS FOR MATH OF A MODIFIED FRYER & LEVITT (2004) APPROACH (see also part 2 and part 3)
+# 4. REGRESSION ANALYSIS FOR MATH OF A MODIFIED FRYER & LEVITT (2004) APPROACH (Math: part 2 - part 6)
 ##################################################################################
 
 # Loading R packages to process PISA data:
