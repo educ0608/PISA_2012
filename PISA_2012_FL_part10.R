@@ -426,6 +426,8 @@ R274 <- pisa.reg.pv(pvlabel="READ",
                     data=DEVCON8r,export=FALSE)
 R274 # VIETNAM  61.44 (same as R272)
 
+# Now for the teacher relatd variables 
+
 R275 <- pisa.reg.pv(pvlabel="READ", 
                     x=c("VIETNAM",
                         "FEMALE","PRESCHOOL", "REPEAT", "ST08Q01","ST115Q01","BOOK_N", "PARPRESSURE",
@@ -483,7 +485,7 @@ R278 <- pisa.reg.pv(pvlabel="READ",
 R278
 # VIETNAM 57.16 
 
-# Yes, LHRS does indeed decrease the Vietnam dummy (after all its Language hours taken outside of school)
+# Yes, LHRS does indeed decrease the Vietnam dummy
 # So let's quickly test the gap increasing variables and then we are done with this set
 
 R279 <- pisa.reg.pv(pvlabel="READ", 

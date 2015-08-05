@@ -336,9 +336,138 @@ R283 <- pisa.reg.pv(pvlabel="READ",
 R283 # BKGR_FAMPROB decreases, BELONG increases
 # Vietnam 58.12 
 
+R284 <- pisa.reg.pv(pvlabel="READ", 
+                    x=c("VIETNAM",
+                        "FEMALE","PRESCHOOL", "REPEAT", "ST08Q01","ST115Q01","BOOK_N", "PARPRESSURE",
+                        "PCGIRLS","VOLUMOM","FUNDMOM","COUNCILMOM","PROPCERT","TCSHORT",
+                        "TCM_STUASS","ASS_PROG","ASS_PROM","ASS_NAT","ASS_CUR","STU_FEEDB",
+                        "TOWN","CLSIZE","COMPWEB","SCMATEDU","SCMATBUI","EXC2_PLAY",
+                        "EXC6_MATHCOMP","EXC10_SPORT","EXC11_UNICORN","SCORE_PUBLIC","LEADINST",
+                        "QUAL_RECORD","SCHSEL","TEACCLIM","BKGR_FAMPROB","BELONG","ATSCHL"),
+                    weight="W_FSTUWT",
+                    data=DEVCON8s,export=FALSE)
+R284 # BKGR_FAMPROB decreases, BELONG increases, ATSCHL decreases
+# Vietnam 57.70
 
+R285 <- pisa.reg.pv(pvlabel="READ", 
+                    x=c("VIETNAM",
+                        "FEMALE","PRESCHOOL", "REPEAT", "ST08Q01","ST115Q01","BOOK_N", "PARPRESSURE",
+                        "PCGIRLS","VOLUMOM","FUNDMOM","COUNCILMOM","PROPCERT","TCSHORT",
+                        "TCM_STUASS","ASS_PROG","ASS_PROM","ASS_NAT","ASS_CUR","STU_FEEDB",
+                        "TOWN","CLSIZE","COMPWEB","SCMATEDU","SCMATBUI","EXC2_PLAY",
+                        "EXC6_MATHCOMP","EXC10_SPORT","EXC11_UNICORN","SCORE_PUBLIC","LEADINST",
+                        "QUAL_RECORD","SCHSEL","TEACCLIM","BKGR_FAMPROB","BELONG","ATSCHL","ATTLNACT"),
+                    weight="W_FSTUWT",
+                    data=DEVCON8s,export=FALSE)
+R285 # BKGR_FAMPROB decreases, BELONG increases, ATSCHL decreases, ATTLNACT decreases
+# Vietnam 55.99
 
+R286 <- pisa.reg.pv(pvlabel="READ", 
+                    x=c("VIETNAM",
+                        "FEMALE","PRESCHOOL", "REPEAT", "ST08Q01","ST115Q01","BOOK_N", "PARPRESSURE",
+                        "PCGIRLS","VOLUMOM","FUNDMOM","COUNCILMOM","PROPCERT","TCSHORT",
+                        "TCM_STUASS","ASS_PROG","ASS_PROM","ASS_NAT","ASS_CUR","STU_FEEDB",
+                        "TOWN","CLSIZE","COMPWEB","SCMATEDU","SCMATBUI","EXC2_PLAY",
+                        "EXC6_MATHCOMP","EXC10_SPORT","EXC11_UNICORN","SCORE_PUBLIC","LEADINST",
+                        "QUAL_RECORD","SCHSEL","TEACCLIM","BKGR_FAMPROB","BELONG","ATSCHL","ATTLNACT",
+                        "ATT_CONTROL"),
+                    weight="W_FSTUWT",
+                    data=DEVCON8s,export=FALSE)
+R286 # BKGR_FAMPROB decreases, BELONG increases, ATSCHL decreases, ATTLNACT decreases, ATT_CONTROL increases
+# Vietnam 57.55
 
+# We have now checked all the student related variables from the rotational part 3. Let's group them into
+# decreasing and increasing variables 
+
+# Gap decreasing variables
+
+R287 <- pisa.reg.pv(pvlabel="READ", 
+                    x=c("VIETNAM",
+                        "FEMALE","PRESCHOOL", "REPEAT", "ST08Q01","ST115Q01","BOOK_N", "PARPRESSURE",
+                        "PCGIRLS","VOLUMOM","FUNDMOM","COUNCILMOM","PROPCERT","TCSHORT",
+                        "TCM_STUASS","ASS_PROG","ASS_PROM","ASS_NAT","ASS_CUR","STU_FEEDB",
+                        "TOWN","CLSIZE","COMPWEB","SCMATEDU","SCMATBUI","EXC2_PLAY",
+                        "EXC6_MATHCOMP","EXC10_SPORT","EXC11_UNICORN","SCORE_PUBLIC","LEADINST",
+                        "QUAL_RECORD","SCHSEL","TEACCLIM","BKGR_FAMPROB","ATSCHL","ATTLNACT"),
+                    weight="W_FSTUWT",
+                    data=DEVCON8s,export=FALSE)
+R287
+# VIETNAM 55.25
+
+# Gap increasing variables:
+
+R288 <- pisa.reg.pv(pvlabel="READ", 
+                    x=c("VIETNAM",
+                        "FEMALE","PRESCHOOL", "REPEAT", "ST08Q01","ST115Q01","BOOK_N", "PARPRESSURE",
+                        "PCGIRLS","VOLUMOM","FUNDMOM","COUNCILMOM","PROPCERT","TCSHORT",
+                        "TCM_STUASS","ASS_PROG","ASS_PROM","ASS_NAT","ASS_CUR","STU_FEEDB",
+                        "TOWN","CLSIZE","COMPWEB","SCMATEDU","SCMATBUI","EXC2_PLAY",
+                        "EXC6_MATHCOMP","EXC10_SPORT","EXC11_UNICORN","SCORE_PUBLIC","LEADINST",
+                        "QUAL_RECORD","SCHSEL","TEACCLIM","BELONG","ATT_CONTROL"),
+                    weight="W_FSTUWT",
+                    data=DEVCON8s,export=FALSE)
+R288
+# VIETNAM 62.33
+
+# Testing the Teacher related variables:
+
+R289 <- pisa.reg.pv(pvlabel="READ", 
+                    x=c("VIETNAM",
+                        "FEMALE","PRESCHOOL", "REPEAT", "ST08Q01","ST115Q01","BOOK_N", "PARPRESSURE",
+                        "PCGIRLS","VOLUMOM","FUNDMOM","COUNCILMOM","PROPCERT","TCSHORT",
+                        "TCM_STUASS","ASS_PROG","ASS_PROM","ASS_NAT","ASS_CUR","STU_FEEDB",
+                        "TOWN","CLSIZE","COMPWEB","SCMATEDU","SCMATBUI","EXC2_PLAY",
+                        "EXC6_MATHCOMP","EXC10_SPORT","EXC11_UNICORN","SCORE_PUBLIC","LEADINST",
+                        "QUAL_RECORD","SCHSEL","TEACCLIM","BKGR_FAMPROB","BELONG","ATSCHL","ATTLNACT",
+                        "ATT_CONTROL","STUDREL"),
+                    weight="W_FSTUWT",
+                    data=DEVCON8s,export=FALSE)
+R289 # STUDREL decreases
+# VIETNAM 57.12 
+
+R290 <- pisa.reg.pv(pvlabel="READ", 
+                    x=c("VIETNAM",
+                        "FEMALE","PRESCHOOL", "REPEAT", "ST08Q01","ST115Q01","BOOK_N", "PARPRESSURE",
+                        "PCGIRLS","VOLUMOM","FUNDMOM","COUNCILMOM","PROPCERT","TCSHORT",
+                        "TCM_STUASS","ASS_PROG","ASS_PROM","ASS_NAT","ASS_CUR","STU_FEEDB",
+                        "TOWN","CLSIZE","COMPWEB","SCMATEDU","SCMATBUI","EXC2_PLAY",
+                        "EXC6_MATHCOMP","EXC10_SPORT","EXC11_UNICORN","SCORE_PUBLIC","LEADINST",
+                        "QUAL_RECORD","SCHSEL","TEACCLIM","BKGR_FAMPROB","BELONG","ATSCHL","ATTLNACT",
+                        "ATT_CONTROL","STUDREL","TCHQUAL_DIFF"),
+                    weight="W_FSTUWT",
+                    data=DEVCON8s,export=FALSE)
+R290 # STUDREL decreases, TCHQUAL_DIFF decreases
+# VIETNAM  55.08
+
+# All gap decreasing variables (Students & Teachers)
+
+R291 <- pisa.reg.pv(pvlabel="READ", 
+                    x=c("VIETNAM",
+                        "FEMALE","PRESCHOOL", "REPEAT", "ST08Q01","ST115Q01","BOOK_N", "PARPRESSURE",
+                        "PCGIRLS","VOLUMOM","FUNDMOM","COUNCILMOM","PROPCERT","TCSHORT",
+                        "TCM_STUASS","ASS_PROG","ASS_PROM","ASS_NAT","ASS_CUR","STU_FEEDB",
+                        "TOWN","CLSIZE","COMPWEB","SCMATEDU","SCMATBUI","EXC2_PLAY",
+                        "EXC6_MATHCOMP","EXC10_SPORT","EXC11_UNICORN","SCORE_PUBLIC","LEADINST",
+                        "QUAL_RECORD","SCHSEL","TEACCLIM","BKGR_FAMPROB","ATSCHL","ATTLNACT","STUDREL","TCHQUAL_DIFF"),
+                    weight="W_FSTUWT",
+                    data=DEVCON8s,export=FALSE)
+R291
+# VIETNAM 52.30
+
+# All Gap increasing variables (Students & Teachers) sames as R288:
+
+R292 <- pisa.reg.pv(pvlabel="READ", 
+                    x=c("VIETNAM",
+                        "FEMALE","PRESCHOOL", "REPEAT", "ST08Q01","ST115Q01","BOOK_N", "PARPRESSURE",
+                        "PCGIRLS","VOLUMOM","FUNDMOM","COUNCILMOM","PROPCERT","TCSHORT",
+                        "TCM_STUASS","ASS_PROG","ASS_PROM","ASS_NAT","ASS_CUR","STU_FEEDB",
+                        "TOWN","CLSIZE","COMPWEB","SCMATEDU","SCMATBUI","EXC2_PLAY",
+                        "EXC6_MATHCOMP","EXC10_SPORT","EXC11_UNICORN","SCORE_PUBLIC","LEADINST",
+                        "QUAL_RECORD","SCHSEL","TEACCLIM","BELONG","ATT_CONTROL"),
+                    weight="W_FSTUWT",
+                    data=DEVCON8s,export=FALSE)
+R292
+# VIETNAM 62.33
 
 
 
