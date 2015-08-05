@@ -140,13 +140,13 @@ N0
 #-----Quantity: LMINS (minutes of language classes), MMINS (minutes of math classes), SMINS (minutes of science classes)
 
 T1b <- DEVCON8a[, c("VIETNAM","ST04Q01","ST05Q01","REPEAT","ST08Q01","ST115Q01","ST28Q01","SC24Q01","PCGIRLS",
-                    "PROPCERT","TCSHORT","SC30Q01","SC18Q01","SC18Q02","SC18Q03","SC18Q04","SC18Q05",
-                    "SC18Q06","SC18Q07","SC18Q08","SC39Q07","CLSIZE","COMPWEB","SC03Q01","SCMATEDU","SCMATBUI",
+                    "PROPCERT","TCSHORT","SC30Q01","SC18Q01","SC18Q02","SC18Q04",
+                    "SC18Q07","SC39Q07","CLSIZE","COMPWEB","SC03Q01","SCMATEDU","SCMATBUI",
                     "SC16Q02","SC16Q06","SC16Q10","SC16Q11","SC19Q01","SC39Q03","LEADINST", "SCHSEL", "TEACCLIM",
                     "ST55Q01","LMINS","MMINS","SMINS")]
 N1 <- NROW(na.omit(T1b)) 
-N1 #12732
-N0-N1 #35751 NA's
+N1 #12778
+N0-N1 #35705 NA's
 DEVCON8r <- DEVCON8a[complete.cases(T1b),]
 
 # Let's prepare the relevant student variables again:
@@ -273,7 +273,7 @@ DEVCON8r$LHRS <- (DEVCON8r$LMINS)/60
 # R memory does not get all worked up:
 save(DEVCON8r, file = "C:/Users/WB484284/Desktop/PISAlatestversions/RFiles/PISA_2012/DEVCON8r.rda") 
 
-# First, remember, we have a smaller data set (12732 data points) compared to when we first regressed the Vietnam PISA Math score
+# First, remember, we have a smaller data set (12778 data points) compared to when we first regressed the Vietnam PISA Math score
 # (48483 data points); hence we regress again to get the correct size of the Vietnam dummy. 
 
 R267 <- pisa.reg.pv(pvlabel="READ", 
@@ -282,9 +282,9 @@ R267 <- pisa.reg.pv(pvlabel="READ",
                     data=DEVCON8r,export=FALSE)
 R267
 #Estimate Std. Error t value
-#(Intercept)   416.80       2.88  144.55
-#VIETNAM        98.01       5.52   17.74
-#R-squared      18.88       2.14    8.84
+#(Intercept)   416.75       2.87  144.97
+#VIETNAM        98.06       5.52   17.76
+#R-squared      18.88       2.13    8.84
 
 # Let's try our regression with all gap decreasing variables before we add the rotated parts
 
@@ -299,7 +299,7 @@ R268 <- pisa.reg.pv(pvlabel="READ",
                     weight="W_FSTUWT",
                     data=DEVCON8r,export=FALSE)
 R268
-# VIETNAM 57.29
+# VIETNAM 57.47
 
 R269 <- pisa.reg.pv(pvlabel="READ", 
                     x=c("VIETNAM",
@@ -312,7 +312,7 @@ R269 <- pisa.reg.pv(pvlabel="READ",
                     weight="W_FSTUWT",
                     data=DEVCON8r,export=FALSE)
 R269 # OUTREAD_NONE increases
-# VIETNAM 61.77
+# VIETNAM 61.90
 
 R270 <- pisa.reg.pv(pvlabel="READ", 
                     x=c("VIETNAM",
@@ -325,7 +325,7 @@ R270 <- pisa.reg.pv(pvlabel="READ",
                     weight="W_FSTUWT",
                     data=DEVCON8r,export=FALSE)
 R270 # OUTREAD_NONE increases, OUTREAD_LESS2 decreases
-# VIETNAM 61.50
+# VIETNAM 61.63
 
 R271 <- pisa.reg.pv(pvlabel="READ", 
                     x=c("VIETNAM",
@@ -338,7 +338,7 @@ R271 <- pisa.reg.pv(pvlabel="READ",
                     weight="W_FSTUWT",
                     data=DEVCON8r,export=FALSE)
 R271 # OUTREAD_NONE increases, OUTREAD_LESS2 decreases, OUTREAD_2TO4 decreases
-# VIETNAM 61.46
+# VIETNAM 61.61
 
 R272 <- pisa.reg.pv(pvlabel="READ", 
                     x=c("VIETNAM",
@@ -352,7 +352,7 @@ R272 <- pisa.reg.pv(pvlabel="READ",
                     weight="W_FSTUWT",
                     data=DEVCON8r,export=FALSE)
 R272 # OUTREAD_NONE increases, OUTREAD_LESS2 decreases, OUTREAD_2TO4 decreases, OUTREAD_4TO6 decreases
-# VIETNAM  61.44
+# VIETNAM  61.58 
 
 # Student Effort (OUTREAD) all gap decreasing:
 
@@ -368,7 +368,7 @@ R273 <- pisa.reg.pv(pvlabel="READ",
                     weight="W_FSTUWT",
                     data=DEVCON8r,export=FALSE)
 R273
-# VIETNAM   61.08
+# VIETNAM   61.22
 # This doesn't really make sense, that the Vietnam coefficent goes up after all. Let's check the OUTREAD variables individually
 
 R273a <- pisa.reg.pv(pvlabel="READ", 
@@ -381,7 +381,7 @@ R273a <- pisa.reg.pv(pvlabel="READ",
                         "QUAL_RECORD","SCHSEL","TEACCLIM","OUTREAD_LESS2"),
                     weight="W_FSTUWT",
                     data=DEVCON8r,export=FALSE)
-R273a # VIETNAM 58.58, OUTREAD_LESS2 increases
+R273a # VIETNAM 58.72, OUTREAD_LESS2 increases
 
 R273b <- pisa.reg.pv(pvlabel="READ", 
                      x=c("VIETNAM",
@@ -393,7 +393,7 @@ R273b <- pisa.reg.pv(pvlabel="READ",
                          "QUAL_RECORD","SCHSEL","TEACCLIM","OUTREAD_2TO4"),
                      weight="W_FSTUWT",
                      data=DEVCON8r,export=FALSE)
-R273b # VIETNAM 58.15, OUTREAD_2TO4 increases
+R273b # VIETNAM 58.33, OUTREAD_2TO4 increases
 
 R273c <- pisa.reg.pv(pvlabel="READ", 
                      x=c("VIETNAM",
@@ -405,7 +405,7 @@ R273c <- pisa.reg.pv(pvlabel="READ",
                          "QUAL_RECORD","SCHSEL","TEACCLIM","OUTREAD_4TO6"),
                      weight="W_FSTUWT",
                      data=DEVCON8r,export=FALSE)
-R273c # VIETNAM 57.77, OUTREAD_4TO6 increases
+R273c # VIETNAM 57.95, OUTREAD_4TO6 increases
 
 # So this is a case where OUTREAD_NONE increased the dummy significantly, so that adding the other OUTREAD variables
 # decreased it slightly. However, without OUTREAD_NONE, they are also increasing the dummy. We really have to count them
@@ -424,7 +424,7 @@ R274 <- pisa.reg.pv(pvlabel="READ",
                         "OUTREAD_4TO6"),
                     weight="W_FSTUWT",
                     data=DEVCON8r,export=FALSE)
-R274 # VIETNAM  61.44 (same as R272)
+R274 # VIETNAM  61.58 (same as R272)
 
 # Now for the teacher relatd variables 
 
@@ -440,7 +440,7 @@ R275 <- pisa.reg.pv(pvlabel="READ",
                     weight="W_FSTUWT",
                     data=DEVCON8r,export=FALSE)
 R275 # LHRS decreases
-#VIETNAM 61.22 
+#VIETNAM 61.37 
 
 R276 <- pisa.reg.pv(pvlabel="READ", 
                     x=c("VIETNAM",
@@ -454,7 +454,7 @@ R276 <- pisa.reg.pv(pvlabel="READ",
                     weight="W_FSTUWT",
                     data=DEVCON8r,export=FALSE)
 R276 # LHRS decreases, MHRS increases
-#VIETNAM 63.54
+#VIETNAM 63.66
 
 R277 <- pisa.reg.pv(pvlabel="READ", 
                     x=c("VIETNAM",
@@ -468,9 +468,9 @@ R277 <- pisa.reg.pv(pvlabel="READ",
                     weight="W_FSTUWT",
                     data=DEVCON8r,export=FALSE)
 R277 # LHRS decreases, MHRS increases, SHRS increases
-#VIETNAM 64.78
+#VIETNAM 64.93 
 
-# Again, we are vary as to whether LHRS really decreases the Vietnam dummy if applied alone, so let's see:
+# Let's try all gap decreasing variables:
 
 R278 <- pisa.reg.pv(pvlabel="READ", 
                     x=c("VIETNAM",
@@ -483,7 +483,7 @@ R278 <- pisa.reg.pv(pvlabel="READ",
                     weight="W_FSTUWT",
                     data=DEVCON8r,export=FALSE)
 R278
-# VIETNAM 57.16 
+# VIETNAM 57.34 
 
 # Yes, LHRS does indeed decrease the Vietnam dummy
 # So let's quickly test the gap increasing variables and then we are done with this set
@@ -500,4 +500,4 @@ R279 <- pisa.reg.pv(pvlabel="READ",
                     weight="W_FSTUWT",
                     data=DEVCON8r,export=FALSE)
 R279
-# VIETNAM 62.83
+# VIETNAM 62.99

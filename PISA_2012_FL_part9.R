@@ -144,13 +144,13 @@ N0
 #-----Attitude: PERSEV, OPENPS 
 
 T1b <- DEVCON8a[, c("VIETNAM","ST04Q01","ST05Q01","REPEAT","ST08Q01","ST115Q01","ST28Q01","SC24Q01","PCGIRLS",
-                    "PROPCERT","TCSHORT","SC30Q01","SC18Q01","SC18Q02","SC18Q03","SC18Q04","SC18Q05",
-                    "SC18Q06","SC18Q07","SC18Q08","SC39Q07","CLSIZE","COMPWEB","SC03Q01","SCMATEDU","SCMATBUI",
+                    "PROPCERT","TCSHORT","SC30Q01","SC18Q01","SC18Q02","SC18Q04","SC18Q07",
+                    "SC39Q07","CLSIZE","COMPWEB","SC03Q01","SCMATEDU","SCMATBUI",
                     "SC16Q02","SC16Q06","SC16Q10","SC16Q11","SC19Q01","SC39Q03","LEADINST", "SCHSEL", "TEACCLIM",
                     "PERSEV","OPENPS")]
 N1 <- NROW(na.omit(T1b)) 
-N1 #17433
-N0-N1 #31050 NA's
+N1 #17506
+N0-N1 #30977 NA's
 DEVCON8q <- DEVCON8a[complete.cases(T1b),]
 
 # Let's prepare the relevant student variables again:
@@ -263,7 +263,7 @@ DEVCON8q$QUAL_RECORD[DEVCON8q$SC39Q03==2] <- 0
 # R memory does not get all worked up:
 save(DEVCON8q, file = "C:/Users/WB484284/Desktop/PISAlatestversions/RFiles/PISA_2012/DEVCON8q.rda") 
 
-# First, remember, we have a smaller data set (17433 data points) compared to when we first regressed the Vietnam PISA Math score
+# First, remember, we have a smaller data set (17506 data points) compared to when we first regressed the Vietnam PISA Math score
 # (48483 data points); hence we regress again to get the correct size of the Vietnam dummy. 
 
 R262 <- pisa.reg.pv(pvlabel="READ", 
@@ -272,9 +272,9 @@ R262 <- pisa.reg.pv(pvlabel="READ",
                     data=DEVCON8q,export=FALSE)
 R262
 #Estimate Std. Error t value
-#(Intercept)   411.35       2.69  153.19
-#VIETNAM       102.88       5.51   18.68
-#R-squared      21.41       2.13   10.03
+#(Intercept)   411.23       2.66  154.37
+#VIETNAM       103.00       5.50   18.73
+#R-squared      21.41       2.13   10.04
 
 # Let's try our regression with all gap decreasing variables before we add the rotated parts
 
@@ -289,43 +289,9 @@ R263 <- pisa.reg.pv(pvlabel="READ",
                     weight="W_FSTUWT",
                     data=DEVCON8q,export=FALSE)
 R263
-#Estimate Std. Error t value
-#(Intercept)     326.27      21.14   15.43
-#VIETNAM          58.59       6.04    9.71
-#FEMALE           24.34       1.97   12.35
-#PRESCHOOL        26.37       3.41    7.73
-#REPEAT          -40.16       3.51  -11.43
-#ST08Q01          -6.45       1.54   -4.19
-#ST115Q01         -8.23       1.89   -4.36
-#BOOK_N            0.06       0.01    4.63
-#PARPRESSURE       2.71       4.11    0.66
-#PCGIRLS          18.93      11.37    1.67
-#VOLUMOM          -0.04       0.06   -0.60
-#FUNDMOM           0.10       0.06    1.61
-#COUNCILMOM       -0.12       0.06   -2.09
-#PROPCERT          1.48       5.59    0.27
-#TCSHORT           1.01       1.90    0.53
-#TCM_STUASS        8.87       9.34    0.95
-#ASS_PROG         -9.21      13.06   -0.70
-#ASS_PROM         12.88       5.68    2.27
-#ASS_NAT          -0.34       5.83   -0.06
-#ASS_CUR          -4.27       8.99   -0.47
-#STU_FEEDB         7.02       4.37    1.61
-#TOWN             -5.51       3.59   -1.53
-#CLSIZE            1.06       0.24    4.42
-#COMPWEB          14.04       5.65    2.48
-#SCMATEDU          4.77       2.69    1.77
-#SCMATBUI          1.31       2.49    0.53
-#EXC2_PLAY        13.22       3.95    3.34
-#EXC6_MATHCOMP     8.92       4.94    1.81
-#EXC10_SPORT      -2.94      11.87   -0.25
-#EXC11_UNICORN    11.63       5.12    2.27
-#SCORE_PUBLIC      4.94       4.15    1.19
-#LEADINST          1.13       2.03    0.56
-#QUAL_RECORD      -7.86       7.12   -1.10
-#SCHSEL            0.70       2.84    0.25
-#TEACCLIM         -1.96       2.73   -0.72
-#R-squared        42.20       2.20   19.18
+# VIETNAM: 58.99
+
+# Let's add our Rotated part 1 variables 
 
 R264 <- pisa.reg.pv(pvlabel="READ", 
                     x=c("VIETNAM",
@@ -338,7 +304,7 @@ R264 <- pisa.reg.pv(pvlabel="READ",
                     weight="W_FSTUWT",
                     data=DEVCON8q,export=FALSE)
 R264 # PERSEV decreases
-# VIETNAM: 58.02
+# VIETNAM: 58.43
 
 R265 <- pisa.reg.pv(pvlabel="READ", 
                     x=c("VIETNAM",
@@ -351,7 +317,7 @@ R265 <- pisa.reg.pv(pvlabel="READ",
                     weight="W_FSTUWT",
                     data=DEVCON8q,export=FALSE)
 R265 # PERSEV decreases, OPENPS increases
-# VIETNAM: 58.85
+# VIETNAM: 59.27
 
 # All gap decreasing is just R264
 
@@ -368,6 +334,6 @@ R266 <- pisa.reg.pv(pvlabel="READ",
                     weight="W_FSTUWT",
                     data=DEVCON8q,export=FALSE)
 R266
-# VIETNAM 60.82
+# VIETNAM: 61.22
 
 

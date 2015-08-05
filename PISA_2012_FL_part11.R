@@ -140,13 +140,13 @@ N0
 #----Quality: STUDREL, ST91Q04
 
 T1b <- DEVCON8a[, c("VIETNAM","ST04Q01","ST05Q01","REPEAT","ST08Q01","ST115Q01","ST28Q01","SC24Q01","PCGIRLS",
-                    "PROPCERT","TCSHORT","SC30Q01","SC18Q01","SC18Q02","SC18Q03","SC18Q04","SC18Q05",
-                    "SC18Q06","SC18Q07","SC18Q08","SC39Q07","CLSIZE","COMPWEB","SC03Q01","SCMATEDU","SCMATBUI",
+                    "PROPCERT","TCSHORT","SC30Q01","SC18Q01","SC18Q02","SC18Q04",
+                    "SC18Q07","SC39Q07","CLSIZE","COMPWEB","SC03Q01","SCMATEDU","SCMATBUI",
                     "SC16Q02","SC16Q06","SC16Q10","SC16Q11","SC19Q01","SC39Q03","LEADINST", "SCHSEL", "TEACCLIM",
                     "ST91Q03","BELONG","ATSCHL","ATTLNACT","ST91Q02","STUDREL","ST91Q04")]
 N1 <- NROW(na.omit(T1b)) 
-N1 #16760
-N0-N1 #31723 NA's
+N1 #16829
+N0-N1 #31654 NA's
 DEVCON8s <- DEVCON8a[complete.cases(T1b),]
 
 # Let's prepare the relevant student variables again:
@@ -291,9 +291,9 @@ R280 <- pisa.reg.pv(pvlabel="READ",
                     data=DEVCON8s,export=FALSE)
 R280
 #Estimate Std. Error t value
-#(Intercept)   412.01       2.62  157.51
-#VIETNAM       101.23       5.41   18.71
-#R-squared      21.12       2.07   10.19
+#(Intercept)   411.89       2.59  158.81
+#VIETNAM       101.36       5.40   18.76
+#R-squared      21.13       2.07   10.20
 
 # Let's try our regression with all gap decreasing variables before we add the rotated parts
 
@@ -308,7 +308,7 @@ R281 <- pisa.reg.pv(pvlabel="READ",
                     weight="W_FSTUWT",
                     data=DEVCON8s,export=FALSE)
 R281
-# VIETNAM 58.27
+# VIETNAM 58.65 
 
 R282 <- pisa.reg.pv(pvlabel="READ", 
                     x=c("VIETNAM",
@@ -321,7 +321,7 @@ R282 <- pisa.reg.pv(pvlabel="READ",
                     weight="W_FSTUWT",
                     data=DEVCON8s,export=FALSE)
 R282 # BKGR_FAMPROB decreases
-# Vietnam 55.31
+# Vietnam 55.74
 
 R283 <- pisa.reg.pv(pvlabel="READ", 
                     x=c("VIETNAM",
@@ -334,7 +334,7 @@ R283 <- pisa.reg.pv(pvlabel="READ",
                     weight="W_FSTUWT",
                     data=DEVCON8s,export=FALSE)
 R283 # BKGR_FAMPROB decreases, BELONG increases
-# Vietnam 58.12 
+# Vietnam 58.56
 
 R284 <- pisa.reg.pv(pvlabel="READ", 
                     x=c("VIETNAM",
@@ -347,7 +347,7 @@ R284 <- pisa.reg.pv(pvlabel="READ",
                     weight="W_FSTUWT",
                     data=DEVCON8s,export=FALSE)
 R284 # BKGR_FAMPROB decreases, BELONG increases, ATSCHL decreases
-# Vietnam 57.70
+# Vietnam 58.12
 
 R285 <- pisa.reg.pv(pvlabel="READ", 
                     x=c("VIETNAM",
@@ -360,7 +360,7 @@ R285 <- pisa.reg.pv(pvlabel="READ",
                     weight="W_FSTUWT",
                     data=DEVCON8s,export=FALSE)
 R285 # BKGR_FAMPROB decreases, BELONG increases, ATSCHL decreases, ATTLNACT decreases
-# Vietnam 55.99
+# Vietnam 56.39
 
 R286 <- pisa.reg.pv(pvlabel="READ", 
                     x=c("VIETNAM",
@@ -374,12 +374,12 @@ R286 <- pisa.reg.pv(pvlabel="READ",
                     weight="W_FSTUWT",
                     data=DEVCON8s,export=FALSE)
 R286 # BKGR_FAMPROB decreases, BELONG increases, ATSCHL decreases, ATTLNACT decreases, ATT_CONTROL increases
-# Vietnam 57.55
+# Vietnam 57.94
 
 # We have now checked all the student related variables from the rotational part 3. Let's group them into
 # decreasing and increasing variables 
 
-# Gap decreasing variables
+# Gap decreasing variables:
 
 R287 <- pisa.reg.pv(pvlabel="READ", 
                     x=c("VIETNAM",
@@ -392,7 +392,7 @@ R287 <- pisa.reg.pv(pvlabel="READ",
                     weight="W_FSTUWT",
                     data=DEVCON8s,export=FALSE)
 R287
-# VIETNAM 55.25
+# VIETNAM  55.65 
 
 # Gap increasing variables:
 
@@ -407,7 +407,7 @@ R288 <- pisa.reg.pv(pvlabel="READ",
                     weight="W_FSTUWT",
                     data=DEVCON8s,export=FALSE)
 R288
-# VIETNAM 62.33
+# VIETNAM 62.70
 
 # Testing the Teacher related variables:
 
@@ -423,7 +423,7 @@ R289 <- pisa.reg.pv(pvlabel="READ",
                     weight="W_FSTUWT",
                     data=DEVCON8s,export=FALSE)
 R289 # STUDREL decreases
-# VIETNAM 57.12 
+# VIETNAM 57.52
 
 R290 <- pisa.reg.pv(pvlabel="READ", 
                     x=c("VIETNAM",
@@ -437,7 +437,7 @@ R290 <- pisa.reg.pv(pvlabel="READ",
                     weight="W_FSTUWT",
                     data=DEVCON8s,export=FALSE)
 R290 # STUDREL decreases, TCHQUAL_DIFF decreases
-# VIETNAM  55.08
+# VIETNAM  55.49
 
 # All gap decreasing variables (Students & Teachers)
 
@@ -452,7 +452,7 @@ R291 <- pisa.reg.pv(pvlabel="READ",
                     weight="W_FSTUWT",
                     data=DEVCON8s,export=FALSE)
 R291
-# VIETNAM 52.30
+# VIETNAM 52.72
 
 # All Gap increasing variables (Students & Teachers) sames as R288:
 
@@ -467,7 +467,7 @@ R292 <- pisa.reg.pv(pvlabel="READ",
                     weight="W_FSTUWT",
                     data=DEVCON8s,export=FALSE)
 R292
-# VIETNAM 62.33
+# VIETNAM 62.70
 
 
 
