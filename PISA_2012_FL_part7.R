@@ -49,7 +49,7 @@ library(lme4)# To run mixed-effects models using Eigen and S4
 
 load("DEVCON8a.RDA")
 
-############### 5. REGRESSION ANALYSIS FOR READ OF A MODIFIED FRYER & LEVITT (2004) APPROACH ################
+################ 5. REGRESSION ANALYSIS FOR READ OF A MODIFIED FRYER & LEVITT (2004) APPROACH ################
 
 ################################## 5.1 Introduction & baseline regressions ##################################
 
