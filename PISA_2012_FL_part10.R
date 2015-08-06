@@ -255,6 +255,8 @@ DEVCON8r$SCORE_PUBLIC[DEVCON8r$SC19Q01==2] <- 0
 DEVCON8r$QUAL_RECORD[DEVCON8r$SC39Q03==1] <- 1
 DEVCON8r$QUAL_RECORD[DEVCON8r$SC39Q03==2] <- 0
 
+# The rotated part 2 variables:
+
 #ST55Q01
 #________________________________________________________________________________________________________
 # First I have to generate a series of dummy variables 

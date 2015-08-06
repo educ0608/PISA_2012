@@ -58,7 +58,7 @@ load("DEVCON8a.RDA")
 
 # So let's see first how many missing variables we have overall:
 
-# How big is our initital sample size? Two ways to check: 
+# How big is our initital sample size
 T0 <- DEVCON8a[, c("VIETNAM")] 
 N0<- NROW(na.omit(T0)) 
 N0 # 48483 data points (we already know that)
