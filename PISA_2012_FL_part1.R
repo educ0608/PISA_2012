@@ -229,7 +229,7 @@ DEVCON8$VIETNAM[DEVCON8$COUNTRY!=8] <- 0 # dummy takes value = 0, if the country
 
 names(DEVCON8) <- toupper(names(DEVCON8)) 
 
-# This will be the main file to work off so you might want to save it
+# Let's save it for now
 
 save(DEVCON8, file = "C:/Users/WB484284/Desktop/PISAlatestversions/RFiles/PISA_2012/DEVCON8.rda") 
 
@@ -330,7 +330,7 @@ arrows(400, 0.0052, 496, 0.0052)
 
 # We will keep DEVCON8 as a master file, so we create a new version for the subsequent steps
 
-save(DEVCON8, file = "C:/Users/WB484284/Desktop/PISAlatestversions/RFiles/PISA_2012/DEVCON8.rda")
+save(DEVCON8a, file = "C:/Users/WB484284/Desktop/PISAlatestversions/RFiles/PISA_2012/DEVCON8a.rda")
 
 ############################################## 3. PISA SCORES  ##############################################
 
@@ -400,7 +400,6 @@ READ0
 # Since we will now alter most of the initial file (delete missing cases, etc.) we create a new file (DEVON8a) and 
 # to have the masterfile (DEVCON8) as a back-up. 
 
-DEVCON8a <- DEVCON8
 save(DEVCON8a, file = "C:/Users/WB484284/Desktop/PISAlatestversions/RFiles/PISA_2012/DEVCON8a.rda") 
 
 
