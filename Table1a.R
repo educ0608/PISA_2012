@@ -325,7 +325,7 @@ G8stu1a <- DEVCON8a[, .(FEMALE ,  PRESCHOOL ,  REPEAT ,  ST08Q01 ,  ST09Q01 ,  S
                      MISCED ,  WEALTH ,  CULTPOS ,  HEDRES ,  BOOK_N ,  PARPRESSURE ,  PCGIRLS ,
                      TIGERMOM ,  VOLUMOM ,  TEACHMOM ,  FUNDMOM ,  COUNCILMOM)]
 
-G8stu1b1 <- summarise_each(G8stu1a, funs(MS(.,na.rm=TRUE)))
+G8stu1b1 <- summarise_each(G8stu1a, funs(mean(.,na.rm=TRUE)))
 G8stu1b2 <- summarise_each(G8stu1a,funs(sd(.,na.rm=TRUE)))
 G8stu1b3 <- summarise_each(G8stu1a,funs(Count(.)))
 
@@ -363,7 +363,7 @@ VNstu1a <- DEVCON8a[VIETNAM==1, .(FEMALE ,  PRESCHOOL ,  REPEAT, ST08Q01 ,  ST09
                                     MISCED ,  WEALTH ,  CULTPOS ,  HEDRES ,  BOOK_N ,  PARPRESSURE ,  PCGIRLS ,
                                     TIGERMOM ,  VOLUMOM ,  TEACHMOM ,  FUNDMOM ,  COUNCILMOM)]
                                     
-VNstu1b1 <- summarise_each(VNstu1a, funs(MS(.,na.rm=TRUE)))
+VNstu1b1 <- summarise_each(VNstu1a, funs(mean(.,na.rm=TRUE)))
 VNstu1b2 <- summarise_each(VNstu1a,funs(sd(.,na.rm=TRUE)))
 VNstu1b3 <- summarise_each(VNstu1a,funs(Count(.)))
 
@@ -408,7 +408,7 @@ G8tch1a <- DEVCON8a[, .(STRATIO ,  PROPCERT ,  PROPQUAL ,
                         SMRATIO , TCSHORT , TCFOCST , TCM_STUASS , TCM_PEER , TCM_OBSER , TCM_INSPE ,
                         TCH_INCENTV , SC35Q02 , TCH_MENT)]
 
-G8tch1b1 <- summarise_each(G8tch1a, funs(MS(.,na.rm=TRUE)))
+G8tch1b1 <- summarise_each(G8tch1a, funs(mean(.,na.rm=TRUE)))
 G8tch1b2 <- summarise_each(G8tch1a,funs(sd(.,na.rm=TRUE)))
 G8tch1b3 <- summarise_each(G8tch1a,funs(Count(.)))
 
@@ -446,7 +446,7 @@ VNtch1a <- DEVCON8a[VIETNAM==1, .(STRATIO ,  PROPCERT ,  PROPQUAL ,
                                   SMRATIO , TCSHORT , TCFOCST , TCM_STUASS , TCM_PEER , TCM_OBSER , TCM_INSPE ,
                                   TCH_INCENTV , SC35Q02 , TCH_MENT)]
 
-VNtch1b1 <- summarise_each(VNtch1a, funs(MS(.,na.rm=TRUE)))
+VNtch1b1 <- summarise_each(VNtch1a, funs(mean(.,na.rm=TRUE)))
 VNtch1b2 <- summarise_each(VNtch1a,funs(sd(.,na.rm=TRUE)))
 VNtch1b3 <- summarise_each(VNtch1a,funs(Count(.)))
 
@@ -490,7 +490,7 @@ G8ped1a <- DEVCON8a[, .(ASS_PROG , ASS_PROM ,
                         ASS_INSTR , ASS_NAT , ASS_SCH , ASS_TCH , ASS_CUR , ASS_OTH , STU_FEEDB ,
                         COMP_USE , TXT_BOOK , STD_CUR)]
 
-G8ped1b1 <- summarise_each(G8ped1a, funs(MS(.,na.rm=TRUE)))
+G8ped1b1 <- summarise_each(G8ped1a, funs(mean(.,na.rm=TRUE)))
 G8ped1b2 <- summarise_each(G8ped1a,funs(sd(.,na.rm=TRUE)))
 G8ped1b3 <- summarise_each(G8ped1a,funs(Count(.)))
 
@@ -528,7 +528,7 @@ VNped1a <- DEVCON8a[VIETNAM==1, .(ASS_PROG , ASS_PROM ,
                                   ASS_INSTR , ASS_NAT , ASS_SCH , ASS_TCH , ASS_CUR , ASS_OTH , STU_FEEDB ,
                                   COMP_USE , TXT_BOOK , STD_CUR)]
 
-VNped1b1 <- summarise_each(VNped1a, funs(MS(.,na.rm=TRUE)))
+VNped1b1 <- summarise_each(VNped1a, funs(mean(.,na.rm=TRUE)))
 VNped1b2 <- summarise_each(VNped1a,funs(sd(.,na.rm=TRUE)))
 VNped1b3 <- summarise_each(VNped1a,funs(Count(.)))
 
@@ -575,7 +575,7 @@ G8scu1a <- DEVCON8a[, .(PRIVATESCL , SC02Q02 , DUM_VILLAGE , TOWN , CITY ,
                         SCORE_PUBLIC , SCORE_AUTHRITS , SCHAUTON , TCHPARTI , LEADCOM , LEADINST , LEADPD ,
                         LEADTCH , QUAL_RECORD , SCHSEL , STUDCLIM , TEACCLIM , TCMORALE)]
 
-G8scu1b1 <- summarise_each(G8scu1a, funs(MS(.,na.rm=TRUE)))
+G8scu1b1 <- summarise_each(G8scu1a, funs(mean(.,na.rm=TRUE)))
 G8scu1b2 <- summarise_each(G8scu1a,funs(sd(.,na.rm=TRUE)))
 G8scu1b3 <- summarise_each(G8scu1a,funs(Count(.)))
 
@@ -613,7 +613,7 @@ VNscu1a <- DEVCON8a[VIETNAM==1, .(ASS_PROG , ASS_PROM ,
                                   ASS_INSTR , ASS_NAT , ASS_SCH , ASS_TCH , ASS_CUR , ASS_OTH , STU_FEEDB ,
                                   COMP_USE , TXT_BOOK , STD_CUR)]
 
-VNscu1b1 <- summarise_each(VNscu1a, funs(MS(.,na.rm=TRUE)))
+VNscu1b1 <- summarise_each(VNscu1a, funs(mean(.,na.rm=TRUE)))
 VNscu1b2 <- summarise_each(VNscu1a,funs(sd(.,na.rm=TRUE)))
 VNscu1b3 <- summarise_each(VNscu1a,funs(Count(.)))
 
@@ -657,7 +657,7 @@ print(xtable(flaxscu),include.rownames = FALSE) # this generates the latex table
 G8rota1a <- DEVCON8a[, .( MATWKETH , INSTMOT , INTMAT ,
                           SUBNORM , MATHEFF , FAILMAT , MATINTFC , MATBEH , PERSEV , OPENPS)]
 
-G8rota1b1 <- summarise_each(G8rota1a, funs(MS(.,na.rm=TRUE)))
+G8rota1b1 <- summarise_each(G8rota1a, funs(mean(.,na.rm=TRUE)))
 G8rota1b2 <- summarise_each(G8rota1a,funs(sd(.,na.rm=TRUE)))
 G8rota1b3 <- summarise_each(G8rota1a,funs(Count(.)))
 
@@ -695,7 +695,7 @@ flax1rota[c(seq),MS:=paste0("(",MS,")")]
 VNrota1a <- DEVCON8a[VIETNAM==1, .( MATWKETH , INSTMOT , INTMAT ,
                                     SUBNORM , MATHEFF , FAILMAT , MATINTFC , MATBEH , PERSEV , OPENPS)]
 
-VNrota1b1 <- summarise_each(VNrota1a, funs(MS(.,na.rm=TRUE)))
+VNrota1b1 <- summarise_each(VNrota1a, funs(mean(.,na.rm=TRUE)))
 VNrota1b2 <- summarise_each(VNrota1a,funs(sd(.,na.rm=TRUE)))
 VNrota1b3 <- summarise_each(VNrota1a,funs(Count(.)))
 
@@ -740,7 +740,7 @@ G8rotb1a <- DEVCON8a[, .( OUTMATH_NONE , OUTMATH_LESS2 , OUTMATH_2TO4 , OUTMATH_
                           OUTSCIE_NONE , OUTSCIE_LESS2 , OUTSCIE_2TO4 , OUTSCIE_4TO6 ,
                           EXAPPLM , EXPUREM , FAMCONC , LHRS , MHRS , SHRS)]
 
-G8rotb1b1 <- summarise_each(G8rotb1a, funs(MS(.,na.rm=TRUE)))
+G8rotb1b1 <- summarise_each(G8rotb1a, funs(mean(.,na.rm=TRUE)))
 G8rotb1b2 <- summarise_each(G8rotb1a,funs(sd(.,na.rm=TRUE)))
 G8rotb1b3 <- summarise_each(G8rotb1a,funs(Count(.)))
 
@@ -779,7 +779,7 @@ VNrotb1a <- DEVCON8a[VIETNAM==1, .(OUTMATH_NONE , OUTMATH_LESS2 , OUTMATH_2TO4 ,
                                    OUTSCIE_NONE , OUTSCIE_LESS2 , OUTSCIE_2TO4 , OUTSCIE_4TO6 ,
                                    EXAPPLM , EXPUREM , FAMCONC , LHRS , MHRS , SHRS)]
 
-VNrotb1b1 <- summarise_each(VNrotb1a, funs(MS(.,na.rm=TRUE)))
+VNrotb1b1 <- summarise_each(VNrotb1a, funs(mean(.,na.rm=TRUE)))
 VNrotb1b2 <- summarise_each(VNrotb1a,funs(sd(.,na.rm=TRUE)))
 VNrotb1b3 <- summarise_each(VNrotb1a,funs(Count(.)))
 
@@ -823,7 +823,7 @@ G8rotc1a <- DEVCON8a[, .(BKGR_FAMPROB , SCMAT , ANXMAT ,
                          BELONG , ATSCHL , ATTLNACT , ATT_CONTROL , MTSUP , STUDREL , TCHQUAL_DIFF , TCHBEHTD ,
                          TCHBEHSO , TCHBEHFA , COGACT , CLSMAN , DISCLIMA)]
 
-G8rotc1b1 <- summarise_each(G8rotc1a, funs(MS(.,na.rm=TRUE)))
+G8rotc1b1 <- summarise_each(G8rotc1a, funs(mean(.,na.rm=TRUE)))
 G8rotc1b2 <- summarise_each(G8rotc1a,funs(sd(.,na.rm=TRUE)))
 G8rotc1b3 <- summarise_each(G8rotc1a,funs(Count(.)))
 
@@ -861,7 +861,7 @@ VNrotc1a <- DEVCON8a[VIETNAM==1, .(BKGR_FAMPROB , SCMAT , ANXMAT ,
                                    BELONG , ATSCHL , ATTLNACT , ATT_CONTROL , MTSUP , STUDREL , TCHQUAL_DIFF , TCHBEHTD ,
                                    TCHBEHSO , TCHBEHFA , COGACT , CLSMAN , DISCLIMA)]
 
-VNrotc1b1 <- summarise_each(VNrotc1a, funs(MS(.,na.rm=TRUE)))
+VNrotc1b1 <- summarise_each(VNrotc1a, funs(mean(.,na.rm=TRUE)))
 VNrotc1b2 <- summarise_each(VNrotc1a,funs(sd(.,na.rm=TRUE)))
 VNrotc1b3 <- summarise_each(VNrotc1a,funs(Count(.)))
 
