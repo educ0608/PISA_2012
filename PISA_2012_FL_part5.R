@@ -126,10 +126,6 @@ N0
 # We will add the rotated variables according to the subsector (students, teachers, etc) they belong to (see our schematic structure)
 # and within, as always, in order that they have been asked
 
-
-# We will add the rotated variables according to the subsector (students, teachers, etc) they belong to (see our schematic structure)
-# and within, as always, in order that they have been asked
-
 # 1. STUDENTS
 #-----Effort: ST55Q02 (Math lessons out of school), ST57Q01-Q06
 #-----Preparation: EXAPPLM, EXPUREM, FACMCONC

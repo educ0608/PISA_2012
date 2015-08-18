@@ -5,6 +5,21 @@
 # Contains variables separated by sections (students, teachers, ped.practice, schools, rotated part 1
 # rotated part 2, rotated part 3)
 
+# Admin packages
+library(foreign)# To import and export data to and from R (eg. txt files)
+library(xlsx)# To generate MS-Excel output
+library(epicalc)# For producing descriptives of data
+library(tables) # Computes and displays complex tables of summary statistics
+library(stargazer)# For latex regression and summary statistics tables
+
+# Modeling packages
+library(intsvy)# For PISA (and TIMSS, PIRLS, etc) analysis with Plausible Values (PV) and Balanced Repeated Replication (BRR)
+library(TDMR)# For tuned data mining in R - eg. detect column of constants in dataframe
+library(gmodels)# For model fitting, contains various R programming tools (eg. PROC FREQ like tables)
+library(psych)# For rescaling variables to given mean and sd
+library(sm)# for locally smoothed regressions and density estimation
+library(lme4)# To run mixed-effects models using Eigen and S4
+
 library(data.table) # to generate tables
 library(dplyr) # to perform aggregations easily
 library(xtable) # to generate latex table from R primitive
@@ -119,9 +134,9 @@ DEVCON8a$TCH_MENT[DEVCON8a$SC39Q08==2] <- 0
 
 #SC31Q01 - SC31Q07
 #________________________________________________________________________________________________________________
-SC31OUT.rda <- read.csv("C:/Users/WB484284/Desktop/PISAlaDEVCON8aversions/RFiles/PISA_2012/SC31DATOUT.csv")
+SC31OUT.rda <- read.csv("C:/Users/WB484284/Desktop/PISAlatestversions/RFiles/PISA_2012/SC31DATOUT.csv")
 DEVCON8a <- merge(DEVCON8a,SC31OUT.rda,by="NEWID")
-DEVCON8a$TCH_INCENTV <- rescale(DEVCON8a$WMLE_SC31, MS = 0, sd = 1,df=FALSE)
+DEVCON8a$TCH_INCENTV <- rescale(DEVCON8a$WMLE_SC31, mean = 0, sd = 1,df=FALSE)
 
 # Pedagogical Practices variables 
 
@@ -322,8 +337,12 @@ Count <- function(x) base::length(which(complete.cases(x) == TRUE))
 
 # We generate an extract from the DEVCON8a set with all variables we used in our regressions
 G8stu1a <- DEVCON8a[, .(FEMALE ,  PRESCHOOL ,  REPEAT ,  ST08Q01 ,  ST09Q01 ,  ST115Q01 ,  HISEI ,
-                     MISCED ,  WEALTH ,  CULTPOS ,  HEDRES ,  BOOK_N ,  PARPRESSURE ,  PCGIRLS ,
-                     TIGERMOM ,  VOLUMOM ,  TEACHMOM ,  FUNDMOM ,  COUNCILMOM)]
+                     MISCED ,  WEALTH ,  CULTPOS ,  HEDRES ,  BOOK_N, MATWKETH, OUTMATH_NONE,
+                     OUTMATH_LESS2, OUTMATH_2TO4, OUTMATH_4TO6, OUTREAD_NONE, OUTREAD_LESS2, OUTREAD_2TO4,
+                     OUTREAD_4TO6, OUTSCIE_NONE, OUTSCIE_LESS2, OUTSCIE_2TO4, OUTSCIE_4TO6, INSTMOT, INTMAT,
+                     SUBNORM, MATHEFF, FAILMAT, MATINTFC, MATBEH, PERSEV, OPENPS, SCMAT, ANXMAT, BELONG, ATSCHL, ATTLNACT,
+                     ATT_CONTROL, EXAPPLM, EXPUREM, FAMCONC, PARPRESSURE,  
+                     TIGERMOM,  VOLUMOM,  TEACHMOM,  FUNDMOM,  COUNCILMOM,BKGR_FAMPROB)]
 
 G8stu1b1 <- summarise_each(G8stu1a, funs(mean(.,na.rm=TRUE)))
 G8stu1b2 <- summarise_each(G8stu1a,funs(sd(.,na.rm=TRUE)))
@@ -347,9 +366,10 @@ as.matrix(blix) -> blax # I have to convert blix into a matrix so I can cbind it
 flax1stu<- cbind(mt1,blax) # Now I have the format I need with extra elements I have to delete
 setnames(flax1stu,c("V1"),c("Valid N"))
 
-seq <- seq(2,38,by=2) # I will need to use 2,38 for the actual version as there are 19 variables
+seq <- seq(2,100,by=2) # I will need to use 2,38 for the actual version as there are 50 variables
 
-flax1stu[c(2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38),
+flax1stu[c(2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62,64,66,68,70,
+           72,74,76,78,80,82,84,86,88,90,92,94,96,98,100),
      c("Variable","Valid N"):=""] # this eliminates the values
 
 flax1stu[, MS:=as.character(MS)]
@@ -359,9 +379,13 @@ flax1stu[c(seq),MS:=paste0("(",MS,")")]
 
 # We generate a Vietnam extract from the DEVCON8a set with all variables we used in our regressions
 
-VNstu1a <- DEVCON8a[VIETNAM==1, .(FEMALE ,  PRESCHOOL ,  REPEAT, ST08Q01 ,  ST09Q01 ,  ST115Q01 ,  HISEI ,
-                                    MISCED ,  WEALTH ,  CULTPOS ,  HEDRES ,  BOOK_N ,  PARPRESSURE ,  PCGIRLS ,
-                                    TIGERMOM ,  VOLUMOM ,  TEACHMOM ,  FUNDMOM ,  COUNCILMOM)]
+VNstu1a <- DEVCON8a[VIETNAM==1, .(FEMALE ,  PRESCHOOL ,  REPEAT ,  ST08Q01 ,  ST09Q01 ,  ST115Q01 ,  HISEI ,
+                                  MISCED ,  WEALTH ,  CULTPOS ,  HEDRES ,  BOOK_N , MATWKETH, OUTMATH_NONE,
+                                  OUTMATH_LESS2, OUTMATH_2TO4, OUTMATH_4TO6, OUTREAD_NONE, OUTREAD_LESS2, OUTREAD_2TO4,
+                                  OUTREAD_4TO6, OUTSCIE_NONE, OUTSCIE_LESS2, OUTSCIE_2TO4, OUTSCIE_4TO6, INSTMOT, INTMAT,
+                                  SUBNORM, MATHEFF, FAILMAT, MATINTFC, MATBEH, PERSEV, OPENPS, SCMAT, ANXMAT, BELONG, ATSCHL, ATTLNACT,
+                                  ATT_CONTROL, EXAPPLM, EXPUREM, FAMCONC, PARPRESSURE,  
+                                  TIGERMOM,  VOLUMOM,  TEACHMOM,  FUNDMOM,  COUNCILMOM, BKGR_FAMPROB)]
                                     
 VNstu1b1 <- summarise_each(VNstu1a, funs(mean(.,na.rm=TRUE)))
 VNstu1b2 <- summarise_each(VNstu1a,funs(sd(.,na.rm=TRUE)))
@@ -385,7 +409,8 @@ as.matrix(blix) -> blax # I have to convert blix into a matrix so I can cbind it
 flax2stu<- cbind(mt1,blax) # Now I have the format I need with extra elements I have to delete
 setnames(flax2stu,c("Variable","V1"),c("Variable1","Valid N"))
 
-flax2stu[c(2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38),
+flax2stu[c(2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62,64,66,68,70,
+           72,74,76,78,80,82,84,86,88,90,92,94,96,98,100),
          c("Variable1","Valid N"):=""] # this eliminates the values
 
 flax2stu[, MS:=as.character(MS)]
@@ -405,8 +430,8 @@ print(xtable(flaxstu),include.rownames = FALSE) # this generates the latex table
 
 # We generate an extract from the DEVCON8a set with all variables we used in our regressions
 G8tch1a <- DEVCON8a[, .(STRATIO ,  PROPCERT ,  PROPQUAL ,
-                        SMRATIO , TCSHORT , TCFOCST , TCM_STUASS , TCM_PEER , TCM_OBSER , TCM_INSPE ,
-                        TCH_INCENTV , SC35Q02 , TCH_MENT)]
+                        SMRATIO , TCSHORT , LMINS, SMINS, MMINS,TCFOCST , TCM_STUASS , TCM_PEER , TCM_OBSER , TCM_INSPE ,
+                        TCH_INCENTV , SC35Q02 , TCH_MENT, MTSUP, STUDREL, TCHQUAL_DIFF)]
 
 G8tch1b1 <- summarise_each(G8tch1a, funs(mean(.,na.rm=TRUE)))
 G8tch1b2 <- summarise_each(G8tch1a,funs(sd(.,na.rm=TRUE)))
@@ -430,9 +455,9 @@ as.matrix(blix) -> blax # I have to convert blix into a matrix so I can cbind it
 flax1tch<- cbind(mt1,blax) # Now I have the format I need with extra elements I have to delete
 setnames(flax1tch,c("V1"),c("Valid N"))
 
-seq <- seq(2,26,by=2) # I will need to use 2,38 for the actual version as there are 13 variables
+seq <- seq(2,38,by=2) # I will need to use 2,38 for the actual version as there are 19 variables
 
-flax1tch[c(2,4,6,8,10,12,14,16,18,20,22,24,26),
+flax1tch[c(2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38),
          c("Variable","Valid N"):=""] # this eliminates the values
 
 flax1tch[, MS:=as.character(MS)]
@@ -443,8 +468,8 @@ flax1tch[c(seq),MS:=paste0("(",MS,")")]
 # We generate a Vietnam extract from the DEVCON8a set with all variables we used in our regressions
 
 VNtch1a <- DEVCON8a[VIETNAM==1, .(STRATIO ,  PROPCERT ,  PROPQUAL ,
-                                  SMRATIO , TCSHORT , TCFOCST , TCM_STUASS , TCM_PEER , TCM_OBSER , TCM_INSPE ,
-                                  TCH_INCENTV , SC35Q02 , TCH_MENT)]
+                                  SMRATIO , TCSHORT , LMINS, SMINS, MMINS,TCFOCST , TCM_STUASS , TCM_PEER , TCM_OBSER , TCM_INSPE ,
+                                  TCH_INCENTV , SC35Q02 , TCH_MENT, MTSUP, STUDREL, TCHQUAL_DIFF)]
 
 VNtch1b1 <- summarise_each(VNtch1a, funs(mean(.,na.rm=TRUE)))
 VNtch1b2 <- summarise_each(VNtch1a,funs(sd(.,na.rm=TRUE)))
@@ -468,7 +493,7 @@ as.matrix(blix) -> blax # I have to convert blix into a matrix so I can cbind it
 flax2tch<- cbind(mt1,blax) # Now I have the format I need with extra elements I have to delete
 setnames(flax2tch,c("Variable","V1"),c("Variable1","Valid N"))
 
-flax2tch[c(2,4,6,8,10,12,14,16,18,20,22,24,26),
+flax2tch[c(2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38),
          c("Variable1","Valid N"):=""] # this eliminates the values
 
 flax2tch[, MS:=as.character(MS)]
@@ -486,9 +511,9 @@ print(xtable(flaxtch),include.rownames = FALSE) # this generates the latex table
 ### The G8 countries:
 
 # We generate an extract from the DEVCON8a set with all variables we used in our regressions
-G8ped1a <- DEVCON8a[, .(ASS_PROG , ASS_PROM ,
-                        ASS_INSTR , ASS_NAT , ASS_SCH , ASS_TCH , ASS_CUR , ASS_OTH , STU_FEEDB ,
-                        COMP_USE , TXT_BOOK , STD_CUR)]
+G8ped1a <- DEVCON8a[, .(COMP_USE , TXT_BOOK , STD_CUR, TCHBEHTD, TCHBEHSO, ASS_PROG , ASS_PROM ,
+                        ASS_INSTR , ASS_NAT , ASS_SCH , ASS_TCH , ASS_CUR , ASS_OTH , TCHBEHFA, COGACT,
+                        STU_FEEDB , CLSMAN, DISCLIMA)]
 
 G8ped1b1 <- summarise_each(G8ped1a, funs(mean(.,na.rm=TRUE)))
 G8ped1b2 <- summarise_each(G8ped1a,funs(sd(.,na.rm=TRUE)))
@@ -512,9 +537,9 @@ as.matrix(blix) -> blax # I have to convert blix into a matrix so I can cbind it
 flax1ped<- cbind(mt1,blax) # Now I have the format I need with extra elements I have to delete
 setnames(flax1ped,c("V1"),c("Valid N"))
 
-seq <- seq(2,24,by=2) # I will need to use 2,38 for the actual version as there are 13 variables
+seq <- seq(2,36,by=2) # I will need to use 2,38 for the actual version as there are 18 variables
 
-flax1ped[c(2,4,6,8,10,12,14,16,18,20,22,24),
+flax1ped[c(2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36),
          c("Variable","Valid N"):=""] # this eliminates the values
 
 flax1ped[, MS:=as.character(MS)]
@@ -524,9 +549,9 @@ flax1ped[c(seq),MS:=paste0("(",MS,")")]
 
 # We generate a Vietnam extract from the DEVCON8a set with all variables we used in our regressions
 
-VNped1a <- DEVCON8a[VIETNAM==1, .(ASS_PROG , ASS_PROM ,
-                                  ASS_INSTR , ASS_NAT , ASS_SCH , ASS_TCH , ASS_CUR , ASS_OTH , STU_FEEDB ,
-                                  COMP_USE , TXT_BOOK , STD_CUR)]
+VNped1a <- DEVCON8a[VIETNAM==1, .(COMP_USE , TXT_BOOK , STD_CUR, TCHBEHTD, TCHBEHSO, ASS_PROG , ASS_PROM ,
+                                  ASS_INSTR , ASS_NAT , ASS_SCH , ASS_TCH , ASS_CUR , ASS_OTH , TCHBEHFA, COGACT,
+                                  STU_FEEDB , CLSMAN, DISCLIMA)]
 
 VNped1b1 <- summarise_each(VNped1a, funs(mean(.,na.rm=TRUE)))
 VNped1b2 <- summarise_each(VNped1a,funs(sd(.,na.rm=TRUE)))
@@ -550,7 +575,7 @@ as.matrix(blix) -> blax # I have to convert blix into a matrix so I can cbind it
 flax2ped<- cbind(mt1,blax) # Now I have the format I need with extra elements I have to delete
 setnames(flax2ped,c("Variable","V1"),c("Variable1","Valid N"))
 
-flax2ped[c(2,4,6,8,10,12,14,16,18,20,22,24,26),
+flax2ped[c(2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36),
          c("Variable1","Valid N"):=""] # this eliminates the values
 
 flax2ped[, MS:=as.character(MS)]
@@ -569,7 +594,7 @@ print(xtable(flaxped),include.rownames = FALSE) # this generates the latex table
 
 # We generate an extract from the DEVCON8a set with all variables we used in our regressions
 G8scu1a <- DEVCON8a[, .(PRIVATESCL , SC02Q02 , DUM_VILLAGE , TOWN , CITY ,
-                        CLSIZE , SCHSIZE , RATCMP15 , COMPWEB , SCMATEDU , SCMATBUI ,
+                        CLSIZE , SCHSIZE , PCGIRLS, RATCMP15 , COMPWEB , SCMATEDU , SCMATBUI ,
                         EXC1_BAND , EXC2_PLAY , EXC3_NEWS , EXC4_VOLU , EXC5_MCLUB , EXC6_MATHCOMP ,
                         EXC7_CHESS , EXC8_ICTCB , EXC9_ARTCB , EXC10_SPORT , EXC11_UNICORN , SCL_EXTR_CL ,
                         SCORE_PUBLIC , SCORE_AUTHRITS , SCHAUTON , TCHPARTI , LEADCOM , LEADINST , LEADPD ,
@@ -609,9 +634,12 @@ flax1scu[c(seq),MS:=paste0("(",MS,")")]
 
 # We generate a Vietnam extract from the DEVCON8a set with all variables we used in our regressions
 
-VNscu1a <- DEVCON8a[VIETNAM==1, .(ASS_PROG , ASS_PROM ,
-                                  ASS_INSTR , ASS_NAT , ASS_SCH , ASS_TCH , ASS_CUR , ASS_OTH , STU_FEEDB ,
-                                  COMP_USE , TXT_BOOK , STD_CUR)]
+VNscu1a <- DEVCON8a[VIETNAM==1, .(PRIVATESCL , SC02Q02 , DUM_VILLAGE , TOWN , CITY ,
+                                  CLSIZE , SCHSIZE , PCGIRLS, RATCMP15 , COMPWEB , SCMATEDU , SCMATBUI ,
+                                  EXC1_BAND , EXC2_PLAY , EXC3_NEWS , EXC4_VOLU , EXC5_MCLUB , EXC6_MATHCOMP ,
+                                  EXC7_CHESS , EXC8_ICTCB , EXC9_ARTCB , EXC10_SPORT , EXC11_UNICORN , SCL_EXTR_CL ,
+                                  SCORE_PUBLIC , SCORE_AUTHRITS , SCHAUTON , TCHPARTI , LEADCOM , LEADINST , LEADPD ,
+                                  LEADTCH , QUAL_RECORD , SCHSEL , STUDCLIM , TEACCLIM , TCMORALE)]
 
 VNscu1b1 <- summarise_each(VNscu1a, funs(mean(.,na.rm=TRUE)))
 VNscu1b2 <- summarise_each(VNscu1a,funs(sd(.,na.rm=TRUE)))
@@ -648,6 +676,24 @@ flaxscu <- cbind(flax1scu,flax2scu)
 flaxscu$Variable1 <- NULL
 
 print(xtable(flaxscu),include.rownames = FALSE) # this generates the latex table input
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+######################### FOR POTENTIAL LATER USE - INDIVIDUAL ROTATED PARTS ###########################
 
 ######################### The ROTATED PART 1 ##########################
 
