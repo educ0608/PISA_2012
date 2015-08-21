@@ -812,7 +812,7 @@ R130 <- pisa.reg.pv(pvlabel="MATH",
                         "SCL_EXTR_CL","SCORE_PUBLIC","QUAL_RECORD","SCHSEL","ST57Q01","ST57Q02","ST57Q03"),
                     weight="W_FSTUWT",
                     data=DEVCON8j,export=FALSE)
-R130 # ST57Q01 increases, ST57Q02 increases, ST57Q03 increases
+R130 # ST57Q01 increases, ST57Q02 increases, ST57Q03 decreases
 # Vietnam 73.70
 
 R131 <- pisa.reg.pv(pvlabel="MATH", 
@@ -1360,6 +1360,8 @@ R147
 
 # Since FAMCONC really did the trick here, let us try one more thing and leave ST55 out, so as to have a 
 # better sample size and just work with the other variables
+
+############################ FOR LATER ############
 
 ########### Regressions without ST55/LMINS/SMINS/MMINS, to see how FAMCONC works in a larger set
 

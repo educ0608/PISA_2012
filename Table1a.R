@@ -25,6 +25,8 @@ library(dplyr) # to perform aggregations easily
 library(xtable) # to generate latex table from R primitive
 library(reshape2) # For melting and recasting data 
 
+load("DEVCON8a")
+
 # Preparing the newly created variables in DEVCON8a:
 
 # NON - ROTATED PART:
@@ -296,6 +298,8 @@ DEVCON8a$OUTSCIE_LESS2   <- ifelse(DEVCON8a$ST55Q03==2,1,0)
 DEVCON8a$OUTSCIE_2TO4   <- ifelse(DEVCON8a$ST55Q03==3,1,0)
 DEVCON8a$OUTSCIE_4TO6   <- ifelse(DEVCON8a$ST55Q03==4,1,0)
 
+#ST57 leave as is
+
 # LMINS, MMINS, SMINS
 #________________________________________________________________________________________________________
 DEVCON8a$SHRS <- (DEVCON8a$SMINS)/60
@@ -333,43 +337,43 @@ Count <- function(x) base::length(which(complete.cases(x) == TRUE))
 
 ######################### The STUDENT PART ##########################
 
-### The G8 countries:
+### The DEV7 countries:
 
 # We generate an extract from the DEVCON8a set with all variables we used in our regressions
-G8stu1a <- DEVCON8a[, .(FEMALE ,  PRESCHOOL ,  REPEAT ,  ST08Q01 ,  ST09Q01 ,  ST115Q01 ,  HISEI ,
+DEV7stu1a <- DEVCON8a[VIETNAM==0, .(FEMALE ,  PRESCHOOL ,  REPEAT ,  ST08Q01 ,  ST09Q01 ,  ST115Q01 ,  HISEI ,
                      MISCED ,  WEALTH ,  CULTPOS ,  HEDRES ,  BOOK_N, MATWKETH, OUTMATH_NONE,
                      OUTMATH_LESS2, OUTMATH_2TO4, OUTMATH_4TO6, OUTREAD_NONE, OUTREAD_LESS2, OUTREAD_2TO4,
-                     OUTREAD_4TO6, OUTSCIE_NONE, OUTSCIE_LESS2, OUTSCIE_2TO4, OUTSCIE_4TO6, INSTMOT, INTMAT,
+                     OUTREAD_4TO6, OUTSCIE_NONE, OUTSCIE_LESS2, OUTSCIE_2TO4, OUTSCIE_4TO6, ST57Q01, ST57Q02, ST57Q03, ST57Q04, ST57Q05, ST57Q06, INSTMOT, INTMAT,
                      SUBNORM, MATHEFF, FAILMAT, MATINTFC, MATBEH, PERSEV, OPENPS, SCMAT, ANXMAT, BELONG, ATSCHL, ATTLNACT,
                      ATT_CONTROL, EXAPPLM, EXPUREM, FAMCONC, PARPRESSURE,  
                      TIGERMOM,  VOLUMOM,  TEACHMOM,  FUNDMOM,  COUNCILMOM,BKGR_FAMPROB)]
 
-G8stu1b1 <- summarise_each(G8stu1a, funs(mean(.,na.rm=TRUE)))
-G8stu1b2 <- summarise_each(G8stu1a,funs(sd(.,na.rm=TRUE)))
-G8stu1b3 <- summarise_each(G8stu1a,funs(Count(.)))
+DEV7stu1b1 <- summarise_each(DEV7stu1a, funs(mean(.,na.rm=TRUE)))
+DEV7stu1b2 <- summarise_each(DEV7stu1a,funs(sd(.,na.rm=TRUE)))
+DEV7stu1b3 <- summarise_each(DEV7stu1a,funs(Count(.)))
 
-G8stu1b1
-G8stu1b2
-G8stu1b3
+DEV7stu1b1
+DEV7stu1b2
+DEV7stu1b3
 
-t1 <- rbind(round(G8stu1b1,4),round(G8stu1b2,4))
+t1 <- rbind(round(DEV7stu1b1,4),round(DEV7stu1b2,4))
 mt1 <- melt(t1)
 mt1
 setnames(mt1,c("variable","value"), c("Variable", "MS"))
 mt1[2,.(Variable)]
 
 # Now to add the third column of "Count" output and eliminate the extra entries (even numbered in 1st and 3rd column)
-s <- G8stu1b3 # just to use easier name
+s <- DEV7stu1b3 # just to use easier name
 
 blix <- c(rep(s,each=2)) # generates doubled values
 as.matrix(blix) -> blax # I have to convert blix into a matrix so I can cbind it to mt1
 flax1stu<- cbind(mt1,blax) # Now I have the format I need with extra elements I have to delete
 setnames(flax1stu,c("V1"),c("Valid N"))
 
-seq <- seq(2,100,by=2) # I will need to use 2,38 for the actual version as there are 50 variables
+seq <- seq(2,112,by=2) # I will need to use 2,112 for the actual version as there are 56 variables
 
 flax1stu[c(2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62,64,66,68,70,
-           72,74,76,78,80,82,84,86,88,90,92,94,96,98,100),
+           72,74,76,78,80,82,84,86,88,90,92,94,96,98,100,102,104,106,108,110,112),
      c("Variable","Valid N"):=""] # this eliminates the values
 
 flax1stu[, MS:=as.character(MS)]
@@ -382,7 +386,7 @@ flax1stu[c(seq),MS:=paste0("(",MS,")")]
 VNstu1a <- DEVCON8a[VIETNAM==1, .(FEMALE ,  PRESCHOOL ,  REPEAT ,  ST08Q01 ,  ST09Q01 ,  ST115Q01 ,  HISEI ,
                                   MISCED ,  WEALTH ,  CULTPOS ,  HEDRES ,  BOOK_N , MATWKETH, OUTMATH_NONE,
                                   OUTMATH_LESS2, OUTMATH_2TO4, OUTMATH_4TO6, OUTREAD_NONE, OUTREAD_LESS2, OUTREAD_2TO4,
-                                  OUTREAD_4TO6, OUTSCIE_NONE, OUTSCIE_LESS2, OUTSCIE_2TO4, OUTSCIE_4TO6, INSTMOT, INTMAT,
+                                  OUTREAD_4TO6, OUTSCIE_NONE, OUTSCIE_LESS2, OUTSCIE_2TO4, OUTSCIE_4TO6, ST57Q01, ST57Q02, ST57Q03, ST57Q04, ST57Q05, ST57Q06, INSTMOT, INTMAT,
                                   SUBNORM, MATHEFF, FAILMAT, MATINTFC, MATBEH, PERSEV, OPENPS, SCMAT, ANXMAT, BELONG, ATSCHL, ATTLNACT,
                                   ATT_CONTROL, EXAPPLM, EXPUREM, FAMCONC, PARPRESSURE,  
                                   TIGERMOM,  VOLUMOM,  TEACHMOM,  FUNDMOM,  COUNCILMOM, BKGR_FAMPROB)]
@@ -410,13 +414,13 @@ flax2stu<- cbind(mt1,blax) # Now I have the format I need with extra elements I 
 setnames(flax2stu,c("Variable","V1"),c("Variable1","Valid N"))
 
 flax2stu[c(2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62,64,66,68,70,
-           72,74,76,78,80,82,84,86,88,90,92,94,96,98,100),
+           72,74,76,78,80,82,84,86,88,90,92,94,96,98,100,102,104,106,108,110,112),
          c("Variable1","Valid N"):=""] # this eliminates the values
 
 flax2stu[, MS:=as.character(MS)]
 flax2stu[c(seq),MS:=paste0("(",MS,")")]
 
-# Combining G8 countries and Vietnam:
+# Combining DEV7 countries and Vietnam:
 
 flaxstu <- cbind(flax1stu,flax2stu)
 flaxstu$Variable1 <- NULL
@@ -426,29 +430,29 @@ print(xtable(flaxstu),include.rownames = FALSE) # this generates the latex table
 
 ######################### The TEACHER PART ##########################
 
-### The G8 countries:
+### The DEV7 countries:
 
 # We generate an extract from the DEVCON8a set with all variables we used in our regressions
-G8tch1a <- DEVCON8a[, .(STRATIO ,  PROPCERT ,  PROPQUAL ,
-                        SMRATIO , TCSHORT , LMINS, SMINS, MMINS,TCFOCST , TCM_STUASS , TCM_PEER , TCM_OBSER , TCM_INSPE ,
+DEV7tch1a <- DEVCON8a[VIETNAM==0, .(STRATIO ,  PROPCERT ,  PROPQUAL ,
+                        SMRATIO , TCSHORT , LHRS, SHRS, MHRS,TCFOCST , TCM_STUASS , TCM_PEER , TCM_OBSER , TCM_INSPE ,
                         TCH_INCENTV , SC35Q02 , TCH_MENT, MTSUP, STUDREL, TCHQUAL_DIFF)]
 
-G8tch1b1 <- summarise_each(G8tch1a, funs(mean(.,na.rm=TRUE)))
-G8tch1b2 <- summarise_each(G8tch1a,funs(sd(.,na.rm=TRUE)))
-G8tch1b3 <- summarise_each(G8tch1a,funs(Count(.)))
+DEV7tch1b1 <- summarise_each(DEV7tch1a, funs(mean(.,na.rm=TRUE)))
+DEV7tch1b2 <- summarise_each(DEV7tch1a,funs(sd(.,na.rm=TRUE)))
+DEV7tch1b3 <- summarise_each(DEV7tch1a,funs(Count(.)))
 
-G8tch1b1
-G8tch1b2
-G8tch1b3
+DEV7tch1b1
+DEV7tch1b2
+DEV7tch1b3
 
-t1 <- rbind(round(G8tch1b1,4),round(G8tch1b2,4))
+t1 <- rbind(round(DEV7tch1b1,4),round(DEV7tch1b2,4))
 mt1 <- melt(t1)
 mt1
 setnames(mt1,c("variable","value"), c("Variable", "MS"))
 mt1[2,.(Variable)]
 
 # Now to add the third column of "Count" output and eliminate the extra entries (even numbered in 1st and 3rd column)
-s <- G8tch1b3 # just to use easier name
+s <- DEV7tch1b3 # just to use easier name
 
 blix <- c(rep(s,each=2)) # generates doubled values
 as.matrix(blix) -> blax # I have to convert blix into a matrix so I can cbind it to mt1
@@ -468,7 +472,7 @@ flax1tch[c(seq),MS:=paste0("(",MS,")")]
 # We generate a Vietnam extract from the DEVCON8a set with all variables we used in our regressions
 
 VNtch1a <- DEVCON8a[VIETNAM==1, .(STRATIO ,  PROPCERT ,  PROPQUAL ,
-                                  SMRATIO , TCSHORT , LMINS, SMINS, MMINS,TCFOCST , TCM_STUASS , TCM_PEER , TCM_OBSER , TCM_INSPE ,
+                                  SMRATIO , TCSHORT , LHRS, SHRS, MHRS,TCFOCST , TCM_STUASS , TCM_PEER , TCM_OBSER , TCM_INSPE ,
                                   TCH_INCENTV , SC35Q02 , TCH_MENT, MTSUP, STUDREL, TCHQUAL_DIFF)]
 
 VNtch1b1 <- summarise_each(VNtch1a, funs(mean(.,na.rm=TRUE)))
@@ -499,7 +503,7 @@ flax2tch[c(2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38),
 flax2tch[, MS:=as.character(MS)]
 flax2tch[c(seq),MS:=paste0("(",MS,")")]
 
-# Combining G8 countries and Vietnam:
+# Combining DEV7 countries and Vietnam:
 
 flaxtch <- cbind(flax1tch,flax2tch)
 flaxtch$Variable1 <- NULL
@@ -508,29 +512,29 @@ print(xtable(flaxtch),include.rownames = FALSE) # this generates the latex table
 
 ######################### The PEDAGOGICAL PRACTICES PART ##########################
 
-### The G8 countries:
+### The DEV7 countries:
 
 # We generate an extract from the DEVCON8a set with all variables we used in our regressions
-G8ped1a <- DEVCON8a[, .(COMP_USE , TXT_BOOK , STD_CUR, TCHBEHTD, TCHBEHSO, ASS_PROG , ASS_PROM ,
+DEV7ped1a <- DEVCON8a[VIETNAM==0, .(COMP_USE , TXT_BOOK , STD_CUR, TCHBEHTD, TCHBEHSO, ASS_PROG , ASS_PROM ,
                         ASS_INSTR , ASS_NAT , ASS_SCH , ASS_TCH , ASS_CUR , ASS_OTH , TCHBEHFA, COGACT,
                         STU_FEEDB , CLSMAN, DISCLIMA)]
 
-G8ped1b1 <- summarise_each(G8ped1a, funs(mean(.,na.rm=TRUE)))
-G8ped1b2 <- summarise_each(G8ped1a,funs(sd(.,na.rm=TRUE)))
-G8ped1b3 <- summarise_each(G8ped1a,funs(Count(.)))
+DEV7ped1b1 <- summarise_each(DEV7ped1a, funs(mean(.,na.rm=TRUE)))
+DEV7ped1b2 <- summarise_each(DEV7ped1a,funs(sd(.,na.rm=TRUE)))
+DEV7ped1b3 <- summarise_each(DEV7ped1a,funs(Count(.)))
 
-G8ped1b1
-G8ped1b2
-G8ped1b3
+DEV7ped1b1
+DEV7ped1b2
+DEV7ped1b3
 
-t1 <- rbind(round(G8ped1b1,4),round(G8ped1b2,4))
+t1 <- rbind(round(DEV7ped1b1,4),round(DEV7ped1b2,4))
 mt1 <- melt(t1)
 mt1
 setnames(mt1,c("variable","value"), c("Variable", "MS"))
 mt1[2,.(Variable)]
 
 # Now to add the third column of "Count" output and eliminate the extra entries (even numbered in 1st and 3rd column)
-s <- G8ped1b3 # just to use easier name
+s <- DEV7ped1b3 # just to use easier name
 
 blix <- c(rep(s,each=2)) # generates doubled values
 as.matrix(blix) -> blax # I have to convert blix into a matrix so I can cbind it to mt1
@@ -581,7 +585,7 @@ flax2ped[c(2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36),
 flax2ped[, MS:=as.character(MS)]
 flax2ped[c(seq),MS:=paste0("(",MS,")")]
 
-# Combining G8 countries and Vietnam:
+# Combining DEV7 countries and Vietnam:
 
 flaxped <- cbind(flax1ped,flax2ped)
 flaxped$Variable1 <- NULL
@@ -590,42 +594,42 @@ print(xtable(flaxped),include.rownames = FALSE) # this generates the latex table
 
 ######################### The SCHOOLS PART ##########################
 
-### The G8 countries:
+### The DEV7 countries:
 
 # We generate an extract from the DEVCON8a set with all variables we used in our regressions
-G8scu1a <- DEVCON8a[, .(PRIVATESCL , SC02Q02 , DUM_VILLAGE , TOWN , CITY ,
-                        CLSIZE , SCHSIZE , PCGIRLS, RATCMP15 , COMPWEB , SCMATEDU , SCMATBUI ,
+DEV7scu1a <- DEVCON8a[VIETNAM==0, .(PRIVATESCL , SC02Q02 , DUM_VILLAGE , TOWN , CITY ,
+                        CLSIZE , SCHSIZE , PCGIRLS, SCHSEL, RATCMP15 , COMPWEB , SCMATEDU , SCMATBUI ,
                         EXC1_BAND , EXC2_PLAY , EXC3_NEWS , EXC4_VOLU , EXC5_MCLUB , EXC6_MATHCOMP ,
                         EXC7_CHESS , EXC8_ICTCB , EXC9_ARTCB , EXC10_SPORT , EXC11_UNICORN , SCL_EXTR_CL ,
                         SCORE_PUBLIC , SCORE_AUTHRITS , SCHAUTON , TCHPARTI , LEADCOM , LEADINST , LEADPD ,
-                        LEADTCH , QUAL_RECORD , SCHSEL , STUDCLIM , TEACCLIM , TCMORALE)]
+                        LEADTCH , QUAL_RECORD , STUDCLIM , TEACCLIM , TCMORALE)]
 
-G8scu1b1 <- summarise_each(G8scu1a, funs(mean(.,na.rm=TRUE)))
-G8scu1b2 <- summarise_each(G8scu1a,funs(sd(.,na.rm=TRUE)))
-G8scu1b3 <- summarise_each(G8scu1a,funs(Count(.)))
+DEV7scu1b1 <- summarise_each(DEV7scu1a, funs(mean(.,na.rm=TRUE)))
+DEV7scu1b2 <- summarise_each(DEV7scu1a,funs(sd(.,na.rm=TRUE)))
+DEV7scu1b3 <- summarise_each(DEV7scu1a,funs(Count(.)))
 
-G8scu1b1
-G8scu1b2
-G8scu1b3
+DEV7scu1b1
+DEV7scu1b2
+DEV7scu1b3
 
-t1 <- rbind(round(G8scu1b1,4),round(G8scu1b2,4))
+t1 <- rbind(round(DEV7scu1b1,4),round(DEV7scu1b2,4))
 mt1 <- melt(t1)
 mt1
 setnames(mt1,c("variable","value"), c("Variable", "MS"))
 mt1[2,.(Variable)]
 
 # Now to add the third column of "Count" output and eliminate the extra entries (even numbered in 1st and 3rd column)
-s <- G8scu1b3 # just to use easier name
+s <- DEV7scu1b3 # just to use easier name
 
 blix <- c(rep(s,each=2)) # generates doubled values
 as.matrix(blix) -> blax # I have to convert blix into a matrix so I can cbind it to mt1
 flax1scu<- cbind(mt1,blax) # Now I have the format I need with extra elements I have to delete
 setnames(flax1scu,c("V1"),c("Valid N"))
 
-seq <- seq(2,72,by=2) # I will need to use 2,38 for the actual version as there are 36 variables
+seq <- seq(2,74,by=2) # I will need to use 2,38 for the actual version as there are 36 variables
 
 flax1scu[c(2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62,
-           64,66,68,70,72),
+           64,66,68,70,72,74),
          c("Variable","Valid N"):=""] # this eliminates the values
 
 flax1scu[, MS:=as.character(MS)]
@@ -635,11 +639,11 @@ flax1scu[c(seq),MS:=paste0("(",MS,")")]
 # We generate a Vietnam extract from the DEVCON8a set with all variables we used in our regressions
 
 VNscu1a <- DEVCON8a[VIETNAM==1, .(PRIVATESCL , SC02Q02 , DUM_VILLAGE , TOWN , CITY ,
-                                  CLSIZE , SCHSIZE , PCGIRLS, RATCMP15 , COMPWEB , SCMATEDU , SCMATBUI ,
+                                  CLSIZE , SCHSIZE , PCGIRLS,SCHSEL, RATCMP15 , COMPWEB , SCMATEDU , SCMATBUI ,
                                   EXC1_BAND , EXC2_PLAY , EXC3_NEWS , EXC4_VOLU , EXC5_MCLUB , EXC6_MATHCOMP ,
                                   EXC7_CHESS , EXC8_ICTCB , EXC9_ARTCB , EXC10_SPORT , EXC11_UNICORN , SCL_EXTR_CL ,
                                   SCORE_PUBLIC , SCORE_AUTHRITS , SCHAUTON , TCHPARTI , LEADCOM , LEADINST , LEADPD ,
-                                  LEADTCH , QUAL_RECORD , SCHSEL , STUDCLIM , TEACCLIM , TCMORALE)]
+                                  LEADTCH , QUAL_RECORD ,STUDCLIM , TEACCLIM , TCMORALE)]
 
 VNscu1b1 <- summarise_each(VNscu1a, funs(mean(.,na.rm=TRUE)))
 VNscu1b2 <- summarise_each(VNscu1a,funs(sd(.,na.rm=TRUE)))
@@ -664,13 +668,13 @@ flax2scu<- cbind(mt1,blax) # Now I have the format I need with extra elements I 
 setnames(flax2scu,c("Variable","V1"),c("Variable1","Valid N"))
 
 flax2scu[c(2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62,
-           64,66,68,70,72),
+           64,66,68,70,72,74),
          c("Variable1","Valid N"):=""] # this eliminates the values
 
 flax2scu[, MS:=as.character(MS)]
 flax2scu[c(seq),MS:=paste0("(",MS,")")]
 
-# Combining G8 countries and Vietnam:
+# Combining DEV7 countries and Vietnam:
 
 flaxscu <- cbind(flax1scu,flax2scu)
 flaxscu$Variable1 <- NULL
@@ -697,28 +701,28 @@ print(xtable(flaxscu),include.rownames = FALSE) # this generates the latex table
 
 ######################### The ROTATED PART 1 ##########################
 
-### The G8 countries:
+### The DEV7 countries:
 
 # We generate an extract from the DEVCON8a set with all variables we used in our regressions
-G8rota1a <- DEVCON8a[, .( MATWKETH , INSTMOT , INTMAT ,
+DEV7rota1a <- DEVCON8a[, .( MATWKETH , INSTMOT , INTMAT ,
                           SUBNORM , MATHEFF , FAILMAT , MATINTFC , MATBEH , PERSEV , OPENPS)]
 
-G8rota1b1 <- summarise_each(G8rota1a, funs(mean(.,na.rm=TRUE)))
-G8rota1b2 <- summarise_each(G8rota1a,funs(sd(.,na.rm=TRUE)))
-G8rota1b3 <- summarise_each(G8rota1a,funs(Count(.)))
+DEV7rota1b1 <- summarise_each(DEV7rota1a, funs(mean(.,na.rm=TRUE)))
+DEV7rota1b2 <- summarise_each(DEV7rota1a,funs(sd(.,na.rm=TRUE)))
+DEV7rota1b3 <- summarise_each(DEV7rota1a,funs(Count(.)))
 
-G8rota1b1
-G8rota1b2
-G8rota1b3
+DEV7rota1b1
+DEV7rota1b2
+DEV7rota1b3
 
-t1 <- rbind(round(G8rota1b1,4),round(G8rota1b2,4))
+t1 <- rbind(round(DEV7rota1b1,4),round(DEV7rota1b2,4))
 mt1 <- melt(t1)
 mt1
 setnames(mt1,c("variable","value"), c("Variable", "MS"))
 mt1[2,.(Variable)]
 
 # Now to add the third column of "Count" output and eliminate the extra entries (even numbered in 1st and 3rd column)
-s <- G8rota1b3 # just to use easier name
+s <- DEV7rota1b3 # just to use easier name
 
 blix <- c(rep(s,each=2)) # generates doubled values
 as.matrix(blix) -> blax # I have to convert blix into a matrix so I can cbind it to mt1
@@ -769,7 +773,7 @@ flax2rota[c(2,4,6,8,10,12,14,16,18,20),
 flax2rota[, MS:=as.character(MS)]
 flax2rota[c(seq),MS:=paste0("(",MS,")")]
 
-# Combining G8 countries and Vietnam:
+# Combining DEV7 countries and Vietnam:
 
 flaxrota <- cbind(flax1rota,flax2rota)
 flaxrota$Variable1 <- NULL
@@ -778,30 +782,30 @@ print(xtable(flaxrota),include.rownames = FALSE) # this generates the latex tabl
 
 ######################### The ROTATED PART 2 ##########################
 
-### The G8 countries:
+### The DEV7 countries:
 
 # We generate an extract from the DEVCON8a set with all variables we used in our regressions
-G8rotb1a <- DEVCON8a[, .( OUTMATH_NONE , OUTMATH_LESS2 , OUTMATH_2TO4 , OUTMATH_4TO6 ,
+DEV7rotb1a <- DEVCON8a[, .( OUTMATH_NONE , OUTMATH_LESS2 , OUTMATH_2TO4 , OUTMATH_4TO6 ,
                           OUTREAD_NONE , OUTREAD_LESS2 , OUTREAD_2TO4 , OUTREAD_4TO6 ,
                           OUTSCIE_NONE , OUTSCIE_LESS2 , OUTSCIE_2TO4 , OUTSCIE_4TO6 ,
                           EXAPPLM , EXPUREM , FAMCONC , LHRS , MHRS , SHRS)]
 
-G8rotb1b1 <- summarise_each(G8rotb1a, funs(mean(.,na.rm=TRUE)))
-G8rotb1b2 <- summarise_each(G8rotb1a,funs(sd(.,na.rm=TRUE)))
-G8rotb1b3 <- summarise_each(G8rotb1a,funs(Count(.)))
+DEV7rotb1b1 <- summarise_each(DEV7rotb1a, funs(mean(.,na.rm=TRUE)))
+DEV7rotb1b2 <- summarise_each(DEV7rotb1a,funs(sd(.,na.rm=TRUE)))
+DEV7rotb1b3 <- summarise_each(DEV7rotb1a,funs(Count(.)))
 
-G8rotb1b1
-G8rotb1b2
-G8rotb1b3
+DEV7rotb1b1
+DEV7rotb1b2
+DEV7rotb1b3
 
-t1 <- rbind(round(G8rotb1b1,4),round(G8rotb1b2,4))
+t1 <- rbind(round(DEV7rotb1b1,4),round(DEV7rotb1b2,4))
 mt1 <- melt(t1)
 mt1
 setnames(mt1,c("variable","value"), c("Variable", "MS"))
 mt1[2,.(Variable)]
 
 # Now to add the third column of "Count" output and eliminate the extra entries (even numbered in 1st and 3rd column)
-s <- G8rotb1b3 # just to use easier name
+s <- DEV7rotb1b3 # just to use easier name
 
 blix <- c(rep(s,each=2)) # generates doubled values
 as.matrix(blix) -> blax # I have to convert blix into a matrix so I can cbind it to mt1
@@ -853,7 +857,7 @@ flax2rotb[c(2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36),
 flax2rotb[, MS:=as.character(MS)]
 flax2rotb[c(seq),MS:=paste0("(",MS,")")]
 
-# Combining G8 countries and Vietnam:
+# Combining DEV7 countries and Vietnam:
 
 flaxrotb <- cbind(flax1rotb,flax2rotb)
 flaxrotb$Variable1 <- NULL
@@ -862,29 +866,29 @@ print(xtable(flaxrotb),include.rownames = FALSE) # this generates the latex tabl
 
 ######################### The ROTATED PART 3 ##########################
 
-### The G8 countries:
+### The DEV7 countries:
 
 # We generate an extract from the DEVCON8a set with all variables we used in our regressions
-G8rotc1a <- DEVCON8a[, .(BKGR_FAMPROB , SCMAT , ANXMAT ,
+DEV7rotc1a <- DEVCON8a[, .(BKGR_FAMPROB , SCMAT , ANXMAT ,
                          BELONG , ATSCHL , ATTLNACT , ATT_CONTROL , MTSUP , STUDREL , TCHQUAL_DIFF , TCHBEHTD ,
                          TCHBEHSO , TCHBEHFA , COGACT , CLSMAN , DISCLIMA)]
 
-G8rotc1b1 <- summarise_each(G8rotc1a, funs(mean(.,na.rm=TRUE)))
-G8rotc1b2 <- summarise_each(G8rotc1a,funs(sd(.,na.rm=TRUE)))
-G8rotc1b3 <- summarise_each(G8rotc1a,funs(Count(.)))
+DEV7rotc1b1 <- summarise_each(DEV7rotc1a, funs(mean(.,na.rm=TRUE)))
+DEV7rotc1b2 <- summarise_each(DEV7rotc1a,funs(sd(.,na.rm=TRUE)))
+DEV7rotc1b3 <- summarise_each(DEV7rotc1a,funs(Count(.)))
 
-G8rotc1b1
-G8rotc1b2
-G8rotc1b3
+DEV7rotc1b1
+DEV7rotc1b2
+DEV7rotc1b3
 
-t1 <- rbind(round(G8rotc1b1,4),round(G8rotc1b2,4))
+t1 <- rbind(round(DEV7rotc1b1,4),round(DEV7rotc1b2,4))
 mt1 <- melt(t1)
 mt1
 setnames(mt1,c("variable","value"), c("Variable", "MS"))
 mt1[2,.(Variable)]
 
 # Now to add the third column of "Count" output and eliminate the extra entries (even numbered in 1st and 3rd column)
-s <- G8rotc1b3 # just to use easier name
+s <- DEV7rotc1b3 # just to use easier name
 
 blix <- c(rep(s,each=2)) # generates doubled values
 as.matrix(blix) -> blax # I have to convert blix into a matrix so I can cbind it to mt1
@@ -935,7 +939,7 @@ flax2rotc[c(2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32),
 flax2rotc[, MS:=as.character(MS)]
 flax2rotc[c(seq),MS:=paste0("(",MS,")")]
 
-# Combining G8 countries and Vietnam:
+# Combining DEV7 countries and Vietnam:
 
 flaxrotc <- cbind(flax1rotc,flax2rotc)
 flaxrotc$Variable1 <- NULL
