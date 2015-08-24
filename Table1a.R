@@ -298,7 +298,7 @@ DEVCON8a$OUTSCIE_LESS2   <- ifelse(DEVCON8a$ST55Q03==2,1,0)
 DEVCON8a$OUTSCIE_2TO4   <- ifelse(DEVCON8a$ST55Q03==3,1,0)
 DEVCON8a$OUTSCIE_4TO6   <- ifelse(DEVCON8a$ST55Q03==4,1,0)
 
-#ST57 leave as is
+#ST57 leave as is, ST72Q01 leave as is
 
 # LMINS, MMINS, SMINS
 #________________________________________________________________________________________________________
@@ -598,7 +598,7 @@ print(xtable(flaxped),include.rownames = FALSE) # this generates the latex table
 
 # We generate an extract from the DEVCON8a set with all variables we used in our regressions
 DEV7scu1a <- DEVCON8a[VIETNAM==0, .(PRIVATESCL , SC02Q02 , DUM_VILLAGE , TOWN , CITY ,
-                        CLSIZE , SCHSIZE , PCGIRLS, SCHSEL, RATCMP15 , COMPWEB , SCMATEDU , SCMATBUI ,
+                        CLSIZE , SCHSIZE , PCGIRLS, ST72Q01, SCHSEL, RATCMP15 , COMPWEB , SCMATEDU , SCMATBUI ,
                         EXC1_BAND , EXC2_PLAY , EXC3_NEWS , EXC4_VOLU , EXC5_MCLUB , EXC6_MATHCOMP ,
                         EXC7_CHESS , EXC8_ICTCB , EXC9_ARTCB , EXC10_SPORT , EXC11_UNICORN , SCL_EXTR_CL ,
                         SCORE_PUBLIC , SCORE_AUTHRITS , SCHAUTON , TCHPARTI , LEADCOM , LEADINST , LEADPD ,
@@ -626,10 +626,10 @@ as.matrix(blix) -> blax # I have to convert blix into a matrix so I can cbind it
 flax1scu<- cbind(mt1,blax) # Now I have the format I need with extra elements I have to delete
 setnames(flax1scu,c("V1"),c("Valid N"))
 
-seq <- seq(2,74,by=2) # I will need to use 2,38 for the actual version as there are 36 variables
+seq <- seq(2,76,by=2) # I will need to use 2,38 for the actual version as there are 36 variables
 
 flax1scu[c(2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62,
-           64,66,68,70,72,74),
+           64,66,68,70,72,74,76),
          c("Variable","Valid N"):=""] # this eliminates the values
 
 flax1scu[, MS:=as.character(MS)]
@@ -639,7 +639,7 @@ flax1scu[c(seq),MS:=paste0("(",MS,")")]
 # We generate a Vietnam extract from the DEVCON8a set with all variables we used in our regressions
 
 VNscu1a <- DEVCON8a[VIETNAM==1, .(PRIVATESCL , SC02Q02 , DUM_VILLAGE , TOWN , CITY ,
-                                  CLSIZE , SCHSIZE , PCGIRLS,SCHSEL, RATCMP15 , COMPWEB , SCMATEDU , SCMATBUI ,
+                                  CLSIZE , SCHSIZE , PCGIRLS, ST72Q01, SCHSEL, RATCMP15 , COMPWEB , SCMATEDU , SCMATBUI ,
                                   EXC1_BAND , EXC2_PLAY , EXC3_NEWS , EXC4_VOLU , EXC5_MCLUB , EXC6_MATHCOMP ,
                                   EXC7_CHESS , EXC8_ICTCB , EXC9_ARTCB , EXC10_SPORT , EXC11_UNICORN , SCL_EXTR_CL ,
                                   SCORE_PUBLIC , SCORE_AUTHRITS , SCHAUTON , TCHPARTI , LEADCOM , LEADINST , LEADPD ,
@@ -668,7 +668,7 @@ flax2scu<- cbind(mt1,blax) # Now I have the format I need with extra elements I 
 setnames(flax2scu,c("Variable","V1"),c("Variable1","Valid N"))
 
 flax2scu[c(2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62,
-           64,66,68,70,72,74),
+           64,66,68,70,72,74,76),
          c("Variable1","Valid N"):=""] # this eliminates the values
 
 flax2scu[, MS:=as.character(MS)]
