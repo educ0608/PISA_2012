@@ -137,16 +137,17 @@ N0
 #-----Effort: ST55Q01 (Language lessons out of school)
 #-----Preparation: none	
 # 2. Teachers	
-#-----Quantity: LMINS (minutes of language classes), MMINS (minutes of math classes), SMINS (minutes of science classes)
+#-----Quantity: LMINS (minutes of language classes), MMINS (minutes of math classes), SMINS (minutes of science classes),
+#-----ST72Q01
 
 T1b <- DEVCON8a[, c("VIETNAM","ST04Q01","ST05Q01","REPEAT","ST08Q01","ST115Q01","ST28Q01","SC24Q01","PCGIRLS",
                     "PROPCERT","TCSHORT","SC30Q01","SC18Q01","SC18Q02","SC18Q04",
                     "SC18Q07","SC39Q07","CLSIZE","COMPWEB","SC03Q01","SCMATEDU","SCMATBUI",
                     "SC16Q02","SC16Q06","SC16Q10","SC16Q11","SC19Q01","SC39Q03","LEADINST", "SCHSEL", "TEACCLIM",
-                    "ST55Q01","LMINS","MMINS","SMINS")]
+                    "ST55Q01","LMINS","MMINS","SMINS","ST72Q01")]
 N1 <- NROW(na.omit(T1b)) 
-N1 #12778
-N0-N1 #35705 NA's
+N1 #11843
+N0-N1 #36640 NA's
 DEVCON8r <- DEVCON8a[complete.cases(T1b),]
 
 # Let's prepare the relevant student variables again:
@@ -283,10 +284,10 @@ R267 <- pisa.reg.pv(pvlabel="READ",
                     weight="W_FSTUWT",
                     data=DEVCON8r,export=FALSE)
 R267
-#Estimate Std. Error t value
-#(Intercept)   416.75       2.87  144.97
-#VIETNAM        98.06       5.52   17.76
-#R-squared      18.88       2.13    8.84
+# Estimate Std. Error t value
+# (Intercept)   420.48       3.08  136.36
+# VIETNAM        95.19       5.20   18.30
+# R-squared      17.70       2.05    8.64
 
 # Let's try our regression with all gap decreasing variables before we add the rotated parts
 
@@ -301,7 +302,7 @@ R268 <- pisa.reg.pv(pvlabel="READ",
                     weight="W_FSTUWT",
                     data=DEVCON8r,export=FALSE)
 R268
-# VIETNAM 57.47
+# VIETNAM 54.22
 
 R269 <- pisa.reg.pv(pvlabel="READ", 
                     x=c("VIETNAM",
@@ -314,7 +315,7 @@ R269 <- pisa.reg.pv(pvlabel="READ",
                     weight="W_FSTUWT",
                     data=DEVCON8r,export=FALSE)
 R269 # OUTREAD_NONE increases
-# VIETNAM 61.90
+# VIETNAM 58.69
 
 R270 <- pisa.reg.pv(pvlabel="READ", 
                     x=c("VIETNAM",
@@ -327,7 +328,7 @@ R270 <- pisa.reg.pv(pvlabel="READ",
                     weight="W_FSTUWT",
                     data=DEVCON8r,export=FALSE)
 R270 # OUTREAD_NONE increases, OUTREAD_LESS2 decreases
-# VIETNAM 61.63
+# VIETNAM ...
 
 R271 <- pisa.reg.pv(pvlabel="READ", 
                     x=c("VIETNAM",
@@ -340,7 +341,7 @@ R271 <- pisa.reg.pv(pvlabel="READ",
                     weight="W_FSTUWT",
                     data=DEVCON8r,export=FALSE)
 R271 # OUTREAD_NONE increases, OUTREAD_LESS2 decreases, OUTREAD_2TO4 decreases
-# VIETNAM 61.61
+# VIETNAM ...
 
 R272 <- pisa.reg.pv(pvlabel="READ", 
                     x=c("VIETNAM",
@@ -354,7 +355,7 @@ R272 <- pisa.reg.pv(pvlabel="READ",
                     weight="W_FSTUWT",
                     data=DEVCON8r,export=FALSE)
 R272 # OUTREAD_NONE increases, OUTREAD_LESS2 decreases, OUTREAD_2TO4 decreases, OUTREAD_4TO6 decreases
-# VIETNAM  61.58 
+# VIETNAM  ...
 
 # Student Effort (OUTREAD) all gap decreasing:
 
@@ -370,7 +371,7 @@ R273 <- pisa.reg.pv(pvlabel="READ",
                     weight="W_FSTUWT",
                     data=DEVCON8r,export=FALSE)
 R273
-# VIETNAM   61.22
+# VIETNAM   58.05
 # This doesn't really make sense, that the Vietnam coefficent goes up after all. Let's check the OUTREAD variables individually
 
 R273a <- pisa.reg.pv(pvlabel="READ", 
@@ -426,7 +427,7 @@ R274 <- pisa.reg.pv(pvlabel="READ",
                         "OUTREAD_4TO6"),
                     weight="W_FSTUWT",
                     data=DEVCON8r,export=FALSE)
-R274 # VIETNAM  61.58 (same as R272)
+R274 # VIETNAM  58.05 (same as R272)
 
 # Now for the teacher relatd variables 
 
@@ -466,11 +467,25 @@ R277 <- pisa.reg.pv(pvlabel="READ",
                         "TOWN","CLSIZE","COMPWEB","SCMATEDU","SCMATBUI","EXC2_PLAY",
                         "EXC6_MATHCOMP","EXC10_SPORT","EXC11_UNICORN","SCORE_PUBLIC","LEADINST",
                         "QUAL_RECORD","SCHSEL","TEACCLIM","OUTREAD_NONE","OUTREAD_LESS2","OUTREAD_2TO4",
-                        "OUTREAD_4TO6","LHRS","MHRS","SHRS"),
+                        "OUTREAD_4TO6","LHRS","MHRS","SHRS","ST72Q01"),
                     weight="W_FSTUWT",
                     data=DEVCON8r,export=FALSE)
 R277 # LHRS decreases, MHRS increases, SHRS increases
 #VIETNAM 64.93 
+
+R278 <- pisa.reg.pv(pvlabel="READ", 
+                    x=c("VIETNAM",
+                        "FEMALE","PRESCHOOL", "REPEAT", "ST08Q01","ST115Q01","BOOK_N", "PARPRESSURE",
+                        "PCGIRLS","VOLUMOM","FUNDMOM","COUNCILMOM","PROPCERT","TCSHORT",
+                        "TCM_STUASS","ASS_PROG","ASS_PROM","ASS_NAT","ASS_CUR","STU_FEEDB",
+                        "TOWN","CLSIZE","COMPWEB","SCMATEDU","SCMATBUI","EXC2_PLAY",
+                        "EXC6_MATHCOMP","EXC10_SPORT","EXC11_UNICORN","SCORE_PUBLIC","LEADINST",
+                        "QUAL_RECORD","SCHSEL","TEACCLIM","OUTREAD_NONE","OUTREAD_LESS2","OUTREAD_2TO4",
+                        "OUTREAD_4TO6","LHRS","MHRS","SHRS","ST72Q01"),
+                    weight="W_FSTUWT",
+                    data=DEVCON8r,export=FALSE)
+R277 # LHRS decreases, MHRS increases, SHRS increases, ST72Q01 decreases
+#VIETNAM 60.07 
 
 # Let's try all gap decreasing variables:
 
@@ -481,13 +496,12 @@ R278 <- pisa.reg.pv(pvlabel="READ",
                         "TCM_STUASS","ASS_PROG","ASS_PROM","ASS_NAT","ASS_CUR","STU_FEEDB",
                         "TOWN","CLSIZE","COMPWEB","SCMATEDU","SCMATBUI","EXC2_PLAY",
                         "EXC6_MATHCOMP","EXC10_SPORT","EXC11_UNICORN","SCORE_PUBLIC","LEADINST",
-                        "QUAL_RECORD","SCHSEL","TEACCLIM","LHRS"),
+                        "QUAL_RECORD","SCHSEL","TEACCLIM","LHRS","ST72Q01"),
                     weight="W_FSTUWT",
                     data=DEVCON8r,export=FALSE)
 R278
-# VIETNAM 57.34 
+# VIETNAM 52.04 
 
-# Yes, LHRS does indeed decrease the Vietnam dummy
 # So let's quickly test the gap increasing variables and then we are done with this set
 
 R279 <- pisa.reg.pv(pvlabel="READ", 
@@ -502,4 +516,4 @@ R279 <- pisa.reg.pv(pvlabel="READ",
                     weight="W_FSTUWT",
                     data=DEVCON8r,export=FALSE)
 R279
-# VIETNAM 62.99
+# VIETNAM 59.84 
