@@ -1949,7 +1949,7 @@ R80 <- pisa.reg.pv(pvlabel="MATH",
 R80 # PRIVATESCL increases, SC02Q02 increases, DUM_VILALGE increases, TOWN decreases, CLSIZE decreases, SCHSIZE increases,
 #RATCMP15 increases, COMPWEB decreases, SCMATEDU decreases, SCMATBUI decreases, (EXC2_PLAY + EXC6_MATHCOMP
 # + EXC10_SPORT + EXC11_UNICORN) decrease, SCL_EXTR_CL decreases, SCORE_PUBLIC decreases, SCORE_AUTHRITS increases,
-#SCHAUTON increases, TCHPARTI increases, LEADCOM increases, LEADINST decreases, LEADPD increases, LEADTCH increases,
+#SCHAUTON increases, TCHPARTI increases, LEADCOM increases, LEADINST increases, LEADPD increases, LEADTCH increases,
 #QUAL_RECORD decreases, SCHSEL decreases
 #VIETNAM: 106.02
 
@@ -1968,7 +1968,7 @@ R81 <- pisa.reg.pv(pvlabel="MATH",
 R81 # PRIVATESCL increases, SC02Q02 increases, DUM_VILLAGE increases, TOWN decreases, CLSIZE decreases, SCHSIZE increases,
 #RATCMP15 increases, COMPWEB decreases, SCMATEDU decreases, SCMATBUI decreases, (EXC2_PLAY + EXC6_MATHCOMP
 # + EXC10_SPORT + EXC11_UNICORN) decrease, SCL_EXTR_CL decreases, SCORE_PUBLIC decreases, SCORE_AUTHRITS increases,
-#SCHAUTON increases, TCHPARTI increases, LEADCOM increases, LEADINST decreases, LEADPD increases, LEADTCH increases,
+#SCHAUTON increases, TCHPARTI increases, LEADCOM increases, LEADINST increases, LEADPD increases, LEADTCH increases,
 #QUAL_RECORD decreases, SCHSEL decreases, STUDCLIM increases
 #VIETNAM: 107.29
 
@@ -1987,7 +1987,7 @@ R82 <- pisa.reg.pv(pvlabel="MATH",
 R82 # PRIVATESCL increases, SC02Q02 increases, DUM_VILLAGE increases, TOWN decreases, CLSIZE decreases, SCHSIZE increases,
 #RATCMP15 increases, COMPWEB decreases, SCMATEDU decreases, SCMATBUI decreases, (EXC2_PLAY + EXC6_MATHCOMP
 # + EXC10_SPORT + EXC11_UNICORN) decrease, SCL_EXTR_CL decreases, SCORE_PUBLIC decreases, SCORE_AUTHRITS increases,
-#SCHAUTON increases, TCHPARTI increases, LEADCOM increases, LEADINST decreases, LEADPD increases, LEADTCH increases,
+#SCHAUTON increases, TCHPARTI increases, LEADCOM increases, LEADINST increases, LEADPD increases, LEADTCH increases,
 #QUAL_RECORD decreases, SCHSEL decreases, STUDCLIM increases, TEACCLIM increases
 #VIETNAM: 107.32
 

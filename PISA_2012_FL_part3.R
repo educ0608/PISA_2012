@@ -529,50 +529,11 @@ R97 <- pisa.reg.pv(pvlabel="MATH",
                        "TCFOCST","TCM_STUASS","TCM_PEER","TCH_INCENTV", "ASS_PROG","ASS_PROM",
                        "ASS_SCH","STU_FEEDB","COMP_USE","TXT_BOOK","TOWN","CLSIZE","COMPWEB",
                        "SCMATEDU","SCMATBUI","EXC2_PLAY","EXC6_MATHCOMP","EXC10_SPORT","EXC11_UNICORN",
-                       "SCL_EXTR_CL","SCORE_PUBLIC","LEADINST","QUAL_RECORD","SCHSEL"),
+                       "SCL_EXTR_CL","SCORE_PUBLIC","QUAL_RECORD","SCHSEL"),
                    weight="W_FSTUWT",
                    data=DEVCON8h,export=FALSE)
 R97
-#Estimate Std. Error t value
-#(Intercept)     376.38      24.99   15.06
-#VIETNAM          72.12       7.81    9.24
-#PRESCHOOL        26.98       4.07    6.63
-#REPEAT          -39.50       3.63  -10.90
-#ST08Q01          -7.72       1.39   -5.56
-#ST115Q01         -4.57       2.04   -2.24
-#BOOK_N            0.07       0.01    5.23
-#PARPRESSURE      10.81       4.62    2.34
-#PCGIRLS          20.08      18.63    1.08
-#FUNDMOM           0.17       0.06    2.58
-#COUNCILMOM       -0.17       0.06   -2.72
-#PROPCERT         16.02       6.76    2.37
-#SMRATIO          -0.03       0.01   -1.86
-#TCSHORT           5.78       2.01    2.87
-#TCFOCST          -2.94       2.18   -1.35
-#TCM_STUASS       -6.16       7.38   -0.84
-#TCM_PEER         -5.57       5.98   -0.93
-#TCH_INCENTV      -1.73       2.20   -0.79
-#ASS_PROG        -31.89      10.42   -3.06
-#ASS_PROM          8.44       6.17    1.37
-#ASS_SCH         -12.68      10.50   -1.21
-#STU_FEEDB        -0.22       5.93   -0.04
-#COMP_USE          0.87       5.25    0.17
-#TXT_BOOK        -18.22       8.58   -2.12
-#TOWN             -5.33       4.36   -1.22
-#CLSIZE            0.74       0.24    3.09
-#COMPWEB          12.19       6.88    1.77
-#SCMATEDU          6.62       3.11    2.13
-#SCMATBUI          2.29       2.71    0.84
-#EXC2_PLAY         6.15       4.81    1.28
-#EXC6_MATHCOMP     2.44       5.64    0.43
-#EXC10_SPORT      -1.66      10.14   -0.16
-#EXC11_UNICORN     7.39       5.84    1.27
-#SCL_EXTR_CL      13.45       5.12    2.63
-#SCORE_PUBLIC      9.63       5.68    1.70
-#LEADINST          1.02       2.46    0.41
-#QUAL_RECORD       7.56       7.77    0.97
-#SCHSEL            1.52       3.35    0.45
-#R-squared        45.38       2.39   18.95
+# see above
 
 ######################################## Gap increasing variables ########
 
